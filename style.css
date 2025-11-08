@@ -67,7 +67,7 @@ body {
 .card {
   background: #fff;
   border-radius: 20px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   padding: 30px;
   max-width: 700px;
   margin: auto;
@@ -84,21 +84,31 @@ footer {
   color: #666;
 }
 
-/* === 手機版選單按鈕 === */
+/* === 手機版選單按鈕（改成高質感樣式） === */
 .menu-toggle {
   display: none;
   position: fixed;
-  top: 15px;
-  left: 15px;
-  background-color: #e8953c;
+  top: 16px;
+  left: 16px;
+  background: rgba(232, 149, 60, 0.92);
   color: white;
   border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 20px;
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
   z-index: 1001;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  transition: all 0.25s ease-in-out;
+}
+.menu-toggle:hover {
+  background: rgba(241, 166, 74, 0.95);
+  transform: scale(1.05);
+}
+.menu-toggle:active {
+  transform: scale(0.96);
 }
 
 /* === 手機版 RWD 調整 === */
@@ -113,6 +123,7 @@ footer {
     position: fixed;
     height: 100%;
     width: 230px;
+    z-index: 1000;
   }
 
   /* 開啟時滑出 */
@@ -127,7 +138,7 @@ footer {
     width: 100%;
   }
 
-  /* 顯示漢堡按鈕 */
+  /* 顯示選單按鈕 */
   .menu-toggle {
     display: block;
   }
