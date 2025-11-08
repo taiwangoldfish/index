@@ -1,0 +1,129 @@
+body {
+  font-family: "Noto Sans TC", sans-serif;
+  background-color: #fff9f0;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+header {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header h1 {
+  color: #e8953c;
+  margin: 0;
+  padding: 15px 0;
+  text-align: center;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #e8953c;
+  margin-bottom: 10px;
+}
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+}
+.nav-list li {
+  position: relative;
+  margin: 5px 10px;
+}
+.nav-list > li > a {
+  color: #e8953c;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+.nav-list > li > a:hover {
+  color: #c7762e;
+}
+
+/* Dropdown */
+.dropdown {
+  display: none;
+  position: absolute;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 10px;
+  list-style: none;
+  z-index: 100;
+}
+.dropdown li {
+  margin: 5px 0;
+}
+.dropdown li a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.dropdown li a:hover {
+  color: #e8953c;
+}
+.nav-list li:hover .dropdown {
+  display: block;
+}
+
+/* Main card */
+.card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  padding: 30px;
+  margin: 40px auto;
+  max-width: 600px;
+  text-align: center;
+}
+.card h2 {
+  color: #e8953c;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* ===== RWD ===== */
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: block;
+  }
+  .nav-list {
+    flex-direction: column;
+    display: none;
+    background: #fff;
+    width: 100%;
+  }
+  .nav-list.active {
+    display: flex;
+  }
+  .nav-list li {
+    text-align: center;
+  }
+  .dropdown {
+    position: static;
+    box-shadow: none;
+  }
+}
