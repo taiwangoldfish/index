@@ -8,10 +8,12 @@
 </head>
 <body>
 
-  <!-- 側邊導覽欄 -->
+  <!-- 📱 手機版選單按鈕（RWD專用） -->
+  <button class="menu-toggle" id="menuToggle">☰ 選單</button>
+
+  <!-- 🐠 側邊導覽欄 -->
   <aside class="sidebar" id="sidebar">
     <div class="logo">🐠 金魚養殖經驗交流分享</div>
-    <div class="menu-toggle" id="mobile-menu">☰</div>
 
     <nav>
       <ul>
@@ -54,7 +56,6 @@
             <li>出國回國魚缸經驗分享</li>
             <li>出國前操作-影片</li>
             <li>回國後操作-影片</li>
-            <!-- 補影片 -->
             <li>颱風天的養魚對應措施</li> 
             <li><a href="#" onclick="loadPage('content/special-typhoon-fasting.html')">颱風天為何禁食</a></li>
             <li>家庭溢流案例分享</li>
@@ -170,21 +171,7 @@
     </nav>
   </aside>
 
-  <script>
-  function loadPage(page) {
-    fetch(page)
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById('mainContent').innerHTML = html;
-      })
-      .catch(err => {
-        document.getElementById('mainContent').innerHTML = "<p>載入失敗 😢</p>";
-      });
-  }
-</script>
-
-
-  <!-- 主要內容 -->
+  <!-- 🧾 主內容 -->
   <main class="content" id="mainContent">
     <div class="card">
       <h2>歡迎來到金魚養殖經驗交流分享</h2>
@@ -192,18 +179,35 @@
     </div>
   </main>
 
+  <!-- 🪷 頁尾 -->
   <footer>
     <p>© 2025 金魚養殖經驗交流分享 ｜ 製作：MLE</p>
   </footer>
 
+  <!-- ⚙️ JS 控制 -->
   <script>
-    const menu = document.getElementById('mobile-menu');
+    // 手機版選單開關
+    const toggleBtn = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
-    menu.addEventListener('click', () => {
+    toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('active');
     });
+
+    // 載入子頁面
+    function loadPage(page) {
+      fetch(page)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('mainContent').innerHTML = html;
+          // 手機上載入完畢自動收合選單
+          sidebar.classList.remove('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        })
+        .catch(() => {
+          document.getElementById('mainContent').innerHTML = "<p>載入失敗 😢</p>";
+        });
+    }
   </script>
+
 </body>
 </html>
-
-index幫我改好 感恩你
