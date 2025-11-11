@@ -22,6 +22,7 @@ body {
   transition: transform 0.3s ease-in-out;
   z-index: 999;
 }
+
 .sidebar .logo {
   background: #e8953c;
   color: #fff;
@@ -30,14 +31,18 @@ body {
   padding: 16px 0;
   font-size: 1.2em;
 }
+
 .sidebar nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .sidebar nav ul > li {
   border-bottom: 1px solid #eee;
 }
+
+/* 父層分類標題樣式 */
 .sidebar nav span {
   display: block;
   background: #fff5e9;
@@ -45,15 +50,23 @@ body {
   font-weight: bold;
   padding: 10px 15px;
 }
+
+/* 子項目 */
 .sidebar nav ul ul li {
   padding: 6px 25px;
   color: #333;
   cursor: pointer;
   transition: 0.3s;
 }
+
 .sidebar nav ul ul li:hover {
   color: #e8953c;
   background-color: #fff2de;
+}
+
+/* === 自動隱藏只有子項的父層分類 === */
+.sidebar nav ul > li:has(ul li) > span {
+  display: none;
 }
 
 /* === 主內容 === */
@@ -64,17 +77,46 @@ body {
   min-height: 100vh;
   transition: margin-left 0.3s ease-in-out;
 }
+
 .card {
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   padding: 30px;
-  max-width: 700px;
+  max-width: 900px;
   margin: auto;
   text-align: center;
 }
+
 .card h2 {
   color: #e8953c;
+}
+
+/* === 區塊樣式（分明化） === */
+.section {
+  padding: 18px 20px;
+  border-radius: 12px;
+  margin: 18px 0;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* 淡黃主題（重點區） */
+.section.yellow {
+  background: #fff7e5;
+  border-left: 6px solid #e8953c;
+}
+
+/* 淡藍主題（輔助區） */
+.section.blue {
+  background: #eaf4ff;
+  border-left: 6px solid #7ab6f8;
+}
+
+/* 純白底區（延伸內容） */
+.section.white {
+  background: #fff;
+  border-left: 6px solid #ddd;
 }
 
 /* === Footer === */
@@ -84,7 +126,7 @@ footer {
   color: #666;
 }
 
-/* === 手機版選單按鈕（改成高質感樣式） === */
+/* === 手機版選單按鈕（高質感樣式） === */
 .menu-toggle {
   display: none;
   position: fixed;
@@ -103,10 +145,12 @@ footer {
   backdrop-filter: blur(4px);
   transition: all 0.25s ease-in-out;
 }
+
 .menu-toggle:hover {
   background: rgba(241, 166, 74, 0.95);
   transform: scale(1.05);
 }
+
 .menu-toggle:active {
   transform: scale(0.96);
 }
@@ -142,4 +186,70 @@ footer {
   .menu-toggle {
     display: block;
   }
+}
+
+/* === 可選：圖片放大燈箱樣式（供圖鑑頁使用） === */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox img {
+  max-width: 95%;
+  max-height: 95%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  cursor: zoom-out;
+}
+
+/* === 圖鑑網格樣式（通用） === */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  justify-items: center;
+  margin: 15px 0 30px 0;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s;
+  cursor: pointer;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* === 單張橫圖樣式（如金魚族譜） === */
+.gallery-horizontal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin: 25px 0 40px 0;
+}
+
+.gallery-horizontal img {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-horizontal img:hover {
+  transform: scale(1.02);
 }
