@@ -64,11 +64,6 @@ body {
   background-color: #fff2de;
 }
 
-/* === 自動隱藏只有子項的父層分類 === */
-.sidebar nav ul > li > span:has(+ ul li) {
-  display: none;
-}
-
 /* === 主內容 === */
 .content {
   margin-left: 260px;
