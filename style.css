@@ -23,6 +23,7 @@ body {
   z-index: 999;
 }
 
+/* Logo */
 .sidebar .logo {
   background: #e8953c;
   color: #fff;
@@ -32,6 +33,7 @@ body {
   font-size: 1.2em;
 }
 
+/* 主要選單架構 */
 .sidebar nav ul {
   list-style: none;
   padding: 0;
@@ -42,7 +44,7 @@ body {
   border-bottom: 1px solid #eee;
 }
 
-/* 父層分類標題樣式 */
+/* 父層分類標題 */
 .sidebar nav span {
   display: block;
   background: #fff5e9;
@@ -51,20 +53,38 @@ body {
   padding: 10px 15px;
 }
 
-/* 子項目 */
+/* === 子項目（第二層） === */
 .sidebar nav ul ul li {
-  padding: 6px 25px;
   color: #333;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.sidebar nav ul ul li:hover {
+/* 🔗 子項連結樣式 */
+.sidebar nav ul ul li a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  padding: 6px 25px;
+  transition: 0.3s;
+}
+
+/* hover 效果 */
+.sidebar nav ul ul li a:hover {
   color: #e8953c;
   background-color: #fff2de;
 }
 
-/* === 主內容 === */
+/* 點擊後的選中項目樣式 */
+.sidebar nav ul ul li a.active {
+  background-color: #ffe7c0;
+  color: #c57400;
+  font-weight: 600;
+  border-left: 4px solid #e8953c;
+}
+
+/* === 主內容區 === */
 .content {
   margin-left: 260px;
   padding: 40px;
@@ -73,6 +93,7 @@ body {
   transition: margin-left 0.3s ease-in-out;
 }
 
+/* 卡片容器 */
 .card {
   background: #fff;
   border-radius: 20px;
@@ -89,8 +110,7 @@ body {
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
 }
 
-
-/* === 區塊樣式（分明化） === */
+/* === 內容區塊樣式（分明化） === */
 .section {
   padding: 18px 20px;
   border-radius: 12px;
@@ -99,19 +119,17 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-/* 淡黃主題（重點區） */
+/* 色系區塊 */
 .section.yellow {
   background: #fff7e5;
   border-left: 6px solid #e8953c;
 }
 
-/* 淡藍主題（輔助區） */
 .section.blue {
   background: #eaf4ff;
   border-left: 6px solid #7ab6f8;
 }
 
-/* 純白底區（延伸內容） */
 .section.white {
   background: #fff;
   border-left: 6px solid #ddd;
@@ -124,7 +142,7 @@ footer {
   color: #666;
 }
 
-/* === 手機版選單按鈕（高質感樣式） === */
+/* === 手機版選單按鈕 === */
 .menu-toggle {
   display: none;
   position: fixed;
@@ -159,34 +177,31 @@ footer {
     flex-direction: column;
   }
 
-  /* 側邊欄預設隱藏 */
   .sidebar {
     transform: translateX(-100%);
     position: fixed;
     height: 100%;
     width: 230px;
     z-index: 1000;
+    box-shadow: 3px 0 8px rgba(0, 0, 0, 0.15);
   }
 
-  /* 開啟時滑出 */
   .sidebar.active {
     transform: translateX(0);
   }
 
-  /* 主內容全寬 */
   .content {
     margin-left: 0;
     padding: 20px;
     width: 100%;
   }
 
-  /* 顯示選單按鈕 */
   .menu-toggle {
     display: block;
   }
 }
 
-/* === 可選：圖片放大燈箱樣式（供圖鑑頁使用） === */
+/* === 燈箱樣式（圖片放大） === */
 .lightbox {
   display: none;
   position: fixed;
@@ -208,7 +223,7 @@ footer {
   cursor: zoom-out;
 }
 
-/* === 圖鑑網格樣式（通用） === */
+/* === 圖鑑網格樣式 === */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -230,7 +245,7 @@ footer {
   transform: scale(1.05);
 }
 
-/* === 單張橫圖樣式（如金魚族譜） === */
+/* === 橫圖展示 === */
 .gallery-horizontal {
   display: flex;
   flex-direction: column;
@@ -251,7 +266,8 @@ footer {
 .gallery-horizontal img:hover {
   transform: scale(1.02);
 }
-/* === 圖片與影片通用區塊 === */
+
+/* === 圖片與影片通用樣式 === */
 .media-box {
   display: flex;
   flex-direction: column;
