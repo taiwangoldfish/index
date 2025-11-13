@@ -311,3 +311,15 @@ footer {
   text-align: center;
   line-height: 1.4;
 }
+
+ol {
+  padding-left: 25px;     /* 調整整體縮排距離 */
+  margin-top: 10px;
+  line-height: 1.8;
+}
+
+ol li {
+  margin-bottom: 6px;     /* 每項之間的距離 */
+  padding-left: 4px;      /* 讓文字靠近數字一點 */
+  text-indent: -4px;      /* 把文字往回拉，讓「1.」和文字更接近 */
+}
