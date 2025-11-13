@@ -167,45 +167,43 @@
 
   <!-- ⚙️ JS 控制 -->
   <script>
-    // 📱 手機選單開關
-    const toggleBtn = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-    });
+  // 📱 手機選單開關
+  const toggleBtn = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+  });
 
-    // 📄 載入子頁面 + 高亮選單
-    function loadPage(page, el) {
-      fetch(page)
-        .then(response => {
-          if (!response.ok) throw new Error("載入失敗");
-          return response.text();
-        })
-        .then(html => {
-          document.getElementById('mainContent').innerHTML = html;
-          sidebar.classList.remove('active');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 📄 載入子頁面 + 高亮選單
+  function loadPage(page, el) {
+    fetch(page)
+      .then(response => {
+        if (!response.ok) throw new Error("載入失敗");
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('mainContent').innerHTML = html;
+        sidebar.classList.remove('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
-          // 清除舊 active
-          document.querySelectorAll('.sidebar a.active').forEach(a => a.classList.remove('active'));
-          if (el) el.classList.add('active');
-        })
-        .catch(() => {
-          document.getElementById('mainContent').innerHTML = "<p>❌ 子頁面載入失敗，請稍後再試。</p>";
-        });
-    }
-
-    // 🚀 自動綁定 sidebar 連結
-    document.querySelectorAll('.sidebar a[href="#"], .sidebar a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        const onclick = a.getAttribute('onclick');
-        const match = onclick?.match(/'([^']+)'/);
-        const page = match?.[1];
-        if (page) loadPage(page, a);
+        document.querySelectorAll('.sidebar a.active').forEach(a => a.classList.remove('active'));
+        if (el) el.classList.add('active');
+      })
+      .catch(() => {
+        document.getElementById('mainContent').innerHTML = "<p>❌ 子頁面載入失敗，請稍後再試。</p>";
       });
+  }
+
+  // 🚀 只綁定「有 onclick」的連結
+  document.querySelectorAll('.sidebar a[onclick]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const onclick = a.getAttribute('onclick');
+      const page = onclick.match(/'([^']+)'/)?.[1];
+      if (page) loadPage(page, a);
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>
