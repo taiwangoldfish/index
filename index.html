@@ -5,54 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>金魚養殖經驗交流分享｜Goldfish Guide</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* === 下拉展開動畫 === */
-    .sidebar nav ul ul {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-in-out;
-    }
-    .sidebar nav ul li.open > ul {
-      max-height: 1000px;
-      transition: max-height 0.5s ease-in-out;
-    }
-    .sidebar nav span {
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .sidebar nav span::after {
-      content: "▾";
-      font-size: 0.9em;
-      color: #e8953c;
-      transition: transform 0.3s ease;
-    }
-    .sidebar nav li.open > span::after {
-      transform: rotate(-180deg);
-    }
-    .sidebar a.active {
-      color: #e8953c !important;
-      font-weight: bold;
-    }
-    .join-btn {
-      background: linear-gradient(90deg, #06c755, #00a94f);
-      color: #fff;
-      padding: 12px 28px;
-      border-radius: 50px;
-      font-size: 1.05em;
-      font-weight: bold;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 167, 79, 0.3);
-    }
-    .join-btn:hover {
-      background: linear-gradient(90deg, #00b85c, #00a94f);
-      transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(0, 167, 79, 0.4);
-    }
-  </style>
 </head>
 <body>
 
@@ -66,25 +18,27 @@
     <nav>
       <ul>
         <!-- 首頁 -->
-        <li><span><a href="https://taiwangoldfish.github.io/index/">🏠 首頁</a></span></li>
-
+        <span><a href="https://taiwangoldfish.github.io/index/">首頁</a></span>
         <!-- 🧡 入門篇 -->
         <li>
           <span>🐟 入門篇</span>
           <ul>
             <li><a href="#" onclick="loadPage('./simple/basic-simplify.html', this)">簡化養金魚方式</a></li>
             <li><a href="#" onclick="loadPage('./simple/basic-thinking.html', this)">養魚的思考</a></li>
+            <!-- 影片18 -->
             <li><a href="#" onclick="loadPage('./simple/connection.html', this)">溝通的問題</a></li>
             <li><a href="#" onclick="loadPage('./simple/basic-care.html', this)">金魚基本飼養方式及配備</a></li>
             <li><a href="#" onclick="loadPage('./simple/freshman_need.html', this)">新手必看影片</a></li>
             <li><a href="#" onclick="loadPage('./simple/why-change-water.html', this)">為什麼要換水</a></li>
             <li><a href="#" onclick="loadPage('./simple/water-cost.html', this)">水費貴嗎</a></li>
             <li><a href="#" onclick="loadPage('./simple/bump-flection.html', this)">打氣機的作用</a></li>
-            <li><a href="#" onclick="loadPage('./simple/filter-problem.html', this)">濾材問題</a></li>
-            <li><a href="#" onclick="loadPage('./simple/filter-chose.html', this)">濾材的選擇</a></li>
+            <!-- 影片12 -->
+            <li><a href="#" onclick="loadPage('./simple/filter-problem', this)">濾材問題</a></li>
+            <li><a href="#" onclick="loadPage('./simple/filter-chose', this)">濾材的選擇</a></li>
             <li><a href="#" onclick="loadPage('./simple/filter-why-dry.html', this)">濾材為什麼不要泡水</a></li>
             <li><a href="#" onclick="loadPage('./simple/fish-methods.html', this)">養魚方法真的百百種嗎</a></li>
             <li><a href="#" onclick="loadPage('./simple/fish-experience.html', this)">魚友經驗分享</a></li>
+            <!-- 影片11 -->
             <li><a href="#" onclick="loadPage('./simple/past-future.html', this)">金魚養殖鑑古推今</a></li>
             <li><a href="#" onclick="loadPage('./simple/goldfish-shops.html', this)">金魚店推薦</a></li>
           </ul>
@@ -110,8 +64,9 @@
             <li><a href="#" onclick="loadPage('./content/daily-travel-experience.html', this)">出國回國魚缸經驗分享</a></li>
             <li><a href="#" onclick="loadPage('./content/before-travel.html', this)">出國前操作-影片</a></li>
             <li><a href="#" onclick="loadPage('./content/after-travel.html', this)">回國後操作-影片</a></li>
+            <li><a href="#" onclick="loadPage('./content/after-travel.html', this)">颱風天的養魚對應措施</a></li>
             <li><a href="#" onclick="loadPage('./content/typhoon-coming-do.html', this)">颱風天為何禁食</a></li>
-            <li><a href="#" onclick="loadPage('./content/overflow-at-home.html', this)">家庭溢流案例分享</a></li>
+            <li><a href="#" onclick="loadPage('./content/overflow-at-home.htmll', this)">家庭溢流案例分享</a></li>
           </ul>
         </li>
 
@@ -191,7 +146,9 @@
           <ul>
             <li><a href="#" onclick="loadPage('./fish-problem/fish-dotcer.html', this)">魚顧問</a></li>
             <li><a href="#" onclick="loadPage('./fish-problem/withedodo.html', this)">白點</a></li>
+            <!-- 影片7 -->
             <li><a href="#" onclick="loadPage('./fish-problem/fish-enteritis.html', this)">腸炎症狀和預防</a></li>
+            <!-- 影片6 -->
             <li><a href="#" onclick="loadPage('./fish-problem/determine-fish-disease.html', this)">如何判斷魚病了</a></li>
           </ul>
         </li>
@@ -205,22 +162,75 @@
       <h2>歡迎來到金魚養殖經驗交流分享</h2>
       <p>魚飼養的完整知識庫，從入門、日常操作、買魚檢疫，到飼料、設備、健康照護一應俱全。</p>
     </div>
+      <!-- 💬 LINE 社群邀請 -->
+  <section class="line-section">
+    <h2>📱 歡迎加入我們的 LINE 社群</h2>
+    <p>
+      您已被邀請加入 <strong>「金魚養殖經驗交流分享」</strong>！<br>
+      點擊下方連結或掃描 QR Code 即可加入。
+    </p>
 
-    <!-- 💬 LINE 社群邀請 -->
-    <section class="line-section">
-      <h2>📱 歡迎加入我們的 LINE 社群</h2>
-      <p>
-        您已被邀請加入 <strong>「金魚養殖經驗交流分享」</strong>！<br>
-        點擊下方連結或掃描 QR Code 即可加入。
-      </p>
+    <div style="text-align:center; margin:20px 0;">
+      <a href="https://line.me/ti/g2/VGWnjJWNVZgUaSvZPYEFN1Nqk8qtwR2N1ACmsA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+         target="_blank"
+         class="join-btn">👉 點我加入 LINE 社群</a>
+    </div>
 
-      <div style="text-align:center; margin:20px 0;">
-        <a href="https://line.me/ti/g2/VGWnjJWNVZgUaSvZPYEFN1Nqk8qtwR2N1ACmsA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-           target="_blank"
-           class="join-btn">👉 點我加入 LINE 社群</a>
-      </div>
+    <div style="text-align:center;">
+      <img src="https://raw.githubusercontent.com/michael19980508/index/main/image//QrCode.jpg"
+           alt="LINE 社群 QR Code"
+           style="max-width:200px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.25);">
+    </div>
+  </section>
 
-      <div style="text-align:center;">
-        <img src="https://raw.githubusercontent.com/michael19980508/index/main/image/QrCode.jpg"
-             alt="LINE 社群 QR Code"
-             style="max-width:200px; border-radius:12px; box-shadow:0 4px 10px rgba(
+  </main>
+
+  <!-- 🪷 頁尾 -->
+  <footer>
+    <p>© 2025 金魚養殖經驗交流分享社群  | 內容:金魚養殖經驗交流分享社群眾群管們  ｜ 網頁製作：MLE/p>
+  </footer>
+
+  <!-- ⚙️ JS 控制 -->
+  <script>
+  // 📱 手機選單開關
+  const toggleBtn = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+  });
+
+  // 📄 載入子頁面 + 高亮選單
+  function loadPage(page, el) {
+    fetch(page)
+      .then(response => {
+        if (!response.ok) throw new Error("載入失敗");
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('mainContent').innerHTML = html;
+        sidebar.classList.remove('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        document.querySelectorAll('.sidebar a.active').forEach(a => a.classList.remove('active'));
+        if (el) el.classList.add('active');
+      })
+      .catch(() => {
+        document.getElementById('mainContent').innerHTML = "<p>❌ 子頁面載入失敗，請稍後再試。</p>";
+      });
+  }
+
+  // 🚀 只綁定「有 onclick」的連結
+  document.querySelectorAll('.sidebar a[onclick]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const onclick = a.getAttribute('onclick');
+      const page = onclick.match(/'([^']+)'/)?.[1];
+      if (page) loadPage(page, a);
+    });
+  });
+</script>
+
+</body>
+</html>
+
+我要把選單個個分類變成下拉是選單
