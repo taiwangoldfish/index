@@ -1,59 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>金魚養殖經驗交流分享｜Goldfish Guide</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* === 下拉展開動畫 === */
-    .sidebar nav ul ul {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-in-out;
-    }
-    .sidebar nav ul li.open > ul {
-      max-height: 1000px;
-      transition: max-height 0.5s ease-in-out;
-    }
-    .sidebar nav span {
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .sidebar nav span::after {
-      content: "▾";
-      font-size: 0.9em;
-      color: #e8953c;
-      transition: transform 0.3s ease;
-    }
-    .sidebar nav li.open > span::after {
-      transform: rotate(-180deg);
-    }
-    .sidebar a.active {
-      color: #e8953c !important;
-      font-weight: bold;
-    }
-    .join-btn {
-      background: linear-gradient(90deg, #06c755, #00a94f);
-      color: #fff;
-      padding: 12px 28px;
-      border-radius: 50px;
-      font-size: 1.05em;
-      font-weight: bold;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 167, 79, 0.3);
-    }
-    .join-btn:hover {
-      background: linear-gradient(90deg, #00b85c, #00a94f);
-      transform: scale(1.05);
-      box-shadow: 0 6px 16px rgba(0, 167, 79, 0.4);
-    }
-  </style>
 </head>
+
 <body>
 
   <!-- 📱 手機版選單按鈕 -->
@@ -65,8 +19,11 @@
 
     <nav>
       <ul>
-        <!-- 首頁 -->
-        <li><span><a href="https://taiwangoldfish.github.io/index/">🏠 首頁</a></span></li>
+
+        <!-- ⭐ 改成明顯首頁按鈕 -->
+        <li>
+          <a href="https://taiwangoldfish.github.io/index/" class="home-btn">🏠 首頁</a>
+        </li>
 
         <!-- 🧡 入門篇 -->
         <li>
@@ -80,8 +37,8 @@
             <li><a href="#" onclick="loadPage('./simple/why-change-water.html', this)">為什麼要換水</a></li>
             <li><a href="#" onclick="loadPage('./simple/water-cost.html', this)">水費貴嗎</a></li>
             <li><a href="#" onclick="loadPage('./simple/bump-flection.html', this)">打氣機的作用</a></li>
-            <li><a href="#" onclick="loadPage('./simple/filter-problem.html', this)">濾材問題</a></li>
-            <li><a href="#" onclick="loadPage('./simple/filter-chose.html', this)">濾材的選擇</a></li>
+            <li><a href="#" onclick="loadPage('./simple/filter-problem', this)">濾材問題</a></li>
+            <li><a href="#" onclick="loadPage('./simple/filter-chose', this)">濾材的選擇</a></li>
             <li><a href="#" onclick="loadPage('./simple/filter-why-dry.html', this)">濾材為什麼不要泡水</a></li>
             <li><a href="#" onclick="loadPage('./simple/fish-methods.html', this)">養魚方法真的百百種嗎</a></li>
             <li><a href="#" onclick="loadPage('./simple/fish-experience.html', this)">魚友經驗分享</a></li>
@@ -110,6 +67,7 @@
             <li><a href="#" onclick="loadPage('./content/daily-travel-experience.html', this)">出國回國魚缸經驗分享</a></li>
             <li><a href="#" onclick="loadPage('./content/before-travel.html', this)">出國前操作-影片</a></li>
             <li><a href="#" onclick="loadPage('./content/after-travel.html', this)">回國後操作-影片</a></li>
+            <li><a href="#" onclick="loadPage('./content/after-travel.html', this)">颱風天的養魚對應措施</a></li>
             <li><a href="#" onclick="loadPage('./content/typhoon-coming-do.html', this)">颱風天為何禁食</a></li>
             <li><a href="#" onclick="loadPage('./content/overflow-at-home.html', this)">家庭溢流案例分享</a></li>
           </ul>
@@ -126,7 +84,7 @@
             <li><a href="#" onclick="loadPage('./buyfish/quarantine-tool.html', this)">金魚檢疫必備品</a></li>
             <li><a href="#" onclick="loadPage('./buyfish/basic-judgment.html', this)">養魚從買魚開始1 基本判斷</a></li>
             <li><a href="#" onclick="loadPage('./buyfish/quarantine-principle.html', this)">養魚從買魚開始2 檢疫原理</a></li>
-            <li><a href="#" onclick="loadPage('./buyfish/do-not-Being-played-for-suckers.html', this)">養魚從買魚開始3 我不是韭菜大作戰</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/do-not-Being-played-for-suckers.html', this)">我不是韭菜大作戰</a></li>
             <li><a href="#" onclick="loadPage('./buyfish/fish-stays-at-the-bottom-of-the-tank.html', this)">魚趴案例</a></li>
             <li><a href="#" onclick="loadPage('./buyfish/how-to-turn-gills.html', this)">如何翻鰓</a></li>
             <li><a href="#" onclick="loadPage('./buyfish/quarantine-without-filter-material.html', this)">無濾材檢疫全紀錄</a></li>
@@ -164,27 +122,6 @@
           </ul>
         </li>
 
-        <!-- 📚 過濾配置 -->
-        <li>
-          <span>📚 過濾配置</span>
-          <ul>
-            <li><a href="#" onclick="loadPage('./filter/nitrifying.html', this)">硝化菌篇</a></li>
-            <li><a href="#" onclick="loadPage('./filter/biofilter.html', this)">陶瓷環對比圖</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-volume.html', this)">濾材量的知識點</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-absorption.html', this)">濾材吸水量測試</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-flow-principle.html', this)">過濾和濾材水流原理 & 水流導向</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-system.html', this)">滴流盒與過濾系統配置/過濾更換細節</a></li>
-            <li><a href="#" onclick="loadPage('./filter/2system.html', this)">滴流盒與二尺缸配置</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-system-3ft.html', this)">三尺缸上部過濾配置</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-system-3ft-bottom.html', this)">三尺底濾改乾濕分離配置</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-system-4ft.html', this)">四尺缸上部過濾配置</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-system-4ft-bottom.html', this)">四尺底濾改乾濕分離配置</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-system-5ft.html', this)">五尺缸配置實例</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-7ft.html', this)">七尺缸配置實例</a></li>
-            <li><a href="#" onclick="loadPage('./filter/filter-aba.html', this)">雅柏上部過濾</a></li>
-          </ul>
-        </li>
-
         <!-- ⚠️ 魚病與健康 -->
         <li>
           <span>‼️ 金魚有狀況</span>
@@ -195,6 +132,7 @@
             <li><a href="#" onclick="loadPage('./fish-problem/determine-fish-disease.html', this)">如何判斷魚病了</a></li>
           </ul>
         </li>
+
       </ul>
     </nav>
   </aside>
@@ -209,18 +147,70 @@
     <!-- 💬 LINE 社群邀請 -->
     <section class="line-section">
       <h2>📱 歡迎加入我們的 LINE 社群</h2>
-      <p>
-        您已被邀請加入 <strong>「金魚養殖經驗交流分享」</strong>！<br>
-        點擊下方連結或掃描 QR Code 即可加入。
-      </p>
+      <p>您已被邀請加入 <strong>「金魚養殖經驗交流分享」</strong>！<br>
+        點擊下方連結或掃描 QR Code 即可加入。</p>
 
       <div style="text-align:center; margin:20px 0;">
         <a href="https://line.me/ti/g2/VGWnjJWNVZgUaSvZPYEFN1Nqk8qtwR2N1ACmsA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-           target="_blank"
-           class="join-btn">👉 點我加入 LINE 社群</a>
+          target="_blank" class="join-btn">👉 點我加入 LINE 社群</a>
       </div>
 
       <div style="text-align:center;">
-        <img src="https://raw.githubusercontent.com/michael19980508/index/main/image/QrCode.jpg"
-             alt="LINE 社群 QR Code"
-             style="max-width:200px; border-radius:12px; box-shadow:0 4px 10px rgba(
+        <img src="https://raw.githubusercontent.com/michael19980508/index/main/image//QrCode.jpg" alt="LINE 社群 QR Code"
+          style="max-width:200px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.25);">
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 🪷 頁尾 -->
+  <footer>
+    <p>© 2025 金魚養殖經驗交流分享社群 ｜ 內容:金魚養殖經驗交流分享社群眾群管們 ｜ 網頁製作：MLE</p>
+  </footer>
+
+  <!-- ⚙️ JS 控制 -->
+  <script>
+    // 📱 手機選單開關
+    const toggleBtn = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+
+    // 📄 載入子頁面 + 高亮選單
+    function loadPage(page, el) {
+      fetch(page)
+        .then(response => {
+          if (!response.ok) throw new Error("載入失敗");
+          return response.text();
+        })
+        .then(html => {
+          document.getElementById('mainContent').innerHTML = html;
+          sidebar.classList.remove('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          document.querySelectorAll('.sidebar a.active').forEach(a => a.classList.remove('active'));
+          if (el) el.classList.add('active');
+        })
+        .catch(() => {
+          document.getElementById('mainContent').innerHTML = "<p>❌ 子頁面載入失敗，請稍後再試。</p>";
+        });
+    }
+
+    // ⭐ 只有首頁才啟用「分類下拉」
+    if (window.location.pathname.endsWith("/index/") ||
+        window.location.pathname.endsWith("/index.html") ||
+        window.location.pathname === "/") {
+
+      document.querySelectorAll('.sidebar nav li > span').forEach(span => {
+        span.addEventListener('click', () => {
+          const parentLi = span.parentElement;
+          parentLi.classList.toggle('open');
+        });
+      });
+
+    }
+  </script>
+
+</body>
+</html>
