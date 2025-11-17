@@ -3,7 +3,7 @@ body {
   font-family: "Noto Sans TC", sans-serif;
   margin: 0;
   background-color: #fff9f0;
-  background-image: url("image/背景圖.png");
+  background-image: url("https://taiwangoldfish.github.io/index/image/背景圖.png");
   background-size: 500px auto;       /* 🟡 每張圖寬約 500px，自動依比例調整高度 */
   background-position: center top;   /* 🟡 置中靠上 */
   background-repeat: repeat;         /* 🟡 平鋪重複 */
