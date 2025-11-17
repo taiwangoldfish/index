@@ -3,11 +3,17 @@ body {
   font-family: "Noto Sans TC", sans-serif;
   margin: 0;
   background-color: #fff9f0;
+  background-image: url("https://raw.githubusercontent.com/michael19980508/index/main/image/背景圖.png");
+  background-size: cover;              /* 讓圖片充滿整個畫面 */
+  background-position: center center;  /* 置中對齊 */
+  background-attachment: fixed;        /* 捲動時固定背景 */
+  background-repeat: no-repeat;
   color: #333;
   display: flex;
   flex-direction: row;
   min-height: 100vh;
 }
+
 
 /* === 側邊導覽欄 === */
 .sidebar {
