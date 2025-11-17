@@ -3,16 +3,17 @@ body {
   font-family: "Noto Sans TC", sans-serif;
   margin: 0;
   background-color: #fff9f0;
-  background-image: url("https://taiwangoldfish.github.io/index/image/背景圖.png");
-  background-size: cover;              /* 讓圖片充滿整個畫面 */
-  background-position: center center;  /* 置中對齊 */
-  background-attachment: fixed;        /* 捲動時固定背景 */
-  background-repeat: no-repeat;
+  background-image: url("image/背景圖.png");
+  background-size: 500px auto;       /* 🟡 每張圖寬約 500px，自動依比例調整高度 */
+  background-position: center top;   /* 🟡 置中靠上 */
+  background-repeat: repeat;         /* 🟡 平鋪重複 */
+  background-attachment: fixed;      /* 🟡 捲動時背景不動 */
   color: #333;
   display: flex;
   flex-direction: row;
   min-height: 100vh;
 }
+
 
 
 /* === 側邊導覽欄 === */
