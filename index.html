@@ -217,6 +217,12 @@
   <!-- 🪷 頁尾 -->
   <footer>
     <p>© 2025 金魚養殖經驗交流分享社群 ｜ 內容:金魚養殖經驗交流分享社群眾群管們 ｜ 網頁製作：MLE</p>
+    <p>
+      👁️ 今日瀏覽：
+      <span id="today-count">載入中...</span> ｜ 
+      累積總訪問：
+      <span id="total-count">載入中...</span>
+    </p>
   </footer>
 
   <!-- ⚙️ JS 控制 -->
@@ -259,6 +265,31 @@
       });
     }
 
+    // === 設定專屬識別名稱（請換成你的站名） ===
+  const SITE_KEY = "taiwangoldfish.github.io";
+
+  // === 取得今日日期（當作每日專屬 key） ===
+  const today = new Date().toISOString().split('T')[0]; // 例如 2025-11-17
+
+  // === 1️⃣ 累積總訪問數 ===
+  fetch(`https://api.countapi.xyz/hit/${SITE_KEY}_total`)
+    .then(res => res.json())
+    .then(res => {
+      document.getElementById("total-count").innerText = res.value.toLocaleString();
+    })
+    .catch(() => {
+      document.getElementById("total-count").innerText = "無法取得";
+    });
+
+  // === 2️⃣ 今日瀏覽數（依日期區分，每天歸零） ===
+  fetch(`https://api.countapi.xyz/hit/${SITE_KEY}_${today}`)
+    .then(res => res.json())
+    .then(res => {
+      document.getElementById("today-count").innerText = res.value.toLocaleString();
+    })
+    .catch(() => {
+      document.getElementById("today-count").innerText = "無法取得";
+    });
   </script>
 
 </body>
