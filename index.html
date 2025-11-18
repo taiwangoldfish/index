@@ -179,9 +179,47 @@
         </a>
     </div>
   </footer>
-<script>
-    // 📱 手機選單開關 const toggleBtn = document.getElementById('menuToggle'); const sidebar = document.getElementById('sidebar'); toggleBtn.addEventListener('click', () => { sidebar.classList.toggle('active'); }); // 📄 載入子頁面 + 高亮選單 function loadPage(page, el) { fetch(page) .then(response => { if (!response.ok) throw new Error("載入失敗"); return response.text(); }) .then(html => { document.getElementById('mainContent').innerHTML = html; sidebar.classList.remove('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); document.querySelectorAll('.sidebar a.active').forEach(a => a.classList.remove('active')); if (el) el.classList.add('active'); }) .catch(() => { document.getElementById('mainContent').innerHTML = "<p>❌ 子頁面載入失敗，請稍後再試。</p>"; }); } // ⭐ 只有首頁才啟用「分類下拉」 // ⭐ 只有首頁啟用下拉 if (document.body.classList.contains("home")) { document.querySelectorAll('.sidebar nav li > span').forEach(span => { span.addEventListener('click', () => { const parentLi = span.parentElement; parentLi.classList.toggle('open'); }); }); } // === 設定專屬識別名稱（請換成你的站名） === const SITE_KEY = "taiwangoldfish.github.io"; // === 取得今日日期（當作每日專屬 key） === const today = new Date().toISOString().split('T')[0]; // 例如 2025-11-17 // === 1️⃣ 累積總訪問數 === fetch(https://api.countapi.xyz/hit/${SITE_KEY}_total) .then(res => res.json()) .then(res => { document.getElementById("total-count").innerText = res.value.toLocaleString(); }) .catch(() => { document.getElementById("total-count").innerText = "無法取得"; }); // === 2️⃣ 今日瀏覽數（依日期區分，每天歸零） === fetch(https://api.countapi.xyz/hit/${SITE_KEY}_${today}) .then(res => res.json()) .then(res => { document.getElementById("today-count").innerText = res.value.toLocaleString(); }) .catch(() => { document.getElementById("today-count").innerText = "無法取得"; }); 
-</script>
+ <!-- ⚙️ JS 控制 -->
+  <script>
+    // 📱 手機選單開關
+    const toggleBtn = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+
+    // 📄 載入子頁面 + 高亮選單
+    function loadPage(page, el) {
+      fetch(page)
+        .then(response => {
+          if (!response.ok) throw new Error("載入失敗");
+          return response.text();
+        })
+        .then(html => {
+          document.getElementById('mainContent').innerHTML = html;
+          sidebar.classList.remove('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          document.querySelectorAll('.sidebar a.active').forEach(a => a.classList.remove('active'));
+          if (el) el.classList.add('active');
+        })
+        .catch(() => {
+          document.getElementById('mainContent').innerHTML = "<p>❌ 子頁面載入失敗，請稍後再試。</p>";
+        });
+    }
+
+    // ⭐ 只有首頁才啟用「分類下拉」
+    // ⭐ 只有首頁啟用下拉
+    if (document.body.classList.contains("home")) {
+      document.querySelectorAll('.sidebar nav li > span').forEach(span => {
+        span.addEventListener('click', () => {
+          const parentLi = span.parentElement;
+          parentLi.classList.toggle('open');
+        });
+      });
+    }
+
+  </script>
 </body>
 
 </html>
