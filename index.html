@@ -758,28 +758,61 @@
 
     /* ======================================================
    🟦 首頁：自動偵測 URL ?q=keyword → 自動搜尋
-  ====================================================== */
-  document.addEventListener("DOMContentLoaded", () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const keyword = urlParams.get("q");
+    ====================================================== */
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyword = urlParams.get("q");
+    
+        if (keyword) {
+            const input = document.getElementById("searchInput");
+            const btn = document.getElementById("searchBtn");
+    
+            // 塞回搜尋欄
+            input.value = keyword;
+    
+            // 自動搜尋
+            btn.click();
+    
+            // 自動捲到搜尋結果
+            setTimeout(() => {
+                const area = document.getElementById("searchResults");
+                if (area) area.scrollIntoView({ behavior: "smooth" });
+            }, 300);
+        }
+      });
   
-      if (keyword) {
-          const input = document.getElementById("searchInput");
-          const btn = document.getElementById("searchBtn");
+     document.addEventListener("DOMContentLoaded", () => {
   
-          // 塞回搜尋欄
-          input.value = keyword;
+    // ⭐ 重新啟動首頁的搜尋功能
+    function initHomeSearch() {
+      const btn = document.getElementById("searchBtn");
+      const input = document.getElementById("searchInput");
+      if (!btn || !input) return;
   
-          // 自動搜尋
-          btn.click();
+      btn.addEventListener("click", () => {
+        const keyword = input.value.trim();
+        if (keyword) {
+          window.location.href = `/index/?q=${encodeURIComponent(keyword)}`;
+        }
+      });
   
-          // 自動捲到搜尋結果
-          setTimeout(() => {
-              const area = document.getElementById("searchResults");
-              if (area) area.scrollIntoView({ behavior: "smooth" });
-          }, 300);
-      }
-    });
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          const keyword = input.value.trim();
+          if (keyword) {
+            window.location.href = `/index/?q=${encodeURIComponent(keyword)}`;
+          }
+        }
+      });
+    }
+  
+    // ⭐ 初始化搜尋
+    initHomeSearch();
+  
+    // ⭐ 若首頁用 loadPage() 載入內容，也再執行一次
+    document.addEventListener("pageLoaded", initHomeSearch);
+  
+  });
 
     /* ======================================================
        🏠 首頁分類折疊
@@ -792,8 +825,6 @@
         });
     }
 </script>
-
-<script src="https://taiwangoldfish.github.io/index/script/global-search.js"></script>
   
 </body>
 </html>
