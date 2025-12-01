@@ -717,39 +717,45 @@
        🔍 搜尋按鈕
     ====================================================== */
     document.getElementById("searchBtn").addEventListener("click", async () => {
-        const keyword = document.getElementById("searchInput").value.trim();
-        const resultArea = document.getElementById("searchResults");
+      const keyword = document.getElementById("searchInput").value.trim();
+      const resultArea = document.getElementById("searchResults");
+  
+      if (!keyword) return;
+  
+      resultArea.style.display = "block";
+      resultArea.innerHTML = "<p>🔍 搜尋中...</p>";
+  
+      const results = await searchKeyword(keyword);
+  
+      if (results.length === 0) {
+          resultArea.innerHTML = `<p>❌ 找不到「${keyword}」相關內容。</p>`;
+          
+          // 📱 手機版搜尋後自動收合選單
+          sidebar.classList.remove('active');
+  
+          resultArea.scrollIntoView({ behavior: "smooth" });
+          return;
+      }
+  
+      let html = `<h2>🔍 搜尋：${keyword}</h2><ul class="search-list">`;
+  
+      results.forEach((r) => {
+          html += `
+          <li>
+              <a href="#" onclick="loadPage('${r.url}', this)">
+              ${r.title}
+              </a>
+          </li>`;
+      });
+  
+      html += "</ul>";
+      resultArea.innerHTML = html;
+  
+      // ⭐⭐⭐ 搜尋後收起手機選單 + 自動捲到搜尋結果 ⭐⭐⭐
+      sidebar.classList.remove('active');
+      resultArea.scrollIntoView({ behavior: "smooth" });
+  });
 
-        if (!keyword) return;
-
-        resultArea.style.display = "block";
-        resultArea.innerHTML = "<p>🔍 搜尋中...</p>";
-
-        const results = await searchKeyword(keyword);
-
-        if (results.length === 0) {
-            resultArea.innerHTML = `<p>❌ 找不到「${keyword}」相關內容。</p>`;
-            return;
-        }
-
-        let html = `<h2>🔍 搜尋：${keyword}</h2><ul class="search-list">`;
-
-        results.forEach((r) => {
-            html += `
-      <li>
-        <a href="#" onclick="loadPage('${r.url}', this)">
-          ${r.title}
-        </a>
-      </li>`;
-        });
-
-        html += "</ul>";
-        resultArea.innerHTML = html;
-      
-        resultArea.scrollIntoView({
-            behavior: "smooth"
-        });
-    });
 
     /* ======================================================
        🏠 首頁分類折疊
