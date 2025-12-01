@@ -337,7 +337,79 @@
       document.getElementById("mainContent").innerHTML = "";
     });
 
+    // =============================
+    // 🔍 搜尋功能（新版：只顯示頁面列表）
+    // =============================
     
+    // 1. 可搜尋的頁面清單（你可以再擴充）
+    const searchablePages = [
+      { title: "簡化養金魚方式", url: "./simple/basic-simplify.html" },
+      { title: "養魚的思考", url: "./simple/basic-thinking.html" },
+      { title: "溝通的問題", url: "./simple/connection.html" },
+      { title: "金魚基本飼養方式", url: "./simple/basic-care.html" },
+      { title: "新手必看影片", url: "./simple/freshman_need.html" },
+      { title: "為什麼要換水", url: "./simple/why-change-water.html" },
+      // 👉 其他全部頁面也可以加進來
+    ];
+    
+    // 2. 搜尋頁面內容（不顯示 HTML，只紀錄是否有找到關鍵字）
+    async function searchKeyword(keyword) {
+      const results = [];
+    
+      for (let page of searchablePages) {
+        try {
+          const res = await fetch(page.url);
+          const text = await res.text();
+    
+          if (text.includes(keyword)) {
+            results.push(page);
+          }
+    
+        } catch (err) {
+          console.log("❌ 無法讀取：", page.url);
+        }
+      }
+    
+      return results;
+    }
+    
+    // 3. 搜尋按鈕事件
+    document.getElementById("searchBtn").addEventListener("click", async () => {
+      const keyword = document.getElementById("searchInput").value.trim();
+      const resultArea = document.getElementById("searchResults");
+    
+      if (!keyword) return;
+    
+      resultArea.style.display = "block";
+      resultArea.innerHTML = "<p>🔍 搜尋中...</p>";
+    
+      const results = await searchKeyword(keyword);
+    
+      if (results.length === 0) {
+        resultArea.innerHTML = `<p>❌ 找不到「${keyword}」相關內容。</p>`;
+        return;
+      }
+    
+      // ⭐ 僅顯示頁面列表，不顯示 HTML 內容
+      let html = `<h2>🔍 搜尋：${keyword}</h2><ul class="search-list">`;
+    
+      results.forEach(r => {
+        html += `
+          <li>
+            <a href="#" onclick="loadPage('${r.url}', this)">
+              ${r.title}
+            </a>
+          </li>`;
+      });
+    
+      html += "</ul>";
+    
+      resultArea.innerHTML = html;
+    
+      // 清空首頁內容避免混亂（依你需要決定要不要）
+      document.getElementById("mainContent").innerHTML = "";
+    });
+
     // ⭐ 只有首頁才啟用「分類下拉」
     // ⭐ 只有首頁啟用下拉
     if (document.body.classList.contains("home")) {
