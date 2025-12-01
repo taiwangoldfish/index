@@ -43,8 +43,8 @@
             <li><a href="#" onclick="loadPage('./simple/why-change-water.html', this)">為什麼要換水</a></li>
             <li><a href="#" onclick="loadPage('./simple/water-cost.html', this)">水費貴嗎</a></li>
             <li><a href="#" onclick="loadPage('./simple/bump-flection.html', this)">打氣機的作用</a></li>
-            <li><a href="#" onclick="loadPage('./simple/filter-problem', this)">濾材問題</a></li>
-            <li><a href="#" onclick="loadPage('./simple/filter-chose', this)">濾材的選擇</a></li>
+            <li><a href="#" onclick="loadPage('./simple/filter-problem.html', this)">濾材問題</a></li>
+            <li><a href="#" onclick="loadPage('./simple/filter-chose.html', this)">濾材的選擇</a></li>
             <li><a href="#" onclick="loadPage('./simple/filter-why-dry.html', this)">濾材為什麼不要泡水</a></li>
             <li><a href="#" onclick="loadPage('./simple/fish-methods.html', this)">養魚方法真的百百種嗎</a></li>
             <li><a href="#" onclick="loadPage('./simple/fish-experience.html', this)">魚友經驗分享</a></li>
@@ -746,6 +746,8 @@
         html += "</ul>";
         resultArea.innerHTML = html;
 
+        resultArea.scrollIntoView({ behavior: "smooth" });
+      
         resultArea.scrollIntoView({
             behavior: "smooth"
         });
