@@ -493,3 +493,36 @@ ol li {
 .search-list li a:hover {
   text-decoration: underline;
 }
+
+.search-results {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px auto;
+  max-width: 900px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.search-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.search-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-list li:last-child {
+  border-bottom: none;
+}
+
+.search-list li a {
+  color: #0077cc;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.search-list li a:hover {
+  text-decoration: underline;
+}
