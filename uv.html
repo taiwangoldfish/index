@@ -262,22 +262,123 @@
 
   // 1. 可搜尋頁面清單
   const searchablePages = [
-    { title: "簡化養金魚方式", url: "./simple/basic-simplify.html" },
-    { title: "養魚的思考", url: "./simple/basic-thinking.html" },
-    { title: "溝通的問題", url: "./simple/connection.html" },
-    { title: "金魚基本飼養方式", url: "./simple/basic-care.html" },
-    { title: "新手必看影片", url: "./simple/freshman_need.html" },
-    { title: "為什麼要換水", url: "./simple/why-change-water.html" },
-    { title: "水費貴嗎", url: "./simple/water-cost.html" },
-    { title: "打氣機的作用", url: "./simple/bump-flection.html" },
-    { title: "濾材問題", url: "./simple/filter-problem.html" },
-    { title: "濾材的選擇", url: "./simple/filter-chose.html" },
-    { title: "濾材為什麼不要泡水", url: "./simple/filter-why-dry.html" },
-    { title: "魚友經驗分享", url: "./simple/fish-experience.html" },
-    { title: "金魚店推薦", url: "./simple/goldfish-shops.html" },
 
-    // ⭐ 你之後要的我可以幫你自動加入全部
-  ];
+  // 🧡 入門篇 simple
+  { title: "簡化養金魚方式", url: "./simple/basic-simplify.html" },
+  { title: "養魚的思考", url: "./simple/basic-thinking.html" },
+  { title: "溝通的問題", url: "./simple/connection.html" },
+  { title: "金魚基本飼養方式及配備", url: "./simple/basic-care.html" },
+  { title: "新手必看影片", url: "./simple/freshman_need.html" },
+  { title: "為什麼要換水", url: "./simple/why-change-water.html" },
+  { title: "水費貴嗎", url: "./simple/water-cost.html" },
+  { title: "打氣機的作用", url: "./simple/bump-flection.html" },
+  { title: "濾材問題", url: "./simple/filter-problem.html" },
+  { title: "濾材的選擇", url: "./simple/filter-chose.html" },
+  { title: "濾材為什麼不要泡水", url: "./simple/filter-why-dry.html" },
+  { title: "養魚方法真的百百種嗎", url: "./simple/fish-methods.html" },
+  { title: "魚友經驗分享", url: "./simple/fish-experience.html" },
+  { title: "金魚養殖鑑古推今", url: "./simple/past-future.html" },
+  { title: "金魚店推薦", url: "./simple/goldfish-shops.html" },
+
+  // 🐟 日常操作 content
+  { title: "換水", url: "./content/daily-waterchange.html" },
+  { title: "隔離換水的用意", url: "./content/daily-isolated-waterchange.html" },
+  { title: "正常換水為什麼水還是霧", url: "./content/daily-cloudy-water.html" },
+  { title: "開缸", url: "./content/tank-startup.html" },
+  { title: "清缸建議方式", url: "./content/daily-tank-clean.html" },
+  { title: "移缸經驗分享", url: "./content/daily-tank-move.html" },
+  { title: "夏季魚缸應對高溫注意事項", url: "./content/daily-summer-heat.html" },
+  { title: "普力桶尺寸與夏季高溫換水應變方式", url: "./content/daily-hotwater-change.html" },
+  { title: "夏季注意事項", url: "./content/summer-note.html" },
+  { title: "下鹽", url: "./content/daily-salt-guide.html" },
+  { title: "出國出遠門應變措施", url: "./content/daily-travel-response.html" },
+  { title: "出國回國魚缸經驗分享", url: "./content/daily-travel-experience.html" },
+  { title: "出國前操作-影片", url: "./content/before-travel.html" },
+  { title: "回國後操作-影片", url: "./content/after-travel.html" },
+  { title: "颱風天的養魚對應措施", url: "./content/typhoon-coming-do.html" },
+  { title: "颱風天為何禁食", url: "./content/special-typhoon-fasting.html" },
+  { title: "家庭溢流案例分享", url: "./content/overflow-at-home.html" },
+
+  // 🐟 買魚注意 buyfish
+  { title: "新魚入缸知識", url: "./buyfish/new-fish-tank-intro.html" },
+  { title: "檢疫新魚重點", url: "./buyfish/quarantine-tips.html" },
+  { title: "檢疫篇", url: "./buyfish/quarantine.html" },
+  { title: "檢疫的重要性", url: "./buyfish/quarantine-how-importer.html" },
+  { title: "新魚檢疫/隔離缸", url: "./content/isolated-mean.html" },
+  { title: "金魚檢疫必備品", url: "./buyfish/quarantine-tool.html" },
+  { title: "養魚從買魚開始 1 基本判斷", url: "./buyfish/basic-judgment.html" },
+  { title: "養魚從買魚開始 2 檢疫原理", url: "./buyfish/quarantine-principle.html" },
+  { title: "養魚從買魚開始 2 我不是韭菜大作戰", url: "./buyfish/do-not-Being-played-for-suckers.html" },
+  { title: "魚趴案例", url: "./buyfish/fish-stays-at-the-bottom-of-the-tank.html" },
+  { title: "如何翻鰓", url: "./buyfish/how-to-turn-gills.html" },
+  { title: "無濾材檢疫全紀錄", url: "./buyfish/quarantine-without-filter-material.html" },
+
+  // 🚩 飼料 feed
+  { title: "飼料選擇及保存", url: "./feed/feed-storage.html" },
+  { title: "季節與餵食 / 飼料類型", url: "./feed/feed-season.html" },
+  { title: "若元錠使用方式", url: "./feed/wakogan-usage.html" },
+  { title: "飼料推薦", url: "./feed/feed-recommend.html" },
+  { title: "高夠力金魚飼料", url: "./feed/hikari.html" },
+  { title: "鮮蝦食譜", url: "./feed/ultra-fresh.html" },
+  { title: "德比克飼料", url: "./feed/tropical.html" },
+  { title: "阿岳金魚飼料", url: "./feed/ayue.html" },
+  { title: "赤蟲解凍餵食", url: "./feed/feed-redworm.html" },
+  { title: "赤蟲哪裡買", url: "./feed/redworm-buy.html" },
+
+  // 💎 金魚小知識 knowledge
+  { title: "金魚成長要素", url: "./knowledge/goldfish-growth-factors.html" },
+  { title: "光照", url: "./knowledge/light-guide.html" },
+  { title: "藻類的危害", url: "./knowledge/algae-issue.html" },
+  { title: "泰獅圖鑑", url: "./knowledge/thai-lionhead.html" },
+  { title: "蘭壽圖鑑", url: "./knowledge/ranchu-gallery.html" },
+  { title: "金魚族譜", url: "./knowledge/goldfish-lineage.html" },
+  { title: "繁殖日記", url: "./knowledge/reproduce.html" },
+
+  // 📚 過濾配置 filter
+  { title: "硝化菌篇", url: "./filter/nitrifying.html" },
+  { title: "陶瓷環對比圖", url: "./filter/biofilter.html" },
+  { title: "濾材量的知識點", url: "./filter/filter-volume.html" },
+  { title: "濾材吸水量測試", url: "./filter/filter-absorption.html" },
+  { title: "過濾和濾材水流原理", url: "./filter/filter-flow-principle.html" },
+  { title: "滴流盒與過濾系統配置", url: "./filter/filter-system.html" },
+  { title: "滴流盒與二尺缸配置", url: "./filter/2system.html" },
+  { title: "三尺缸上部過濾配置", url: "./filter/filter-system-3ft.html" },
+  { title: "三尺缸底濾改乾濕分離", url: "./filter/filter-system-3ft-bottom.html" },
+  { title: "四尺缸上部過濾配置", url: "./filter/filter-system-4ft.html" },
+  { title: "四尺缸底濾改乾濕分離", url: "./filter/filter-system-4ft-bottom.html" },
+  { title: "五尺缸配置實例", url: "./filter/filter-system-5ft.html" },
+  { title: "七尺缸配置實例", url: "./filter/filter-7ft.html" },
+  { title: "雅柏上部過濾", url: "./filter/filter-aba.html" },
+
+  // 🧰 魚缸設備 iteam
+  { title: "底吸沉馬", url: "./iteam/submersible-motor.html" },
+  { title: "金魚燈具選擇", url: "./knowledge/light-guide.html" },
+  { title: "養金魚實用好物", url: "./iteam/goodshit.html" },
+  { title: "打氣機安裝方式", url: "./iteam/airpump-install.html" },
+  { title: "測溫器接三胞胎方式", url: "./iteam/thermometer-3way.html" },
+  { title: "浴室水龍頭接溫度計", url: "./iteam/bathroom-mode.html" },
+  { title: "博特沉馬接管詳解圖", url: "./iteam/bot-pump-connection.html" },
+  { title: "博特流量表 / 清洗", url: "./iteam/bot-flow-and-clean.html" },
+  { title: "魚呼吸沉馬分解圖", url: "./iteam/fishbreath-pump-explode.html" },
+  { title: "上部過濾落水管尺寸", url: "./iteam/top-filter-pipe-size.html" },
+  { title: "三胞胎安裝", url: "./iteam/triple-filter-install.html" },
+  { title: "三胞胎注意事項", url: "./iteam/triple-filter-notes.html" },
+  { title: "魚缸背景貼紙 DIY", url: "./iteam/tank-background-diy.html" },
+  { title: "蘋果手機魚缸拍照技巧", url: "./iteam/iphone-tank-photo-tips.html" },
+  { title: "酷魚流量表", url: "./iteam/coolfish-bump-flow.html" },
+  { title: "萌蟲燈", url: "./iteam/light-mengchong.html" },
+  { title: "倍力生 / 龍門架", url: "./iteam/light-frame-beilisheng.html" },
+  { title: "馬印跨燈", url: "./iteam/light-mayyin.html" },
+  { title: "魚缸廠商", url: "./iteam/tank-suppliers.html" },
+
+  // ⚠️ 魚病 fish-problem
+  { title: "魚顧問", url: "./fish-problem/fish-dotcer.html" },
+  { title: "白點", url: "./fish-problem/withedodo.html" },
+  { title: "腸炎症狀與預防", url: "./fish-problem/fish-enteritis.html" },
+  { title: "如何判斷魚病了", url: "./fish-problem/determine-fish-disease.html" }
+
+];
+
 
   // 2. 搜尋頁面文字內容
   async function searchKeyword(keyword) {
