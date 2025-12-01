@@ -2,227 +2,459 @@
 <html lang="zh-Hant">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>金魚養殖經驗交流分享｜Goldfish Guide</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金魚養殖經驗交流分享｜Goldfish Guide</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="home">
-    <!-- 📱 手機版選單按鈕 --> <button class="menu-toggle" id="menuToggle">☰ 選單</button> <!-- 🐠 側邊導覽欄 -->
-    <aside class="sidebar" id="sidebar">
-        <div class="logo">🐠 金魚養殖經驗交流分享</div>
-        <nav>
-            <ul>
-                <!-- ⭐ 改成明顯首頁按鈕 -->
-                <li> <a href="https://taiwangoldfish.github.io/index/" class="home-btn">🏠 首頁</a> </li> <!-- 🧡 入門篇 -->
-                <li> <span>🐟 入門篇</span>
-                    <ul>
-                        <li><a href="#" onclick="loadPage('./simple/basic-simplify.html', this)">簡化養金魚方式</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/basic-thinking.html', this)">養魚的思考</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/connection.html', this)">溝通的問題</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/basic-care.html', this)">金魚基本飼養方式及配備</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/freshman_need.html', this)">新手必看影片</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/why-change-water.html', this)">為什麼要換水</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/water-cost.html', this)">水費貴嗎</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/bump-flection.html', this)">打氣機的作用</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/filter-problem', this)">濾材問題</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/filter-chose', this)">濾材的選擇</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/filter-why-dry.html', this)">濾材為什麼不要泡水</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/fish-methods.html', this)">養魚方法真的百百種嗎</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/fish-experience.html', this)">魚友經驗分享</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/past-future.html', this)">金魚養殖鑑古推今</a></li>
-                        <li><a href="#" onclick="loadPage('./simple/goldfish-shops.html', this)">金魚店推薦</a></li>
-                    </ul>
-                </li> <!-- 🐟 日常操作 -->
-                <li> <span>🐟 日常操作</span>
-                    <ul>
-                        <li><a href="#" onclick="loadPage('./content/daily-waterchange.html', this)">換水</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-isolated-waterchange.html', this)">隔離換水的用意</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-cloudy-water.html', this)">正常換水為什麼水還是霧</a></li>
-                        <li><a href="#" onclick="loadPage('./content/tank-startup.html', this)">開缸</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-tank-clean.html', this)">清缸建議方式</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-tank-move.html', this)">移缸經驗分享</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-summer-heat.html', this)">夏季魚缸應對高溫注意事項</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-hotwater-change.html', this)">普力桶尺寸與夏季高溫換水應變方式</a></li>
-                        <li><a href="#" onclick="loadPage('./content/summer-note.html', this)">夏季注意事項</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-salt-guide.html', this)">下鹽</a></li>
-                        <li><a href="https://taiwangoldfish.github.io/MLE/" target="_blank">下鹽計算機</a></li>
-                        <li><a href="https://taiwangoldfish.github.io/fish-tank-circulation/" target="_blank">魚缸水循環計算器</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-travel-response.html', this)">出國出遠門應變措施</a></li>
-                        <li><a href="#" onclick="loadPage('./content/daily-travel-experience.html', this)">出國回國魚缸經驗分享</a></li>
-                        <li><a href="#" onclick="loadPage('./content/before-travel.html', this)">出國前操作-影片</a></li>
-                        <li><a href="#" onclick="loadPage('./content/after-travel.html', this)">回國後操作-影片</a></li>
-                        <li><a href="#" onclick="loadPage('./content/typhoon-coming-do.html', this)">颱風天的養魚對應措施</a></li>
-                        <li><a href="#" onclick="loadPage('./content/special-typhoon-fasting.html', this)">颱風天為何禁食</a></li>
-                        <li><a href="#" onclick="loadPage('./content/overflow-at-home.html', this)">家庭溢流案例分享</a></li>
-                    </ul>
-                </li> <!-- 🐟 買魚注意 -->
-                <li> <span>🐟 買魚注意</span>
-                    <ul>
-                        <li><a href="#" onclick="loadPage('./buyfish/new-fish-tank-intro.html', this)">新魚入缸知識</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/quarantine-tips.html', this)">檢疫新魚重點</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/quarantine.html', this)">檢疫篇</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/quarantine-how-importer.html', this)">檢疫的重要性</a></li>
-                        <li><a href="#" onclick="loadPage('./content/isolated-mean.html', this)">新魚檢疫/隔離缸</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/quarantine-tool.html', this)">金魚檢疫必備品</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/basic-judgment.html', this)">養魚從買魚開始1 基本判斷</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/quarantine-principle.html', this)">養魚從買魚開始2 檢疫原理</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/do-not-Being-played-for-suckers.html', this)">養魚從買魚開始2 我不是韭菜大作戰</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/fish-stays-at-the-bottom-of-the-tank.html', this)">魚趴案例</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/how-to-turn-gills.html', this)">如何翻鰓</a></li>
-                        <li><a href="#" onclick="loadPage('./buyfish/quarantine-without-filter-material.html', this)">無濾材檢疫全紀錄</a></li>
-                    </ul>
-                </li> <!-- 🚩 飼料 -->
-                <li> <span>🚩 飼料</span>
-                    <ul>
-                        <li><a href="#" onclick="loadPage('./feed/feed-storage.html', this)">飼料選擇及保存</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/feed-season.html', this)">季節與餵食 / 飼料類型</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/wakogan-usage.html', this)">若元錠使用方式</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/feed-recommend.html', this)">飼料推薦</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/hikari.html', this)">高夠力金魚飼料</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/ultra-fresh.html', this)">鮮蝦食譜</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/tropical.html', this)">德比克飼料</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/ayue.html', this)">阿岳金魚飼料</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/feed-redworm.html', this)">赤蟲解凍餵食</a></li>
-                        <li><a href="#" onclick="loadPage('./feed/redworm-buy.html', this)">赤蟲哪裡買</a></li>
-                    </ul>
-                </li> <!-- 💎 金魚小知識 -->
-                <li> <span>💎 金魚小知識</span>
-                    <ul>
-                        <li><a href="#" onclick="loadPage('./knowledge/goldfish-growth-factors.html', this)">金魚成長要素</a></li>
-                        <li><a href="#" onclick="loadPage('./knowledge/light-guide.html', this)">光照</a></li>
-                        <li><a href="#" onclick="loadPage('./knowledge/algae-issue.html', this)">藻類的危害</a></li>
-                        <li><a href="#" onclick="loadPage('./knowledge/thai-lionhead.html', this)">泰獅圖鑑</a></li>
-                        <li><a href="#" onclick="loadPage('./knowledge/ranchu-gallery.html', this)">蘭壽圖鑑</a></li>
-                        <li><a href="#" onclick="loadPage('./knowledge/goldfish-lineage.html', this)">金魚族譜</a></li>
-                        <li><a href="#" onclick="loadPage('./knowledge/reproduce.html', this)">繁殖日記</a></li>
-                    </ul>
-                </li> <!-- 📚 過濾配置 -->
-                <li> <span>📚 過濾配置</span>
-                    <ul>
-                        <li><a href="#" onclick="loadPage('./filter/nitrifying.html', this)">硝化菌篇</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/biofilter.html', this)">陶瓷環對比圖</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-volume.html', this)">濾材量的知識點</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-absorption.html', this)">濾材吸水量測試</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-flow-principle.html', this)">過濾和濾材水流原理</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-system.html', this)">滴流盒與過濾系統配置/過濾更換細節</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/2system.html', this)">滴流盒與二尺缸配置</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-system-3ft.html', this)">三尺缸上部過濾配置</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-system-3ft-bottom.html', this)">三尺底濾改乾濕分離配置</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-system-4ft.html', this)">四尺缸上部過濾配置</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-system-4ft-bottom.html', this)">四尺底濾改乾濕分離配置</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-system-5ft.html', this)">五尺缸配置實例</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-7ft.html', this)">七尺缸配置實例</a></li>
-                        <li><a href="#" onclick="loadPage('./filter/filter-aba.html', this)">雅柏上部過濾</a></li>
-                    </ul>
-                </li> <!-- 🧰 實用好物 -->
-                <li> <span>🧰 魚缸設備相關</span>
-                    <ul>
-                        <li><a href="#" onclick="loadPage('./iteam/submersible-motor.html', this)">底吸沉馬</a></li>
-                        <li><a href="#" onclick="loadPage('./knowledge/light-guide.html', this)">金魚燈具選擇</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/goodshit.html', this)">養金魚實用好物</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/airpump-install.html', this)">打氣機安裝方式</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/water.count.html', this)">魚缸水體換算</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/thermometer-3way.html', this)">測溫器接三胞胎方式</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/bathroom-mode.html', this)">浴室水龍頭接溫度計範例</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/pump-reference.html', this)">魚缸對應沉馬</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/water-flow-guide.html', this)">魚缸水流導向</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/bot-pump-connection.html', this)">博特沉馬接管詳解圖</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/bot-flow-and-clean.html', this)">博特各檔流量表/博特拆解清洗</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/fishbreath-pump-explode.html', this)">魚呼吸沉馬分解圖</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/top-filter-pipe-size.html', this)">上部過濾落水管尺寸</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/triple-filter-install.html', this)">三胞胎安裝 & 三胞胎注意事項</a></li> <!-- <li><a href="#" onclick="loadPage('./iteam/triple-filter-notes.html', this)">三胞胎注意事項</a></li> -->
-                        <li><a href="#" onclick="loadPage('./iteam/tank-background-diy.html', this)">魚缸背景貼紙diy</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/iphone-tank-photo-tips.html', this)">蘋果手機魚缸拍照技巧</a></li>
-                        <!--- <li><a href="#" onclick="loadPage('./iteam/coolfish-bump-flow.html', this)">酷魚流量表</a></li> --->
-                        <li><a href="#" onclick="loadPage('./iteam/light-mengchong.html', this)">萌蟲燈</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/light-frame-beilisheng.html', this)">倍力生/龍門架</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/light-mayyin.html', this)">馬印跨燈</a></li>
-                        <li><a href="#" onclick="loadPage('./iteam/tank-suppliers.html', this)">魚缸廠商</a></li>
-                    </ul>
-                </li> <!-- ⚠️ 魚病與健康 -->
-                <li> <span>‼️ 金魚有狀況</span>
-                    <ul>
-                        <li><a href="#" onclick="loadPage('./fish-problem/fish-dotcer.html', this)">魚顧問</a></li>
-                        <li><a href="#" onclick="loadPage('./fish-problem/withedodo.html', this)">白點</a></li>
-                        <li><a href="#" onclick="loadPage('./fish-problem/fish-enteritis.html', this)">腸炎症狀和預防</a></li>
-                        <li><a href="#" onclick="loadPage('./fish-problem/determine-fish-disease.html', this)">如何判斷魚病了</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </aside>
 
-<!-- 🧾 主內容 -->
-<main class="content" id="mainContent">
+  <!-- 📱 手機版選單按鈕 -->
+  <button class="menu-toggle" id="menuToggle">☰ 選單</button>
+
+  <!-- 🐠 側邊導覽欄 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">🐠 金魚養殖經驗交流分享</div>
+    <!-- 🔍 搜尋框 -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜尋金魚知識..." />
+      <button id="searchBtn">搜尋</button>
+    </div>
+
+
+    <nav>
+      <ul>
+
+        <!-- ⭐ 改成明顯首頁按鈕 -->
+        <li>
+          <a href="https://taiwangoldfish.github.io/index/" class="home-btn">🏠 首頁</a>
+        </li>
+
+        <!-- 🧡 入門篇 -->
+        <li>
+          <span>🐟 入門篇</span>
+          <ul>
+            <li><a href="#" onclick="loadPage('./simple/basic-simplify.html', this)">簡化養金魚方式</a></li>
+            <li><a href="#" onclick="loadPage('./simple/basic-thinking.html', this)">養魚的思考</a></li>
+            <li><a href="#" onclick="loadPage('./simple/connection.html', this)">溝通的問題</a></li>
+            <li><a href="#" onclick="loadPage('./simple/basic-care.html', this)">金魚基本飼養方式及配備</a></li>
+            <li><a href="#" onclick="loadPage('./simple/freshman_need.html', this)">新手必看影片</a></li>
+            <li><a href="#" onclick="loadPage('./simple/why-change-water.html', this)">為什麼要換水</a></li>
+            <li><a href="#" onclick="loadPage('./simple/water-cost.html', this)">水費貴嗎</a></li>
+            <li><a href="#" onclick="loadPage('./simple/bump-flection.html', this)">打氣機的作用</a></li>
+            <li><a href="#" onclick="loadPage('./simple/filter-problem', this)">濾材問題</a></li>
+            <li><a href="#" onclick="loadPage('./simple/filter-chose', this)">濾材的選擇</a></li>
+            <li><a href="#" onclick="loadPage('./simple/filter-why-dry.html', this)">濾材為什麼不要泡水</a></li>
+            <li><a href="#" onclick="loadPage('./simple/fish-methods.html', this)">養魚方法真的百百種嗎</a></li>
+            <li><a href="#" onclick="loadPage('./simple/fish-experience.html', this)">魚友經驗分享</a></li>
+            <li><a href="#" onclick="loadPage('./simple/past-future.html', this)">金魚養殖鑑古推今</a></li>
+            <li><a href="#" onclick="loadPage('./simple/goldfish-shops.html', this)">金魚店推薦</a></li>
+          </ul>
+        </li>
+
+        <!-- 🐟 日常操作 -->
+        <li>
+          <span>🐟 日常操作</span>
+          <ul>
+            <li><a href="#" onclick="loadPage('./content/daily-waterchange.html', this)">換水</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-isolated-waterchange.html', this)">隔離換水的用意</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-cloudy-water.html', this)">正常換水為什麼水還是霧</a></li>
+            <li><a href="#" onclick="loadPage('./content/tank-startup.html', this)">開缸</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-tank-clean.html', this)">清缸建議方式</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-tank-move.html', this)">移缸經驗分享</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-summer-heat.html', this)">夏季魚缸應對高溫注意事項</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-hotwater-change.html', this)">普力桶尺寸與夏季高溫換水應變方式</a></li>
+            <li><a href="#" onclick="loadPage('./content/summer-note.html', this)">夏季注意事項</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-salt-guide.html', this)">下鹽</a></li>
+            <li><a href="https://taiwangoldfish.github.io/MLE/" target="_blank">下鹽計算機</a></li>
+            <li><a href="https://taiwangoldfish.github.io/fish-tank-circulation/" target="_blank">魚缸水循環計算器</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-travel-response.html', this)">出國出遠門應變措施</a></li>
+            <li><a href="#" onclick="loadPage('./content/daily-travel-experience.html', this)">出國回國魚缸經驗分享</a></li>
+            <li><a href="#" onclick="loadPage('./content/before-travel.html', this)">出國前操作-影片</a></li>
+            <li><a href="#" onclick="loadPage('./content/after-travel.html', this)">回國後操作-影片</a></li>
+            <li><a href="#" onclick="loadPage('./content/typhoon-coming-do.html', this)">颱風天的養魚對應措施</a></li>
+            <li><a href="#" onclick="loadPage('./content/special-typhoon-fasting.html', this)">颱風天為何禁食</a></li>
+            <li><a href="#" onclick="loadPage('./content/overflow-at-home.html', this)">家庭溢流案例分享</a></li>
+          </ul>
+        </li>
+
+        <!-- 🐟 買魚注意 -->
+        <li>
+          <span>🐟 買魚注意</span>
+          <ul>
+            <li><a href="#" onclick="loadPage('./buyfish/new-fish-tank-intro.html', this)">新魚入缸知識</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/quarantine-tips.html', this)">檢疫新魚重點</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/quarantine.html', this)">檢疫篇</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/quarantine-how-importer.html', this)">檢疫的重要性</a></li>
+            <li><a href="#" onclick="loadPage('./content/isolated-mean.html', this)">新魚檢疫/隔離缸</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/quarantine-tool.html', this)">金魚檢疫必備品</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/basic-judgment.html', this)">養魚從買魚開始1 基本判斷</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/quarantine-principle.html', this)">養魚從買魚開始2 檢疫原理</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/do-not-Being-played-for-suckers.html', this)">養魚從買魚開始2 我不是韭菜大作戰</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/fish-stays-at-the-bottom-of-the-tank.html', this)">魚趴案例</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/how-to-turn-gills.html', this)">如何翻鰓</a></li>
+            <li><a href="#" onclick="loadPage('./buyfish/quarantine-without-filter-material.html', this)">無濾材檢疫全紀錄</a></li>
+          </ul>
+        </li>
+
+        <!-- 🚩 飼料 -->
+        <li>
+          <span>🚩 飼料</span>
+          <ul>
+            <li><a href="#" onclick="loadPage('./feed/feed-storage.html', this)">飼料選擇及保存</a></li>
+            <li><a href="#" onclick="loadPage('./feed/feed-season.html', this)">季節與餵食 / 飼料類型</a></li>
+            <li><a href="#" onclick="loadPage('./feed/wakogan-usage.html', this)">若元錠使用方式</a></li>
+            <li><a href="#" onclick="loadPage('./feed/feed-recommend.html', this)">飼料推薦</a></li>
+            <li><a href="#" onclick="loadPage('./feed/hikari.html', this)">高夠力金魚飼料</a></li>
+            <li><a href="#" onclick="loadPage('./feed/ultra-fresh.html', this)">鮮蝦食譜</a></li>
+            <li><a href="#" onclick="loadPage('./feed/tropical.html', this)">德比克飼料</a></li>
+            <li><a href="#" onclick="loadPage('./feed/ayue.html', this)">阿岳金魚飼料</a></li>
+            <li><a href="#" onclick="loadPage('./feed/feed-redworm.html', this)">赤蟲解凍餵食</a></li>
+            <li><a href="#" onclick="loadPage('./feed/redworm-buy.html', this)">赤蟲哪裡買</a></li>
+          </ul>
+        </li>
+
+        <!-- 💎 金魚小知識 -->
+        <li>
+          <span>💎 金魚小知識</span>
+          <ul>
+            <li><a href="#" onclick="loadPage('./knowledge/goldfish-growth-factors.html', this)">金魚成長要素</a></li>
+            <li><a href="#" onclick="loadPage('./knowledge/light-guide.html', this)">光照</a></li>
+            <li><a href="#" onclick="loadPage('./knowledge/algae-issue.html', this)">藻類的危害</a></li>
+            <li><a href="#" onclick="loadPage('./knowledge/thai-lionhead.html', this)">泰獅圖鑑</a></li>
+            <li><a href="#" onclick="loadPage('./knowledge/ranchu-gallery.html', this)">蘭壽圖鑑</a></li>
+            <li><a href="#" onclick="loadPage('./knowledge/goldfish-lineage.html', this)">金魚族譜</a></li>
+            <li><a href="#" onclick="loadPage('./knowledge/reproduce.html', this)">繁殖日記</a></li>
+          </ul>
+        </li>
+
+        <!-- 📚 過濾配置 -->
+        <li>
+          <span>📚 過濾配置</span>
+            <ul>
+                <li><a href="#" onclick="loadPage('./filter/nitrifying.html', this)">硝化菌篇</a></li>
+                <li><a href="#" onclick="loadPage('./filter/biofilter.html', this)">陶瓷環對比圖</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-volume.html', this)">濾材量的知識點</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-absorption.html', this)">濾材吸水量測試</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-flow-principle.html', this)">過濾和濾材水流原理 & 水流導向</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-system.html', this)">滴流盒與過濾系統配置/過濾更換細節</a></li>
+                <li><a href="#" onclick="loadPage('./filter/2system.html', this)">滴流盒與二尺缸配置</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-system-3ft.html', this)">三尺缸上部過濾配置</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-system-3ft-bottom.html', this)">三尺底濾改乾濕分離配置</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-system-4ft.html', this)">四尺缸上部過濾配置</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-system-4ft-bottom.html', this)">四尺底濾改乾濕分離配置</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-system-5ft.html', this)">五尺缸配置實例</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-7ft.html', this)">七尺缸配置實例</a></li>
+                <li><a href="#" onclick="loadPage('./filter/filter-aba.html', this)">雅柏上部過濾</a></li>
+            </ul>
+        </li>
+
+        <!-- 🧰 實用好物 -->
+        <li>
+          <span>🧰 魚缸設備相關</span>
+          <ul>
+            <li><a href="#" onclick="loadPage('./iteam/submersible-motor.html', this)">底吸沉馬</a></li>
+            <li><a href="#" onclick="loadPage('./knowledge/light-guide.html', this)">金魚燈具選擇</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/goodshit.html', this)">養金魚實用好物</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/airpump-install.html', this)">打氣機安裝方式</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/thermometer-3way.html', this)">測溫器接三胞胎方式</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/bathroom-mode.html', this)">浴室水龍頭接溫度計範例</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/bot-pump-connection.html', this)">博特沉馬接管詳解圖</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/bot-flow-and-clean.html', this)">博特各檔流量表/博特拆解清洗</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/fishbreath-pump-explode.html', this)">魚呼吸沉馬分解圖</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/top-filter-pipe-size.html', this)">上部過濾落水管尺寸</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/triple-filter-install.html', this)">三胞胎安裝</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/triple-filter-notes.html', this)">三胞胎注意事項</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/tank-background-diy.html', this)">魚缸背景貼紙diy</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/iphone-tank-photo-tips.html', this)">蘋果手機魚缸拍照技巧</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/coolfish-bump-flow.html', this)">酷魚流量表</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/light-mengchong.html', this)">萌蟲燈</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/light-frame-beilisheng.html', this)">倍力生/龍門架</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/light-mayyin.html', this)">馬印跨燈</a></li>
+            <li><a href="#" onclick="loadPage('./iteam/tank-suppliers.html', this)">魚缸廠商</a></li>
+          </ul>
+        </li>
+        
+        <!-- ⚠️ 魚病與健康 -->
+        <li>
+          <span>‼️ 金魚有狀況</span>
+          <ul>
+            <li><a href="#" onclick="loadPage('./fish-problem/fish-dotcer.html', this)">魚顧問</a></li>
+            <li><a href="#" onclick="loadPage('./fish-problem/withedodo.html', this)">白點</a></li>
+            <li><a href="#" onclick="loadPage('./fish-problem/fish-enteritis.html', this)">腸炎症狀和預防</a></li>
+            <li><a href="#" onclick="loadPage('./fish-problem/determine-fish-disease.html', this)">如何判斷魚病了</a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- 🧾 主內容 -->
+  <main class="content" id="mainContent">
+  
+    <!-- 🔍 搜尋結果顯示在這裡（中間區塊） -->
+    <section id="searchResults" class="search-results" style="display:none;"></section>
+  
     <div class="card">
-        <h2>歡迎來到金魚養殖經驗交流分享</h2>
-        <p>金魚飼養的完整知識庫，從入門、日常操作、買魚檢疫，到飼料、設備、健康照護一應俱全。</p>
-    </div> <!-- 💬 LINE 社群邀請 -->
+      <h2>歡迎來到金魚養殖經驗交流分享</h2>
+      <p>魚飼養的完整知識庫，從入門、日常操作、買魚檢疫，到飼料、設備、健康照護一應俱全。</p>
+    </div>
+  
+    <!-- 💬 LINE 社群邀請 -->
     <section class="line-section">
-        <h2>📱 歡迎加入我們的 LINE 社群</h2>
-        <p>您已被邀請加入 <strong>「金魚養殖經驗交流分享」</strong>！<br> 點擊下方連結或掃描 QR Code 即可加入。</p>
-        <div style="text-align:center; margin:20px 0;"> <a href="https://line.me/ti/g2/VGWnjJWNVZgUaSvZPYEFN1Nqk8qtwR2N1ACmsA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="join-btn">👉 點我加入 LINE 社群</a> </div>
-        <div style="text-align:center;"> <img src="https://raw.githubusercontent.com/michael19980508/index/main/image//QrCode.jpg" alt="LINE 社群 QR Code" style="max-width:200px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.25);"> </div>
+      <h2>📱 歡迎加入我們的 LINE 社群</h2>
+      <p>您已被邀請加入 <strong>「金魚養殖經驗交流分享」</strong>！<br>
+        點擊下方連結或掃描 QR Code 即可加入。</p>
+  
+      <div style="text-align:center; margin:20px 0;">
+        <a href="https://line.me/ti/g2/VGWnjJWNVZgUaSvZPYEFN1Nqk8qtwR2N1ACmsA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+          target="_blank" class="join-btn">👉 點我加入 LINE 社群</a>
+      </div>
+  
+      <div style="text-align:center;">
+        <img src="https://raw.githubusercontent.com/michael19980508/index/main/image//QrCode.jpg"
+          alt="LINE 社群 QR Code"
+          style="max-width:200px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.25);">
+      </div>
     </section>
-</main> <!-- 🪷 頁尾 -->
+  
+  </main>
+
   <!-- 🪷 頁尾 -->
   <footer>
     <p>© 2025 金魚養殖經驗交流分享社群 ｜ 內容:金魚養殖經驗交流分享社群眾群管們 ｜ 網頁製作：MLE</p>
-  
-    <!-- hitwebcounter Code START -->
-    <div style="text-align: center; margin-top: 20px;">
-        <p style="margin-bottom: 0.3em;">👣 累積造訪人數：</p>
-        <a href="https://www.hitwebcounter.com/" target="_blank">
-        <img src="https://hitwebcounter.com/counter/counter.php?page=21457784&style=0006&nbdigits=5&type=page&initCount=0" title="Free Tools" Alt="Free Tools"   border="0" /></a>    
-        </a>
-    </div>
   </footer>
- <!-- ⚙️ JS 控制 -->
+
+  <!-- ⚙️ JS 控制 -->
   <script>
-    // 📱 手機選單開關
+    /* ======================================================
+       📱 手機選單開關
+    ====================================================== */
     const toggleBtn = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
     toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('active');
     });
-
-    // 📄 載入子頁面 + 高亮選單
+    
+    /* ======================================================
+       📄 載入子頁面 + 高亮選單
+    ====================================================== */
     function loadPage(page, el) {
       fetch(page)
-        .then(response => {
-          if (!response.ok) throw new Error("載入失敗");
-          return response.text();
+        .then(res => {
+          if (!res.ok) throw new Error("載入失敗");
+          return res.text();
         })
         .then(html => {
           document.getElementById('mainContent').innerHTML = html;
           sidebar.classList.remove('active');
           window.scrollTo({ top: 0, behavior: 'smooth' });
-
-          document.querySelectorAll('.sidebar a.active').forEach(a => a.classList.remove('active'));
+    
+          document.querySelectorAll('.sidebar a.active')
+            .forEach(a => a.classList.remove('active'));
           if (el) el.classList.add('active');
         })
         .catch(() => {
-          document.getElementById('mainContent').innerHTML = "<p>❌ 子頁面載入失敗，請稍後再試。</p>";
+          document.getElementById('mainContent').innerHTML =
+            "<p>❌ 子頁面載入失敗，請稍後再試。</p>";
         });
     }
-
-    // ⭐ 只有首頁才啟用「分類下拉」
-    // ⭐ 只有首頁啟用下拉
-    if (document.body.classList.contains("home")) {
-      document.querySelectorAll('.sidebar nav li > span').forEach(span => {
-        span.addEventListener('click', () => {
-          const parentLi = span.parentElement;
-          parentLi.classList.toggle('open');
-        });
+    
+    /* ======================================================
+       🔍 搜尋功能（完整＋全部頁面）
+    ====================================================== */
+    const searchablePages = [
+  
+    /* 🧡 simple 入門篇 */
+    { title: "簡化養金魚方式", url: "./simple/basic-simplify.html" },
+    { title: "養魚的思考", url: "./simple/basic-thinking.html" },
+    { title: "溝通的問題", url: "./simple/connection.html" },
+    { title: "金魚基本飼養方式及配備", url: "./simple/basic-care.html" },
+    { title: "新手必看影片", url: "./simple/freshman_need.html" },
+    { title: "為什麼要換水", url: "./simple/why-change-water.html" },
+    { title: "水費貴嗎", url: "./simple/water-cost.html" },
+    { title: "打氣機的作用", url: "./simple/bump-flection.html" },
+    { title: "濾材問題", url: "./simple/filter-problem.html" },
+    { title: "濾材的選擇", url: "./simple/filter-chose.html" },
+    { title: "濾材為什麼不要泡水", url: "./simple/filter-why-dry.html" },
+    { title: "養魚方法真的百百種嗎", url: "./simple/fish-methods.html" },
+    { title: "魚友經驗分享", url: "./simple/fish-experience.html" },
+    { title: "金魚養殖鑑古推今", url: "./simple/past-future.html" },
+    { title: "金魚店推薦", url: "./simple/goldfish-shops.html" },
+  
+    /* 🐟 日常操作 content */
+    { title: "換水", url: "./content/daily-waterchange.html" },
+    { title: "隔離換水的用意", url: "./content/daily-isolated-waterchange.html" },
+    { title: "正常換水為什麼水還是霧", url: "./content/daily-cloudy-water.html" },
+    { title: "開缸", url: "./content/tank-startup.html" },
+    { title: "清缸建議方式", url: "./content/daily-tank-clean.html" },
+    { title: "移缸經驗分享", url: "./content/daily-tank-move.html" },
+    { title: "夏季魚缸應對高溫注意事項", url: "./content/daily-summer-heat.html" },
+    { title: "普力桶尺寸與夏季高溫換水應變方式", url: "./content/daily-hotwater-change.html" },
+    { title: "夏季注意事項", url: "./content/summer-note.html" },
+    { title: "下鹽", url: "./content/daily-salt-guide.html" },
+    { title: "出國出遠門應變措施", url: "./content/daily-travel-response.html" },
+    { title: "出國回國魚缸經驗分享", url: "./content/daily-travel-experience.html" },
+    { title: "出國前操作（影片）", url: "./content/before-travel.html" },
+    { title: "回國後操作（影片）", url: "./content/after-travel.html" },
+    { title: "颱風天的養魚對應措施", url: "./content/typhoon-coming-do.html" },
+    { title: "颱風天為何禁食", url: "./content/special-typhoon-fasting.html" },
+    { title: "家庭溢流案例分享", url: "./content/overflow-at-home.html" },
+  
+    /* 🐟 買魚注意 buyfish */
+    { title: "新魚入缸知識", url: "./buyfish/new-fish-tank-intro.html" },
+    { title: "檢疫新魚重點", url: "./buyfish/quarantine-tips.html" },
+    { title: "檢疫篇", url: "./buyfish/quarantine.html" },
+    { title: "檢疫的重要性", url: "./buyfish/quarantine-how-importer.html" },
+    { title: "新魚檢疫/隔離缸", url: "./content/isolated-mean.html" },
+    { title: "金魚檢疫必備品", url: "./buyfish/quarantine-tool.html" },
+    { title: "養魚基本判斷", url: "./buyfish/basic-judgment.html" },
+    { title: "檢疫原理", url: "./buyfish/quarantine-principle.html" },
+    { title: "我不是韭菜大作戰", url: "./buyfish/do-not-Being-played-for-suckers.html" },
+    { title: "魚趴案例", url: "./buyfish/fish-stays-at-the-bottom-of-the-tank.html" },
+    { title: "如何翻鰓", url: "./buyfish/how-to-turn-gills.html" },
+    { title: "無濾材檢疫全紀錄", url: "./buyfish/quarantine-without-filter-material.html" },
+  
+    /* 🚩 飼料 feed */
+    { title: "飼料選擇及保存", url: "./feed/feed-storage.html" },
+    { title: "季節與餵食 / 飼料類型", url: "./feed/feed-season.html" },
+    { title: "若元錠使用方式", url: "./feed/wakogan-usage.html" },
+    { title: "飼料推薦", url: "./feed/feed-recommend.html" },
+    { title: "高夠力金魚飼料", url: "./feed/hikari.html" },
+    { title: "鮮蝦食譜", url: "./feed/ultra-fresh.html" },
+    { title: "德比克飼料", url: "./feed/tropical.html" },
+    { title: "阿岳金魚飼料", url: "./feed/ayue.html" },
+    { title: "赤蟲解凍餵食", url: "./feed/feed-redworm.html" },
+    { title: "赤蟲哪裡買", url: "./feed/redworm-buy.html" },
+  
+    /* 💎 金魚小知識 knowledge */
+    { title: "金魚成長要素", url: "./knowledge/goldfish-growth-factors.html" },
+    { title: "光照", url: "./knowledge/light-guide.html" },
+    { title: "藻類的危害", url: "./knowledge/algae-issue.html" },
+    { title: "泰獅圖鑑", url: "./knowledge/thai-lionhead.html" },
+    { title: "蘭壽圖鑑", url: "./knowledge/ranchu-gallery.html" },
+    { title: "金魚族譜", url: "./knowledge/goldfish-lineage.html" },
+    { title: "繁殖日記", url: "./knowledge/reproduce.html" },
+  
+    /* 📚 過濾配置 filter */
+    { title: "硝化菌篇", url: "./filter/nitrifying.html" },
+    { title: "陶瓷環對比圖", url: "./filter/biofilter.html" },
+    { title: "濾材量的知識點", url: "./filter/filter-volume.html" },
+    { title: "濾材吸水量測試", url: "./filter/filter-absorption.html" },
+    { title: "過濾和濾材水流原理 & 水流導向", url: "./filter/filter-flow-principle.html" },
+    { title: "滴流盒與過濾系統配置", url: "./filter/filter-system.html" },
+    { title: "滴流盒與二尺缸配置", url: "./filter/2system.html" },
+    { title: "三尺缸上部過濾配置", url: "./filter/filter-system-3ft.html" },
+    { title: "三尺缸底濾改乾濕分離", url: "./filter/filter-system-3ft-bottom.html" },
+    { title: "四尺缸上部過濾配置", url: "./filter/filter-system-4ft.html" },
+    { title: "四尺缸底濾改乾濕分離", url: "./filter/filter-system-4ft-bottom.html" },
+    { title: "五尺缸配置實例", url: "./filter/filter-system-5ft.html" },
+    { title: "七尺缸配置實例", url: "./filter/filter-7ft.html" },
+    { title: "雅柏上部過濾", url: "./filter/filter-aba.html" },
+  
+    /* 🧰 設備類 iteam */
+    { title: "底吸沉馬", url: "./iteam/submersible-motor.html" },
+    { title: "金魚燈具選擇", url: "./knowledge/light-guide.html" },
+    { title: "養金魚實用好物", url: "./iteam/goodshit.html" },
+    { title: "打氣機安裝方式", url: "./iteam/airpump-install.html" },
+    { title: "測溫器接三胞胎方式", url: "./iteam/thermometer-3way.html" },
+    { title: "浴室水龍頭接溫度計", url: "./iteam/bathroom-mode.html" },
+    { title: "博特沉馬接管詳解圖", url: "./iteam/bot-pump-connection.html" },
+    { title: "博特流量表 / 清洗", url: "./iteam/bot-flow-and-clean.html" },
+    { title: "魚呼吸沉馬分解圖", url: "./iteam/fishbreath-pump-explode.html" },
+    { title: "上部過濾落水管尺寸", url: "./iteam/top-filter-pipe-size.html" },
+    { title: "三胞胎安裝", url: "./iteam/triple-filter-install.html" },
+    { title: "三胞胎注意事項", url: "./iteam/triple-filter-notes.html" },
+    { title: "魚缸背景貼紙 DIY", url: "./iteam/tank-background-diy.html" },
+    { title: "蘋果手機魚缸拍照技巧", url: "./iteam/iphone-tank-photo-tips.html" },
+    { title: "酷魚流量表", url: "./iteam/coolfish-bump-flow.html" },
+    { title: "萌蟲燈", url: "./iteam/light-mengchong.html" },
+    { title: "倍力生 / 龍門架", url: "./iteam/light-frame-beilisheng.html" },
+    { title: "馬印跨燈", url: "./iteam/light-mayyin.html" },
+    { title: "魚缸廠商", url: "./iteam/tank-suppliers.html" },
+  
+    /* ⚠️魚病 */
+    { title: "魚顧問", url: "./fish-problem/fish-dotcer.html" },
+    { title: "白點", url: "./fish-problem/withedodo.html" },
+    { title: "腸炎症狀與預防", url: "./fish-problem/fish-enteritis.html" },
+    { title: "如何判斷魚病了", url: "./fish-problem/determine-fish-disease.html" }
+  ];
+  
+  /* ======================================================
+     搜尋：比對文字
+  ====================================================== */
+  async function searchKeyword(keyword) {
+    const results = [];
+    for (let page of searchablePages) {
+      try {
+        const res = await fetch(page.url);
+        const text = await res.text();
+        if (text.includes(keyword)) results.push(page);
+      } catch (err) {
+        console.log("❌ 無法讀取：", page.url);
+      }
+    }
+    return results;
+  }
+  
+  /* ======================================================
+     ENTER 搜尋
+  ====================================================== */
+  document.getElementById("searchInput")
+    .addEventListener("keypress", (e) => {
+      if (e.key === "Enter") document.getElementById("searchBtn").click();
+    });
+  
+  /* ======================================================
+     搜尋按鈕
+  ====================================================== */
+  document.getElementById("searchBtn")
+    .addEventListener("click", async () => {
+      const keyword = document.getElementById("searchInput").value.trim();
+      const resultArea = document.getElementById("searchResults");
+  
+      if (!keyword) return;
+  
+      resultArea.style.display = "block";
+      resultArea.innerHTML = "<p>🔍 搜尋中...</p>";
+  
+      const results = await searchKeyword(keyword);
+  
+      if (results.length === 0) {
+        resultArea.innerHTML = `<p>❌ 找不到「${keyword}」相關內容。</p>`;
+        return;
+      }
+  
+      let html = `<h2>🔍 搜尋：${keyword}</h2><ul class="search-list">`;
+  
+      results.forEach(r => {
+        html += `
+          <li>
+            <a href="#" onclick="loadPage('${r.url}', this)">
+              ${r.title}
+            </a>
+          </li>`;
       });
-    }
+  
+      html += "</ul>";
+      resultArea.innerHTML = html;
+  
+      resultArea.scrollIntoView({ behavior: "smooth" });
+    });
+  
+  /* ======================================================
+     首頁：啟用分類下拉
+  ====================================================== */
+  if (document.body.classList.contains("home")) {
+    document.querySelectorAll(".sidebar nav li > span").forEach(span => {
+      span.addEventListener("click", () => {
+        span.parentElement.classList.toggle("open");
+      });
+    });
+  }
+</script>
 
-  </script>
 </body>
-
 </html>
-
-
-
