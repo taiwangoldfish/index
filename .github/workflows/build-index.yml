@@ -1,0 +1,31 @@
+name: Build Search Index
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install beautifulsoup4
+
+      - name: Generate index
+        run: python generate_index.py
+
+      - name: Commit result
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add search-index.json
+          git commit -m "Update search index" || echo "No changes"
+          git push
