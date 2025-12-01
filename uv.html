@@ -347,26 +347,6 @@
       });
     });
 
-    
-      // ⭐ 僅顯示頁面列表，不顯示 HTML 內容
-      let html = `<h2>🔍 搜尋：${keyword}</h2><ul class="search-list">`;
-    
-      results.forEach(r => {
-        html += `
-          <li>
-            <a href="#" onclick="loadPage('${r.url}', this)">
-              ${r.title}
-            </a>
-          </li>`;
-      });
-    
-      html += "</ul>";
-    
-      resultArea.innerHTML = html;
-    
-      // 清空首頁內容避免混亂（依你需要決定要不要）
-      document.getElementById("mainContent").innerHTML = "";
-    });
 
     // ⭐ 只有首頁才啟用「分類下拉」
     // ⭐ 只有首頁啟用下拉
