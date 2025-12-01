@@ -756,6 +756,30 @@
       resultArea.scrollIntoView({ behavior: "smooth" });
   });
 
+    /* ======================================================
+   🟦 首頁：自動偵測 URL ?q=keyword → 自動搜尋
+  ====================================================== */
+  document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const keyword = urlParams.get("q");
+  
+      if (keyword) {
+          const input = document.getElementById("searchInput");
+          const btn = document.getElementById("searchBtn");
+  
+          // 塞回搜尋欄
+          input.value = keyword;
+  
+          // 自動搜尋
+          btn.click();
+  
+          // 自動捲到搜尋結果
+          setTimeout(() => {
+              const area = document.getElementById("searchResults");
+              if (area) area.scrollIntoView({ behavior: "smooth" });
+          }, 300);
+      }
+    });
 
     /* ======================================================
        🏠 首頁分類折疊
@@ -768,8 +792,6 @@
         });
     }
 </script>
-
-<script src="script/global-search.js"></script>
 
 </body>
 </html>
