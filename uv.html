@@ -16,6 +16,12 @@
   <!-- 🐠 側邊導覽欄 -->
   <aside class="sidebar" id="sidebar">
     <div class="logo">🐠 金魚養殖經驗交流分享</div>
+    <!-- 🔍 搜尋框 -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜尋金魚知識..." />
+      <button id="searchBtn">搜尋</button>
+    </div>
+
 
     <nav>
       <ul>
@@ -186,6 +192,8 @@
   </aside>
 
   <!-- 🧾 主內容 -->
+  <!-- 🔍 搜尋結果顯示區 -->
+  <section id="searchResults" class="search-results" style="display:none;"></section>
   <main class="content" id="mainContent">
     <div class="card">
       <h2>歡迎來到金魚養殖經驗交流分享</h2>
@@ -245,6 +253,91 @@
         });
     }
 
+    // =============================
+    // 🔍 搜尋功能
+    // =============================
+    
+    // 1. 所有可搜尋的子頁面清單（你想搜尋哪些就加哪些）
+    const searchablePages = [
+      "./simple/basic-simplify.html",
+      "./simple/basic-thinking.html",
+      "./simple/connection.html",
+      "./simple/basic-care.html",
+      "./simple/freshman_need.html",
+      "./simple/why-change-water.html",
+      "./simple/water-cost.html",
+      "./simple/bump-flection.html",
+      "./simple/filter-problem",
+      "./simple/filter-chose",
+      "./simple/filter-why-dry.html",
+      "./simple/fish-methods.html",
+      "./simple/fish-experience.html",
+      "./simple/past-future.html",
+      "./simple/goldfish-shops.html",
+      // 👉 其他分類你也可以繼續加
+    ];
+    
+    // 2. 搜尋功能核心
+    async function searchKeyword(keyword) {
+      const results = [];
+      for (let page of searchablePages) {
+        try {
+          const res = await fetch(page);
+          const text = await res.text();
+    
+          // 若內容包含關鍵字 → 加到結果
+          if (text.includes(keyword)) {
+            // 摘要
+            const pos = text.indexOf(keyword);
+            const excerpt = text.substring(pos - 50, pos + 50);
+    
+            results.push({
+              page: page,
+              excerpt: excerpt.replace(/<[^>]*>/g, "") // 移除 HTML tag
+            });
+          }
+    
+        } catch (err) {
+          console.log("❌ 無法讀取：", page);
+        }
+      }
+    
+      return results;
+    }
+    
+    // 3. 點擊搜尋按鈕
+    document.getElementById("searchBtn").addEventListener("click", async () => {
+      const keyword = document.getElementById("searchInput").value.trim();
+      if (!keyword) return;
+    
+      const resultArea = document.getElementById("searchResults");
+      resultArea.style.display = "block";
+      resultArea.innerHTML = `<p>🔍 搜尋中...</p>`;
+    
+      const results = await searchKeyword(keyword);
+    
+      if (results.length === 0) {
+        resultArea.innerHTML = `<p>❌ 沒有找到「${keyword}」相關內容。</p>`;
+        return;
+      }
+    
+      // 顯示結果
+      let html = `<h2>🔍 搜尋：${keyword}</h2>`;
+      results.forEach(r => {
+        html += `
+        <div class="result-card">
+          <h3><a href="#" onclick="loadPage('${r.page}', this)">${r.page}</a></h3>
+          <p>${r.excerpt}...</p>
+        </div>`;
+      });
+    
+      resultArea.innerHTML = html;
+    
+      // 移除首頁內容，避免混亂
+      document.getElementById("mainContent").innerHTML = "";
+    });
+
+    
     // ⭐ 只有首頁才啟用「分類下拉」
     // ⭐ 只有首頁啟用下拉
     if (document.body.classList.contains("home")) {
