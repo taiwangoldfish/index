@@ -256,10 +256,10 @@
     }
 
     // =============================
-    // 🔍 搜尋功能（新版：只顯示頁面列表）
+    // 🔍 搜尋功能（最終完整版）
     // =============================
     
-    // 1. 可搜尋的頁面清單（你可以再擴充）
+    // 1. 搜尋頁面清單（你可以持續新增）
     const searchablePages = [
       { title: "簡化養金魚方式", url: "./simple/basic-simplify.html" },
       { title: "養魚的思考", url: "./simple/basic-thinking.html" },
@@ -267,10 +267,18 @@
       { title: "金魚基本飼養方式", url: "./simple/basic-care.html" },
       { title: "新手必看影片", url: "./simple/freshman_need.html" },
       { title: "為什麼要換水", url: "./simple/why-change-water.html" },
-      // 👉 其他全部頁面也可以加進來
+      { title: "水費貴嗎", url: "./simple/water-cost.html" },
+      { title: "打氣機的作用", url: "./simple/bump-flection.html" },
+      { title: "濾材問題", url: "./simple/filter-problem" },
+      { title: "濾材的選擇", url: "./simple/filter-chose" },
+      { title: "濾材為什麼不要泡水", url: "./simple/filter-why-dry.html" },
+      { title: "魚友經驗分享", url: "./simple/fish-experience.html" },
+      { title: "金魚店推薦", url: "./simple/goldfish-shops.html" },
+    
+      // ⭐ 你可以把所有 content / feed / buyfish / filter 都加進來
     ];
     
-    // 2. 搜尋頁面內容（不顯示 HTML，只紀錄是否有找到關鍵字）
+    // 2. 搜尋頁面內容（只比對文字，不插入 HTML）
     async function searchKeyword(keyword) {
       const results = [];
     
@@ -291,22 +299,54 @@
       return results;
     }
     
-    // 3. 搜尋按鈕事件
+    // 3. 按 ENTER 也能搜尋
+    document.getElementById("searchInput").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        document.getElementById("searchBtn").click();
+      }
+    });
+    
+    // 4. 搜尋按鈕事件
     document.getElementById("searchBtn").addEventListener("click", async () => {
       const keyword = document.getElementById("searchInput").value.trim();
       const resultArea = document.getElementById("searchResults");
     
       if (!keyword) return;
     
+      // 顯示搜尋狀態
       resultArea.style.display = "block";
       resultArea.innerHTML = "<p>🔍 搜尋中...</p>";
     
       const results = await searchKeyword(keyword);
     
+      // 沒找到
       if (results.length === 0) {
         resultArea.innerHTML = `<p>❌ 找不到「${keyword}」相關內容。</p>`;
         return;
       }
+    
+      // ⭐搜尋結果顯示在 mainContent 中央
+      let html = `<h2>🔍 搜尋：${keyword}</h2><ul class="search-list">`;
+    
+      results.forEach(r => {
+        html += `
+          <li>
+            <a href="#" onclick="loadPage('${r.url}', this)">
+              ${r.title}
+            </a>
+          </li>`;
+      });
+    
+      html += "</ul>";
+    
+      resultArea.innerHTML = html;
+    
+      // 捲動到搜尋區塊（中間）
+      document.getElementById("searchResults").scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+
     
       // ⭐ 僅顯示頁面列表，不顯示 HTML 內容
       let html = `<h2>🔍 搜尋：${keyword}</h2><ul class="search-list">`;
