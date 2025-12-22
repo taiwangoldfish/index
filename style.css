@@ -83,10 +83,18 @@ body::before {
   text-decoration: none;
   display: block;
   width: 100%;
-  padding: 6px 25px;
+
+  /* 🔧 關鍵修正 */
+  padding: 8px 32px 8px 25px; /* 右邊多留空間給 scrollbar */
+  white-space: normal;        /* 允許自動換行 */
+  word-break: break-word;    /* 中文安全換行 */
+
+  line-height: 1.6;
   transition: all 0.25s ease-in-out;
   border-left: 4px solid transparent;
+  box-sizing: border-box;    /* 防止寬度計算錯誤 */
 }
+
 
 /* hover 效果 */
 .sidebar nav ul ul li a:hover {
