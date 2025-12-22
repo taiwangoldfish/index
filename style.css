@@ -404,10 +404,6 @@ ol li {
   transition: max-height 0.35s ease-in-out;
 }
 
-.sidebar nav li.open > ul {
-  max-height: 2000px;
-}
-
 .sidebar nav li > span {
   cursor: pointer;
   user-select: none;
