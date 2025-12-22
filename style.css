@@ -526,3 +526,15 @@ ol li {
 .search-list li a:hover {
   text-decoration: underline;
 }
+
+/* ✅ 修正下拉選單文字被裁切問題 */
+.sidebar nav li.open > ul {
+  max-height: 3000px;
+  overflow: visible;
+}
+
+.sidebar nav ul ul li a {
+  line-height: 1.6;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
