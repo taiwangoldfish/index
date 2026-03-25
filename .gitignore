@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Local cloned source repo snapshot (can be rebuilt)
+index_repo/
+
+# Pipeline artifacts
+data/raw/
+data/clean/
+
+# Runtime logs
+data/logs/
+
+# Jupyter
+.ipynb_checkpoints/

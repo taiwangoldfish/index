@@ -1,0 +1,193 @@
+from __future__ import annotations
+
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+from uuid import uuid4
+
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field
+
+from .qa import QAEngine
+from .telemetry import append_jsonl
+
+
+class AskRequest(BaseModel):
+    question: str = Field(..., min_length=1, max_length=500)
+    top_k: int = Field(default=5, ge=1, le=10)
+
+
+class SourceModel(BaseModel):
+    title: str
+    section: str
+    url: str
+
+
+class AskResponse(BaseModel):
+    interaction_id: str
+    conclusion: str
+    confidence: float
+    evidence: list[str]
+    sources: list[SourceModel]
+
+
+class FeedbackRequest(BaseModel):
+    interaction_id: str = Field(..., min_length=8)
+    rating: str = Field(..., pattern="^(up|down)$")
+    comment: str = Field(default="", max_length=500)
+
+
+class FeedbackResponse(BaseModel):
+    ok: bool
+
+
+class AdminSummaryResponse(BaseModel):
+    total_asks: int
+    total_feedback: int
+    up_count: int
+    down_count: int
+    avg_confidence: float
+    low_confidence_questions: list[str]
+    top_questions: list[str]
+
+
+def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
+    app = FastAPI(title="Goldfish AI API", version="0.1.0")
+    engine = QAEngine.from_chunk_file(chunk_file)
+
+    web_dir = Path(__file__).resolve().parent.parent / "web"
+    log_file = Path("data/logs/interactions.jsonl")
+    app.mount("/web", StaticFiles(directory=web_dir), name="web")
+
+    @app.get("/")
+    def root() -> FileResponse:
+        return FileResponse(web_dir / "index.html")
+
+    @app.get("/admin")
+    def admin_page() -> FileResponse:
+        return FileResponse(web_dir / "admin.html")
+
+    @app.get("/health")
+    def health() -> dict[str, str]:
+        return {"status": "ok"}
+
+    @app.post("/api/ask", response_model=AskResponse)
+    def ask(req: AskRequest) -> AskResponse:
+        interaction_id = str(uuid4())
+        result = engine.answer_result(req.question, top_k=req.top_k)
+        response = result.response
+        timestamp = datetime.now(timezone.utc).isoformat()
+
+        append_jsonl(
+            log_file,
+            {
+                "type": "ask",
+                "timestamp": timestamp,
+                "interaction_id": interaction_id,
+                "question": req.question,
+                "top_k": req.top_k,
+                "confidence": response.confidence,
+                "top_score": result.top_score,
+                "retrieved_chunk_ids": result.retrieved_chunk_ids,
+                "conclusion": response.conclusion,
+                "source_urls": [s.url for s in response.sources],
+            },
+        )
+
+        return AskResponse(
+            interaction_id=interaction_id,
+            conclusion=response.conclusion,
+            confidence=response.confidence,
+            evidence=response.evidence,
+            sources=[SourceModel(title=s.title, section=s.section, url=s.url) for s in response.sources],
+        )
+
+    @app.post("/api/feedback", response_model=FeedbackResponse)
+    def feedback(req: FeedbackRequest) -> FeedbackResponse:
+        append_jsonl(
+            log_file,
+            {
+                "type": "feedback",
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "interaction_id": req.interaction_id,
+                "rating": req.rating,
+                "comment": req.comment.strip(),
+            },
+        )
+        return FeedbackResponse(ok=True)
+
+    @app.get("/api/admin/summary", response_model=AdminSummaryResponse)
+    def admin_summary() -> AdminSummaryResponse:
+        if not log_file.exists():
+            return AdminSummaryResponse(
+                total_asks=0,
+                total_feedback=0,
+                up_count=0,
+                down_count=0,
+                avg_confidence=0.0,
+                low_confidence_questions=[],
+                top_questions=[],
+            )
+
+        asks: list[dict[str, object]] = []
+        feedbacks: list[dict[str, object]] = []
+        with log_file.open("r", encoding="utf-8") as reader:
+            for line in reader:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+
+                row_type = row.get("type")
+                if row_type == "ask":
+                    asks.append(row)
+                elif row_type == "feedback":
+                    feedbacks.append(row)
+
+        question_counts: dict[str, int] = {}
+        low_confidence_questions: list[str] = []
+        confidence_sum = 0.0
+
+        for ask in asks:
+            question = str(ask.get("question", "")).strip()
+            if question:
+                question_counts[question] = question_counts.get(question, 0) + 1
+
+            confidence = float(ask.get("confidence", 0.0) or 0.0)
+            confidence_sum += confidence
+            if confidence < 0.35 and question:
+                low_confidence_questions.append(question)
+
+        up_count = 0
+        down_count = 0
+        for fb in feedbacks:
+            rating = str(fb.get("rating", "")).lower()
+            if rating == "up":
+                up_count += 1
+            elif rating == "down":
+                down_count += 1
+
+        sorted_questions = sorted(question_counts.items(), key=lambda x: x[1], reverse=True)
+        top_questions = [q for q, _ in sorted_questions[:10]]
+
+        avg_confidence = (confidence_sum / len(asks)) if asks else 0.0
+
+        return AdminSummaryResponse(
+            total_asks=len(asks),
+            total_feedback=len(feedbacks),
+            up_count=up_count,
+            down_count=down_count,
+            avg_confidence=round(avg_confidence, 3),
+            low_confidence_questions=low_confidence_questions[:20],
+            top_questions=top_questions,
+        )
+
+    return app
+
+
+app = create_app()
