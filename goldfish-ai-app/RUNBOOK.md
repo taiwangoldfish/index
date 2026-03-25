@@ -53,6 +53,8 @@ API endpoints:
 - `POST /api/ask`
 - `POST /api/feedback`
 - `GET /api/admin/summary`
+- `GET /api/admin/cases?mode=all|low|down&limit=80`
+- `GET /api/admin/cases.csv?mode=all|low|down&limit=200`
 
 Example request body:
 ```json
@@ -88,6 +90,11 @@ Example feedback body:
   - average confidence
   - top asked questions
   - low-confidence questions to prioritize content fixes
+  - latest cases table with filter modes:
+    - `all`: all recent asks
+    - `low`: confidence < 0.35
+    - `down`: feedback = down
+  - CSV export for case review outside the UI
 
 ## Pipeline Behavior (v1)
 - Allowed source starts at: https://taiwangoldfish.github.io/index/

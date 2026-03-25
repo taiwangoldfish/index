@@ -33,6 +33,33 @@
           <ul id="low-confidence"></ul>
         </section>
       </div>
+
+      <section class="admin-cases">
+        <div class="case-toolbar">
+          <label for="case-mode">案例模式</label>
+          <select id="case-mode">
+            <option value="all" selected>全部</option>
+            <option value="low">低信心</option>
+            <option value="down">負評</option>
+          </select>
+          <button id="refresh-cases" type="button">更新案例</button>
+          <a id="download-csv" href="/api/admin/cases.csv?mode=all&limit=200">下載 CSV</a>
+        </div>
+        <div class="case-table-wrap">
+          <table class="case-table">
+            <thead>
+              <tr>
+                <th>時間</th>
+                <th>問題</th>
+                <th>信心</th>
+                <th>回饋</th>
+                <th>結論</th>
+              </tr>
+            </thead>
+            <tbody id="case-table-body"></tbody>
+          </table>
+        </div>
+      </section>
     </section>
   </main>
 

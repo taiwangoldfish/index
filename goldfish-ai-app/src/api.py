@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+import csv
 from datetime import datetime, timezone
+import io
 import json
 from pathlib import Path
 from uuid import uuid4
 
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, Query
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -51,6 +53,96 @@ class AdminSummaryResponse(BaseModel):
     avg_confidence: float
     low_confidence_questions: list[str]
     top_questions: list[str]
+
+
+class AdminCase(BaseModel):
+    interaction_id: str
+    timestamp: str
+    question: str
+    conclusion: str
+    confidence: float
+    rating: str
+    comment: str
+    source_urls: list[str]
+
+
+class AdminCasesResponse(BaseModel):
+    mode: str
+    total: int
+    items: list[AdminCase]
+
+
+def _read_logs(log_file: Path) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+    if not log_file.exists():
+        return [], []
+
+    asks: list[dict[str, object]] = []
+    feedbacks: list[dict[str, object]] = []
+    with log_file.open("r", encoding="utf-8") as reader:
+        for line in reader:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+
+            row_type = row.get("type")
+            if row_type == "ask":
+                asks.append(row)
+            elif row_type == "feedback":
+                feedbacks.append(row)
+
+    return asks, feedbacks
+
+
+def _build_admin_cases(
+    asks: list[dict[str, object]],
+    feedbacks: list[dict[str, object]],
+    *,
+    mode: str,
+    limit: int,
+) -> list[AdminCase]:
+    feedback_map: dict[str, dict[str, str]] = {}
+    for row in feedbacks:
+        iid = str(row.get("interaction_id", ""))
+        if not iid:
+            continue
+        feedback_map[iid] = {
+            "rating": str(row.get("rating", "")),
+            "comment": str(row.get("comment", "")),
+        }
+
+    cases: list[AdminCase] = []
+    for ask in reversed(asks):
+        iid = str(ask.get("interaction_id", ""))
+        confidence = float(ask.get("confidence", 0.0) or 0.0)
+        fb = feedback_map.get(iid, {"rating": "", "comment": ""})
+        rating = fb.get("rating", "")
+
+        if mode == "low" and confidence >= 0.35:
+            continue
+        if mode == "down" and rating != "down":
+            continue
+
+        cases.append(
+            AdminCase(
+                interaction_id=iid,
+                timestamp=str(ask.get("timestamp", "")),
+                question=str(ask.get("question", "")),
+                conclusion=str(ask.get("conclusion", "")),
+                confidence=round(confidence, 3),
+                rating=rating,
+                comment=fb.get("comment", ""),
+                source_urls=[str(x) for x in ask.get("source_urls", [])],
+            )
+        )
+
+        if len(cases) >= limit:
+            break
+
+    return cases
 
 
 def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
@@ -120,7 +212,8 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
 
     @app.get("/api/admin/summary", response_model=AdminSummaryResponse)
     def admin_summary() -> AdminSummaryResponse:
-        if not log_file.exists():
+        asks, feedbacks = _read_logs(log_file)
+        if not asks and not feedbacks:
             return AdminSummaryResponse(
                 total_asks=0,
                 total_feedback=0,
@@ -130,24 +223,6 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
                 low_confidence_questions=[],
                 top_questions=[],
             )
-
-        asks: list[dict[str, object]] = []
-        feedbacks: list[dict[str, object]] = []
-        with log_file.open("r", encoding="utf-8") as reader:
-            for line in reader:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    row = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-
-                row_type = row.get("type")
-                if row_type == "ask":
-                    asks.append(row)
-                elif row_type == "feedback":
-                    feedbacks.append(row)
 
         question_counts: dict[str, int] = {}
         low_confidence_questions: list[str] = []
@@ -185,6 +260,46 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
             avg_confidence=round(avg_confidence, 3),
             low_confidence_questions=low_confidence_questions[:20],
             top_questions=top_questions,
+        )
+
+    @app.get("/api/admin/cases", response_model=AdminCasesResponse)
+    def admin_cases(
+        mode: str = Query(default="all", pattern="^(all|low|down)$"),
+        limit: int = Query(default=50, ge=1, le=200),
+    ) -> AdminCasesResponse:
+        asks, feedbacks = _read_logs(log_file)
+        items = _build_admin_cases(asks, feedbacks, mode=mode, limit=limit)
+        return AdminCasesResponse(mode=mode, total=len(items), items=items)
+
+    @app.get("/api/admin/cases.csv")
+    def admin_cases_csv(
+        mode: str = Query(default="all", pattern="^(all|low|down)$"),
+        limit: int = Query(default=200, ge=1, le=1000),
+    ) -> Response:
+        asks, feedbacks = _read_logs(log_file)
+        items = _build_admin_cases(asks, feedbacks, mode=mode, limit=limit)
+
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(["interaction_id", "timestamp", "question", "conclusion", "confidence", "rating", "comment", "source_urls"])
+        for item in items:
+            writer.writerow(
+                [
+                    item.interaction_id,
+                    item.timestamp,
+                    item.question,
+                    item.conclusion,
+                    item.confidence,
+                    item.rating,
+                    item.comment,
+                    " | ".join(item.source_urls),
+                ]
+            )
+
+        return Response(
+            content=output.getvalue(),
+            media_type="text/csv",
+            headers={"Content-Disposition": f"attachment; filename=admin-cases-{mode}.csv"},
         )
 
     return app
