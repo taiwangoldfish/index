@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 
+# Generated app reports
+goldfish-ai-app/data/reports/
+
