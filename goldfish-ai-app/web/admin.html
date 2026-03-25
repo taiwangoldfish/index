@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Goldfish AI Admin</title>
+  <link rel="stylesheet" href="/web/styles.css" />
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <main class="app-shell">
+    <header class="app-header">
+      <h1>Goldfish AI Admin</h1>
+      <p>問答品質與回饋摘要</p>
+    </header>
+
+    <section class="chat-panel" id="summary-panel">
+      <div class="stats-grid">
+        <article class="stat-card"><h3>總提問</h3><p id="total-asks">0</p></article>
+        <article class="stat-card"><h3>總回饋</h3><p id="total-feedback">0</p></article>
+        <article class="stat-card"><h3>👍</h3><p id="up-count">0</p></article>
+        <article class="stat-card"><h3>👎</h3><p id="down-count">0</p></article>
+        <article class="stat-card"><h3>平均信心</h3><p id="avg-confidence">0.00</p></article>
+      </div>
+
+      <div class="admin-list-wrap">
+        <section>
+          <h2>熱門問題 Top 10</h2>
+          <ol id="top-questions"></ol>
+        </section>
+        <section>
+          <h2>低信心問題</h2>
+          <ul id="low-confidence"></ul>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="/web/admin.js"></script>
+</body>
+</html>
