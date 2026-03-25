@@ -1,0 +1,7 @@
+beautifulsoup4==4.13.3
+requests==2.32.3
+lxml==5.3.1
+pillow==11.1.0
+pytesseract==0.3.13
+fastapi==0.115.12
+uvicorn==0.34.0
