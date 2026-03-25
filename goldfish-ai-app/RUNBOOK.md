@@ -55,6 +55,8 @@ API endpoints:
 - `GET /api/admin/summary`
 - `GET /api/admin/cases?mode=all|low|down&limit=80`
 - `GET /api/admin/cases.csv?mode=all|low|down&limit=200`
+- `POST /api/admin/report/generate`
+- `GET /api/admin/report/latest`
 
 Example request body:
 ```json
@@ -95,6 +97,19 @@ Example feedback body:
     - `low`: confidence < 0.35
     - `down`: feedback = down
   - CSV export for case review outside the UI
+  - one-click daily report generation and preview
+
+## Daily Tuning Report
+- CLI:
+  - `python run_daily_report.py`
+  - optional: `python run_daily_report.py --date 2026-03-25`
+- Output:
+  - `data/reports/daily-report-YYYY-MM-DD.md`
+  - `data/reports/daily-report-YYYY-MM-DD.csv`
+  - `data/reports/daily-report-latest.md`
+  - `data/reports/daily-report-latest.csv`
+- Purpose:
+  - Prioritize pages and questions for next content quality iteration.
 
 ## Pipeline Behavior (v1)
 - Allowed source starts at: https://taiwangoldfish.github.io/index/

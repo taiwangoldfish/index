@@ -60,6 +60,14 @@
           </table>
         </div>
       </section>
+
+      <section class="admin-report">
+        <div class="case-toolbar">
+          <button id="generate-report" type="button">生成今日報表</button>
+          <a id="download-report-csv" href="/api/admin/cases.csv?mode=low&limit=200">下載低信心 CSV</a>
+        </div>
+        <pre id="report-content" class="report-box">尚未載入報表</pre>
+      </section>
     </section>
   </main>
 

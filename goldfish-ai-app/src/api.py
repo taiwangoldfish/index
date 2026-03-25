@@ -13,6 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from .qa import QAEngine
+from .reporting import generate_daily_report
 from .telemetry import append_jsonl
 
 
@@ -70,6 +71,20 @@ class AdminCasesResponse(BaseModel):
     mode: str
     total: int
     items: list[AdminCase]
+
+
+class DailyReportResponse(BaseModel):
+    date: str
+    markdown_path: str
+    csv_path: str
+    total_asks: int
+    low_confidence_count: int
+    down_feedback_count: int
+
+
+class DailyReportContentResponse(BaseModel):
+    date: str
+    content: str
 
 
 def _read_logs(log_file: Path) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
@@ -151,6 +166,7 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
 
     web_dir = Path(__file__).resolve().parent.parent / "web"
     log_file = Path("data/logs/interactions.jsonl")
+    report_dir = Path("data/reports")
     app.mount("/web", StaticFiles(directory=web_dir), name="web")
 
     @app.get("/")
@@ -301,6 +317,30 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
             media_type="text/csv",
             headers={"Content-Disposition": f"attachment; filename=admin-cases-{mode}.csv"},
         )
+
+    @app.post("/api/admin/report/generate", response_model=DailyReportResponse)
+    def generate_report(date: str | None = Query(default=None)) -> DailyReportResponse:
+        result = generate_daily_report(log_file, report_dir, target_date=date)
+        return DailyReportResponse(
+            date=result.date,
+            markdown_path=str(result.markdown_path).replace("\\", "/"),
+            csv_path=str(result.csv_path).replace("\\", "/"),
+            total_asks=result.total_asks,
+            low_confidence_count=result.low_confidence_count,
+            down_feedback_count=result.down_feedback_count,
+        )
+
+    @app.get("/api/admin/report/latest", response_model=DailyReportContentResponse)
+    def latest_report() -> DailyReportContentResponse:
+        latest = report_dir / "daily-report-latest.md"
+        if latest.exists():
+            content = latest.read_text(encoding="utf-8")
+            date_value = latest.stem.replace("daily-report-latest", "latest")
+            return DailyReportContentResponse(date=date_value, content=content)
+
+        result = generate_daily_report(log_file, report_dir)
+        content = result.markdown_path.read_text(encoding="utf-8")
+        return DailyReportContentResponse(date=result.date, content=content)
 
     return app
 

@@ -14,6 +14,22 @@ async function loadCases(mode) {
   return res.json();
 }
 
+async function generateTodayReport() {
+  const res = await fetch('/api/admin/report/generate', { method: 'POST' });
+  if (!res.ok) {
+    throw new Error('report generate failed');
+  }
+  return res.json();
+}
+
+async function loadLatestReport() {
+  const res = await fetch('/api/admin/report/latest');
+  if (!res.ok) {
+    throw new Error('report latest failed');
+  }
+  return res.json();
+}
+
 function fillList(el, items, ordered = false) {
   el.innerHTML = '';
   if (!items.length) {
@@ -80,6 +96,12 @@ async function refreshCases() {
   renderCaseRows(data.items || []);
 }
 
+async function refreshReport() {
+  const report = await loadLatestReport();
+  const box = document.getElementById('report-content');
+  box.textContent = report.content || '尚無報表內容';
+}
+
 async function render() {
   try {
     const data = await loadSummary();
@@ -92,6 +114,7 @@ async function render() {
     fillList(document.getElementById('top-questions'), data.top_questions, true);
     fillList(document.getElementById('low-confidence'), data.low_confidence_questions);
     await refreshCases();
+    await refreshReport();
   } catch (err) {
     document.getElementById('summary-panel').textContent = '讀取摘要失敗';
   }
@@ -101,6 +124,15 @@ document.getElementById('refresh-cases').addEventListener('click', () => {
   refreshCases().catch(() => {
     document.getElementById('summary-panel').textContent = '更新案例失敗';
   });
+});
+
+document.getElementById('generate-report').addEventListener('click', async () => {
+  try {
+    await generateTodayReport();
+    await refreshReport();
+  } catch (err) {
+    document.getElementById('report-content').textContent = '生成報表失敗';
+  }
 });
 
 render();
