@@ -3,6 +3,9 @@ from pathlib import Path
 from typing import Optional
 
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+
 @dataclass
 class PipelineConfig:
     start_url: str = "https://taiwangoldfish.github.io/index/"
@@ -41,7 +44,7 @@ class PipelineConfig:
     request_timeout_seconds: int = 20
     crawl_delay_seconds: float = 0.3
     max_pages: int = 300
-    source_repo_dir: Optional[Path] = Path("index_repo")
+    source_repo_dir: Optional[Path] = PROJECT_ROOT / "index_repo"
     enable_image_ocr: bool = True
     max_images_per_run: int = 500
     ocr_min_text_chars: int = 6

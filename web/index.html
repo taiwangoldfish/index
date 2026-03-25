@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Goldfish AI Chat</title>
+  <title>金魚 AI 問答</title>
   <link rel="stylesheet" href="/web/styles.css" />
 </head>
 <body>
   <div class="bg-layer"></div>
   <main class="app-shell">
     <header class="app-header">
-      <h1>Goldfish AI</h1>
+      <h1>🐟 金魚 AI</h1>
       <p>僅使用台灣金魚網站資料回答，並附來源。</p>
     </header>
 
     <section id="chat" class="chat-panel" aria-live="polite"></section>
 
     <form id="ask-form" class="ask-form">
-      <textarea id="question" placeholder="輸入問題，例如：如何翻鰓？" required></textarea>
+      <textarea id="question" placeholder="輸入問題，例如：如何翻鰓？按 Enter 送出，Shift+Enter 換行" required></textarea>
       <div class="controls">
-        <label for="topk">Top-K</label>
+        <label for="topk">參考筆數</label>
         <select id="topk">
           <option value="3">3</option>
           <option value="5" selected>5</option>
@@ -39,7 +39,7 @@
 
   <template id="bubble-ai">
     <article class="bubble ai">
-      <div class="meta">Goldfish AI</div>
+      <div class="meta">🐟 金魚 AI</div>
       <div class="content"></div>
     </article>
   </template>

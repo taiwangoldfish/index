@@ -1,0 +1,40 @@
+name: Train Learning Profile
+
+on:
+  schedule:
+    # UTC time: 01:00, 13:00 -> Taiwan time: 09:00, 21:00
+    - cron: "0 1,13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run training
+        run: python ci_train_learning.py
+
+      - name: Commit updated learning files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/keyword_index.json data/learning_profile.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: auto-train learning profile"
+            git push
+          fi

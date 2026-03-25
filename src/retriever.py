@@ -63,6 +63,8 @@ def load_chunks_jsonl(path: Path) -> list[ChunkItem]:
                 continue
             if _is_navigation_chunk(text):
                 continue
+            if _is_low_signal_chunk(text):
+                continue
             items.append(
                 ChunkItem(
                     chunk_id=str(row.get("chunk_id", "")),
@@ -78,6 +80,17 @@ def load_chunks_jsonl(path: Path) -> list[ChunkItem]:
 def _is_navigation_chunk(text: str) -> bool:
     # Filter out large menu-like content blocks that are not answer evidence.
     return "🏠 首頁" in text and "🐟 入門篇" in text
+
+
+def _is_low_signal_chunk(text: str) -> bool:
+    """Filter short/low-information chunks that hurt retrieval quality."""
+    normalized = " ".join(text.split())
+    if not normalized:
+        return True
+    # Common index artifacts such as teaser entries pointing to a video number.
+    if "小影片" in normalized and len(normalized) <= 40:
+        return True
+    return False
 
 
 class BM25Retriever:
@@ -130,17 +143,30 @@ class BM25Retriever:
             score += idf * (numer / denom)
         return score
 
-    def retrieve(self, query: str, top_k: int = 5) -> list[RetrievedItem]:
+    def retrieve(
+        self,
+        query: str,
+        top_k: int = 5,
+        boost_keywords: list[str] | None = None,
+        core_keywords: list[str] | None = None,
+    ) -> list[RetrievedItem]:
         query_tokens = tokenize(query)
-        focus_tokens = {t for t in query_tokens if len(t) >= 3}
         scored: list[RetrievedItem] = []
+        boost_keywords = boost_keywords or []
+        core_keywords = core_keywords or []
 
         for idx, item in enumerate(self.chunks):
-            if focus_tokens:
-                token_set = set(self.doc_tf[idx].keys())
-                if not token_set.intersection(focus_tokens):
-                    continue
             score = self._score_doc(query_tokens, idx)
+            if score > 0 and core_keywords:
+                core_matched = sum(1 for kw in core_keywords if kw and kw in item.text)
+                if core_matched > 0:
+                    # Core knowledge receives stronger priority boost.
+                    score += 0.8 * core_matched
+            if score > 0 and boost_keywords:
+                # Extra weight if page chunk contains matched site keywords.
+                matched = sum(1 for kw in boost_keywords if kw and kw in item.text)
+                if matched > 0:
+                    score += 0.35 * matched
             if score <= 0:
                 continue
             scored.append(RetrievedItem(item=item, score=score))

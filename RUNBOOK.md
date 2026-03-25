@@ -25,6 +25,23 @@ pip install -r requirements.txt
 python run_pipeline.py
 ```
 
+## Continuous Learning Profile (Core First)
+
+Generate and update persistent learning record:
+
+```bash
+python train_learning_profile.py
+```
+
+Output file:
+- `data/learning_profile.json`
+
+This file stores:
+- `core_keywords`: high-priority core topics for retrieval boost
+- `secondary_keywords`: secondary topics
+- `feedback_terms`: terms mined from positive feedback questions
+- `trained_runs`: number of profile retraining runs
+
 ## Ask Questions (BM25 v1)
 ```bash
 python ask.py "如何翻鰓?"
@@ -42,6 +59,46 @@ Answer output format:
 ## Start API + Web Chat
 ```bash
 python run_api.py
+```
+
+## Optional: local LLM boost (Ollama)
+
+This project can keep BM25 retrieval and optionally let a local LLM rewrite the
+final conclusion for better readability.
+
+1. Install Ollama and pull a small model (example):
+
+```bash
+ollama pull qwen2.5:3b
+```
+
+2. Enable LLM enhancement before starting API:
+
+```bash
+set OLLAMA_ENABLED=1
+set OLLAMA_MODEL=qwen2.5:3b
+set OLLAMA_BASE_URL=http://127.0.0.1:11434
+python run_api.py
+```
+
+When disabled (default), system behaves exactly like BM25-only mode.
+
+## Optional: cloud LLM boost (OpenAI API)
+
+You can switch to OpenAI-compatible API without changing retrieval logic.
+
+```bash
+set LLM_ENABLED=1
+set LLM_PROVIDER=openai
+set OPENAI_API_KEY=<your_api_key>
+set OPENAI_MODEL=gpt-4o-mini
+python run_api.py
+```
+
+Optional custom endpoint (OpenAI-compatible):
+
+```bash
+set OPENAI_BASE_URL=https://api.openai.com/v1
 ```
 
 Then open:

@@ -3,32 +3,56 @@ const formEl = document.getElementById("ask-form");
 const qEl = document.getElementById("question");
 const topkEl = document.getElementById("topk");
 
-function appendBubble(kind, text) {
+function appendBubble(kind, text, isHtml = false) {
   const tpl = document.getElementById(kind === "user" ? "bubble-user" : "bubble-ai");
   const node = tpl.content.firstElementChild.cloneNode(true);
-  node.querySelector(".content").textContent = text;
+  const contentEl = node.querySelector(".content");
+  if (isHtml) {
+    contentEl.innerHTML = text;
+  } else {
+    contentEl.textContent = text;
+  }
   chatEl.appendChild(node);
   chatEl.scrollTop = chatEl.scrollHeight;
 }
 
-function renderAnswer(resp) {
-  const lines = [];
-  lines.push(`結論: ${resp.conclusion}`);
-  lines.push(`信心: ${Number(resp.confidence || 0).toFixed(2)}`);
-  lines.push("依據:");
-  resp.evidence.forEach((item, i) => lines.push(`- [${i + 1}] ${item}`));
-  lines.push("來源:");
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-  if (!resp.sources.length) {
-    lines.push("- 無");
-  } else {
-    resp.sources.forEach((s, i) => {
-      lines.push(`- [來源 ${i + 1}] ${s.title} / ${s.section}`);
-      lines.push(`  URL: ${s.url}`);
-    });
+function renderAnswer(resp) {
+  const conf = Number(resp.confidence || 0);
+  const confColor = conf >= 0.6 ? '#27ae60' : conf >= 0.35 ? '#e67e22' : '#e74c3c';
+  const confLabel = conf >= 0.6 ? '高' : conf >= 0.35 ? '中' : '低';
+
+  let html = `<div class="ans-conclusion">${escapeHtml(resp.conclusion)}</div>`;
+  html += `<div class="ans-conf">信心：<span style="color:${confColor};font-weight:600">${confLabel}（${conf.toFixed(2)}）</span></div>`;
+
+  if (resp.matched_keywords && resp.matched_keywords.length) {
+    const total = Number(resp.matched_keywords_total || resp.matched_keywords.length);
+    const shown = resp.matched_keywords.slice(0, 12);
+    const more = total > shown.length ? ` 等 ${total} 個` : '';
+    html += `<div class="ans-kw"><strong>辨識關鍵字（共 ${total} 個）：</strong>${shown.map(escapeHtml).join('、')}${more}</div>`;
   }
 
-  return lines.join("\n");
+  if (resp.evidence && resp.evidence.length) {
+    html += `<div class="ans-evidence"><strong>相關段落（搜尋結果）：</strong><ol>`;
+    resp.evidence.forEach((line) => {
+      html += `<li>${escapeHtml(line)}</li>`;
+    });
+    html += `</ol></div>`;
+  }
+
+  if (resp.sources && resp.sources.length) {
+    html += `<div class="ans-sources"><strong>參考來源：</strong><ul>`;
+    resp.sources.forEach((s, idx) => {
+      const shortUrl = s.url.replace('https://taiwangoldfish.github.io/','');
+      html += `<li>[來源 ${idx + 1}] <a href="${escapeHtml(s.url)}" target="_blank" rel="noopener">${escapeHtml(shortUrl)}</a></li>`;
+    });
+    html += `</ul></div>`;
+  }
+
+  return html;
 }
 
 async function sendFeedback(interactionId, rating, comment = "") {
@@ -107,7 +131,7 @@ formEl.addEventListener("submit", async (event) => {
   button.disabled = true;
   try {
     const answer = await askQuestion(question, topK);
-    appendBubble("ai", renderAnswer(answer));
+    appendBubble("ai", renderAnswer(answer), true);
     appendFeedbackControls(answer.interaction_id);
   } catch (err) {
     appendBubble("ai", "系統暫時無法回應，請稍後再試。\n" + String(err));
@@ -116,4 +140,12 @@ formEl.addEventListener("submit", async (event) => {
   }
 });
 
-appendBubble("ai", "你好，我是 Goldfish AI。\n請輸入金魚飼養問題，我會附上來源。\n");
+// Enter to submit, Shift+Enter for newline
+qEl.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    formEl.requestSubmit();
+  }
+});
+
+appendBubble("ai", "你好，我是 Goldfish AI。\n請輸入金魚飼養問題，我會附上來源。");

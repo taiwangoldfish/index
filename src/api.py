@@ -4,6 +4,8 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 from uuid import uuid4
+import re
+from dataclasses import dataclass
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
@@ -31,6 +33,8 @@ class AskResponse(BaseModel):
     confidence: float
     evidence: list[str]
     sources: list[SourceModel]
+    matched_keywords: list[str] = []
+    matched_keywords_total: int = 0
 
 
 class FeedbackRequest(BaseModel):
@@ -51,6 +55,236 @@ class AdminSummaryResponse(BaseModel):
     avg_confidence: float
     low_confidence_questions: list[str]
     top_questions: list[str]
+
+
+class SuggestedTemplate(BaseModel):
+    page_title: str
+    page_url: str
+    keywords: list[str]
+    template: str
+
+
+class AdminCase(BaseModel):
+    interaction_id: str
+    timestamp: str
+    question: str
+    conclusion: str
+    confidence: float
+    rating: str | None
+    comment: str | None
+    source_urls: list[str]
+    suggested_keywords: list[str]
+    suggested_pages: list[str]
+    suggested_templates: list[SuggestedTemplate]
+
+
+class AdminCasesResponse(BaseModel):
+    total: int
+    cases: list[AdminCase]
+
+
+@dataclass
+class PageMetadata:
+    """Page title and URL for mapping"""
+    page_url: str
+    page_title: str
+
+
+# Regex patterns for keyword extraction
+ZH_BLOCK_RE = re.compile(r'[\u4e00-\u9fff]{2,}')
+EN_WORD_RE = re.compile(r'[a-zA-Z]{3,}')
+
+
+def _extract_keywords(question: str, limit: int = 6) -> list[str]:
+    """Extract keywords from question text (both Chinese and English)."""
+    keywords = set()
+    
+    # Extract Chinese phrases (2+ chars)
+    for match in ZH_BLOCK_RE.finditer(question):
+        keyword = match.group()
+        if keyword and len(keyword) <= 20:
+            keywords.add(keyword)
+    
+    # Extract English words (3+ chars)
+    for match in EN_WORD_RE.finditer(question):
+        keyword = match.group()
+        if keyword.lower() not in {'the', 'and', 'for', 'are', 'how', 'why', 'can'}:
+            keywords.add(keyword)
+    
+    keywords_list = sorted(list(keywords))[:limit]
+    return keywords_list
+
+
+def _load_page_metadata() -> dict[str, PageMetadata]:
+    """Load page URL to title mapping from documents.jsonl."""
+    metadata = {}
+    doc_file = Path("data/chunks/documents.jsonl")
+    
+    if not doc_file.exists():
+        return metadata
+    
+    with doc_file.open("r", encoding="utf-8") as reader:
+        for line in reader:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                doc = json.loads(line)
+                url = doc.get("page_url")
+                title = doc.get("page_title", "Page Content")
+                if url:
+                    metadata[url] = PageMetadata(page_url=url, page_title=title)
+            except json.JSONDecodeError:
+                continue
+    
+    return metadata
+
+
+def _generate_paragraph_template(
+    page_title: str, 
+    question: str, 
+    keywords: list[str]
+) -> str:
+    """Generate a paragraph supplement template for content editors."""
+    if not keywords:
+        keywords = ["相關說明"]
+    
+    template = f"""【補充頁面】{page_title}
+
+用戶提問：「{question}」
+
+建議補充段落：
+
+## 📌 {keywords[0]}
+[請這裡添加關於「{keywords[0]}」的詳細說明]
+
+"""
+    
+    for keyword in keywords[1:]:
+        template += f"## 📌 {keyword}\n[請這裡添加關於「{keyword}」的詳細說明]\n\n"
+    
+    template += """---
+**補充提示**：
+- 用簡潔的語言解釋，避免過於專業的術語
+- 如果可能，配上相關照片或圖表
+- 考慮用 Q&A 形式說明
+"""
+    
+    return template
+
+
+def _build_admin_cases(
+    log_file: Path,
+    page_metadata: dict[str, PageMetadata]
+) -> list[AdminCase]:
+    """Build admin case list with suggestions from telemetry logs."""
+    if not log_file.exists():
+        return []
+    
+    # Read telemetry logs
+    asks: dict[str, dict[str, object]] = {}
+    feedbacks: dict[str, dict[str, object]] = {}
+    
+    with log_file.open("r", encoding="utf-8") as reader:
+        for line in reader:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            
+            row_type = row.get("type")
+            if row_type == "ask":
+                interaction_id = row.get("interaction_id")
+                if interaction_id:
+                    asks[interaction_id] = row
+            elif row_type == "feedback":
+                interaction_id = row.get("interaction_id")
+                if interaction_id:
+                    feedbacks[interaction_id] = row
+    
+    # Track problematic pages (pages in low-confidence or negative feedback cases)
+    page_problem_count: dict[str, int] = {}
+    
+    cases = []
+    for interaction_id, ask in asks.items():
+        question = str(ask.get("question", "")).strip()
+        confidence = float(ask.get("confidence", 0.0) or 0.0)
+        timestamp = str(ask.get("timestamp", ""))
+        conclusion = str(ask.get("conclusion", ""))
+        source_urls = ask.get("source_urls", [])
+        if not isinstance(source_urls, list):
+            source_urls = []
+        
+        # Track problematic pages
+        is_low_conf = confidence < 0.35
+        fb = feedbacks.get(interaction_id, {})
+        is_negative = str(fb.get("rating", "")).lower() == "down"
+        
+        if is_low_conf or is_negative:
+            for url in source_urls:
+                page_problem_count[url] = page_problem_count.get(url, 0) + 1
+        
+        # Extract keywords from question
+        keywords = _extract_keywords(question)
+        
+        # Get top 3 problematic pages (fallback to source URLs if available)
+        suggested_pages = []
+        if source_urls:
+            # Use source URLs if available
+            suggested_pages = source_urls[:3]
+        else:
+            # Fallback: use pages with most problems
+            sorted_pages = sorted(
+                page_problem_count.items(), 
+                key=lambda x: x[1], 
+                reverse=True
+            )
+            suggested_pages = [url for url, _ in sorted_pages[:3]]
+        
+        # Generate templates for each suggested page
+        templates = []
+        for page_url in suggested_pages:
+            meta = page_metadata.get(page_url)
+            page_title = meta.page_title if meta else "Page Content"
+            template_text = _generate_paragraph_template(page_title, question, keywords)
+            templates.append(
+                SuggestedTemplate(
+                    page_title=page_title,
+                    page_url=page_url,
+                    keywords=keywords,
+                    template=template_text
+                )
+            )
+        
+        # Get feedback if available
+        rating = str(feedbacks.get(interaction_id, {}).get("rating", "")).lower()
+        if rating not in {"up", "down"}:
+            rating = None
+        comment = str(feedbacks.get(interaction_id, {}).get("comment", ""))
+        
+        case = AdminCase(
+            interaction_id=interaction_id,
+            timestamp=timestamp,
+            question=question,
+            conclusion=conclusion,
+            confidence=round(confidence, 3),
+            rating=rating,
+            comment=comment if comment else None,
+            source_urls=source_urls,
+            suggested_keywords=keywords,
+            suggested_pages=suggested_pages,
+            suggested_templates=templates,
+        )
+        
+        cases.append(case)
+    
+    # Sort by timestamp descending
+    cases.sort(key=lambda c: c.timestamp, reverse=True)
+    
+    return cases
 
 
 def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
@@ -102,6 +336,8 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
             confidence=response.confidence,
             evidence=response.evidence,
             sources=[SourceModel(title=s.title, section=s.section, url=s.url) for s in response.sources],
+            matched_keywords=getattr(result, "matched_keywords", []),
+            matched_keywords_total=len(getattr(result, "matched_keywords", [])),
         )
 
     @app.post("/api/feedback", response_model=FeedbackResponse)
@@ -186,6 +422,26 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
             low_confidence_questions=low_confidence_questions[:20],
             top_questions=top_questions,
         )
+
+    @app.get("/api/admin/cases", response_model=AdminCasesResponse)
+    def admin_cases(mode: str = "all") -> AdminCasesResponse:
+        """Get admin cases with suggestions.
+        
+        mode:
+            - "all": All cases
+            - "low": Low confidence cases (< 0.35)
+            - "down": Cases with negative feedback
+        """
+        page_metadata = _load_page_metadata()
+        cases = _build_admin_cases(log_file, page_metadata)
+        
+        # Filter by mode
+        if mode == "low":
+            cases = [c for c in cases if c.confidence < 0.35]
+        elif mode == "down":
+            cases = [c for c in cases if c.rating == "down"]
+        
+        return AdminCasesResponse(total=len(cases), cases=cases)
 
     return app
 
