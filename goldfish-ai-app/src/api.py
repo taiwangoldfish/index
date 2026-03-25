@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 import io
 import json
 from pathlib import Path
+import re
 from uuid import uuid4
 
 from fastapi import FastAPI, Query
@@ -65,6 +66,8 @@ class AdminCase(BaseModel):
     rating: str
     comment: str
     source_urls: list[str]
+    suggested_keywords: list[str]
+    suggested_pages: list[str]
 
 
 class AdminCasesResponse(BaseModel):
@@ -85,6 +88,33 @@ class DailyReportResponse(BaseModel):
 class DailyReportContentResponse(BaseModel):
     date: str
     content: str
+
+
+ZH_BLOCK_RE = re.compile(r"[\u4e00-\u9fff]{2,}")
+EN_WORD_RE = re.compile(r"[a-zA-Z]{3,}")
+
+
+def _extract_keywords(question: str, limit: int = 6) -> list[str]:
+    keywords: list[str] = []
+    seen: set[str] = set()
+
+    for block in ZH_BLOCK_RE.findall(question):
+        token = block.strip()
+        if token and token not in seen:
+            seen.add(token)
+            keywords.append(token)
+            if len(keywords) >= limit:
+                return keywords
+
+    for word in EN_WORD_RE.findall(question):
+        token = word.lower().strip()
+        if token and token not in seen:
+            seen.add(token)
+            keywords.append(token)
+            if len(keywords) >= limit:
+                break
+
+    return keywords
 
 
 def _read_logs(log_file: Path) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
@@ -129,6 +159,21 @@ def _build_admin_cases(
             "comment": str(row.get("comment", "")),
         }
 
+    # Build a fallback page priority list from problematic cases.
+    problematic_source_counts: dict[str, int] = {}
+    for ask in asks:
+        iid = str(ask.get("interaction_id", ""))
+        confidence = float(ask.get("confidence", 0.0) or 0.0)
+        rating = feedback_map.get(iid, {}).get("rating", "")
+        if confidence >= 0.35 and rating != "down":
+            continue
+        for url in [str(x) for x in ask.get("source_urls", [])]:
+            if not url:
+                continue
+            problematic_source_counts[url] = problematic_source_counts.get(url, 0) + 1
+
+    fallback_pages = [url for url, _ in sorted(problematic_source_counts.items(), key=lambda x: x[1], reverse=True)[:5]]
+
     cases: list[AdminCase] = []
     for ask in reversed(asks):
         iid = str(ask.get("interaction_id", ""))
@@ -151,6 +196,8 @@ def _build_admin_cases(
                 rating=rating,
                 comment=fb.get("comment", ""),
                 source_urls=[str(x) for x in ask.get("source_urls", [])],
+                suggested_keywords=_extract_keywords(str(ask.get("question", ""))),
+                suggested_pages=([str(x) for x in ask.get("source_urls", [])][:3] or fallback_pages[:3]),
             )
         )
 
@@ -297,7 +344,20 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
 
         output = io.StringIO()
         writer = csv.writer(output)
-        writer.writerow(["interaction_id", "timestamp", "question", "conclusion", "confidence", "rating", "comment", "source_urls"])
+        writer.writerow(
+            [
+                "interaction_id",
+                "timestamp",
+                "question",
+                "conclusion",
+                "confidence",
+                "rating",
+                "comment",
+                "source_urls",
+                "suggested_keywords",
+                "suggested_pages",
+            ]
+        )
         for item in items:
             writer.writerow(
                 [
@@ -309,6 +369,8 @@ def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
                     item.rating,
                     item.comment,
                     " | ".join(item.source_urls),
+                    " | ".join(item.suggested_keywords),
+                    " | ".join(item.suggested_pages),
                 ]
             )
 

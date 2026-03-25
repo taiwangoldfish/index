@@ -96,6 +96,9 @@ Example feedback body:
     - `all`: all recent asks
     - `low`: confidence < 0.35
     - `down`: feedback = down
+  - per-case tuning suggestions:
+    - `suggested_keywords`: keywords to refine content and prompts
+    - `suggested_pages`: candidate pages to expand or revise first
   - CSV export for case review outside the UI
   - one-click daily report generation and preview
 

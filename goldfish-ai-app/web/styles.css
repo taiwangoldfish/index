@@ -214,7 +214,8 @@ body {
   border-bottom: 1px solid var(--line);
   text-align: left;
   vertical-align: top;
-  font-size: 0.92rem;
+  font-size: 0.86rem;
+  line-height: 1.35;
 }
 
 .case-table th {

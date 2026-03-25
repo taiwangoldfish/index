@@ -52,7 +52,7 @@ function renderCaseRows(items) {
   if (!items.length) {
     const row = document.createElement('tr');
     const cell = document.createElement('td');
-    cell.colSpan = 5;
+    cell.colSpan = 7;
     cell.textContent = '目前無案例資料';
     row.appendChild(cell);
     body.appendChild(row);
@@ -81,6 +81,14 @@ function renderCaseRows(items) {
     const c5 = document.createElement('td');
     c5.textContent = item.conclusion || '';
     row.appendChild(c5);
+
+    const c6 = document.createElement('td');
+    c6.textContent = (item.suggested_keywords || []).join('、') || '-';
+    row.appendChild(c6);
+
+    const c7 = document.createElement('td');
+    c7.textContent = (item.suggested_pages || []).join(' | ') || '-';
+    row.appendChild(c7);
 
     body.appendChild(row);
   });
