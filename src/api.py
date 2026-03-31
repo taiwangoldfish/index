@@ -2,12 +2,14 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 from uuid import uuid4
 import re
 from dataclasses import dataclass
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -93,6 +95,19 @@ class PageMetadata:
 # Regex patterns for keyword extraction
 ZH_BLOCK_RE = re.compile(r'[\u4e00-\u9fff]{2,}')
 EN_WORD_RE = re.compile(r'[a-zA-Z]{3,}')
+
+DEFAULT_ALLOWED_ORIGINS = (
+    "https://taiwangoldfish.github.io",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+)
+
+
+def _allowed_origins() -> list[str]:
+    configured = [item.strip() for item in os.getenv("ALLOWED_ORIGINS", "").split(",") if item.strip()]
+    return sorted(set([*DEFAULT_ALLOWED_ORIGINS, *configured]))
 
 
 def _extract_keywords(question: str, limit: int = 6) -> list[str]:
@@ -289,6 +304,13 @@ def _build_admin_cases(
 
 def create_app(chunk_file: Path = Path("data/chunks/chunks.jsonl")) -> FastAPI:
     app = FastAPI(title="Goldfish AI API", version="0.1.0")
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=_allowed_origins(),
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     engine = QAEngine.from_chunk_file(chunk_file)
 
     web_dir = Path(__file__).resolve().parent.parent / "web"
