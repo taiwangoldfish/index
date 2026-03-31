@@ -2,11 +2,6 @@ const chatEl = document.getElementById("chat");
 const formEl = document.getElementById("ask-form");
 const qEl = document.getElementById("question");
 const topkEl = document.getElementById("topk");
-const API_BASE = (window.GOLDFISH_API_BASE || "").replace(/\/$/, "");
-
-function apiUrl(path) {
-  return API_BASE ? `${API_BASE}${path}` : path;
-}
 
 function appendBubble(kind, text, isHtml = false) {
   const tpl = document.getElementById(kind === "user" ? "bubble-user" : "bubble-ai");
@@ -61,7 +56,7 @@ function renderAnswer(resp) {
 }
 
 async function sendFeedback(interactionId, rating, comment = "") {
-  const res = await fetch(apiUrl("/api/feedback"), {
+  const res = await fetch("/api/feedback", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ interaction_id: interactionId, rating, comment }),
@@ -111,7 +106,7 @@ function appendFeedbackControls(interactionId) {
 }
 
 async function askQuestion(question, topK) {
-  const res = await fetch(apiUrl("/api/ask"), {
+  const res = await fetch("/api/ask", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ question, top_k: topK }),

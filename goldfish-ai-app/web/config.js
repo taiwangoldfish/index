@@ -1,1 +1,0 @@
-window.GOLDFISH_API_BASE = window.GOLDFISH_API_BASE || "https://goldfish-ai.onrender.com";

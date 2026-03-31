@@ -1,11 +1,5 @@
-const API_BASE = (window.GOLDFISH_API_BASE || '').replace(/\/$/, '');
-
-function apiUrl(path) {
-  return API_BASE ? `${API_BASE}${path}` : path;
-}
-
 async function loadSummary() {
-  const res = await fetch(apiUrl('/api/admin/summary'));
+  const res = await fetch('/api/admin/summary');
   if (!res.ok) {
     throw new Error('summary api failed');
   }
@@ -13,7 +7,7 @@ async function loadSummary() {
 }
 
 async function loadCases(mode = 'all') {
-  const res = await fetch(apiUrl(`/api/admin/cases?mode=${encodeURIComponent(mode)}`));
+  const res = await fetch(`/api/admin/cases?mode=${encodeURIComponent(mode)}`);
   if (!res.ok) {
     throw new Error('cases api failed');
   }
