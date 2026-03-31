@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -7,9 +8,19 @@ from src.learning_profile import build_learning_profile
 
 
 def main() -> None:
-    keyword_index_path = Path("data/keyword_index.json")
-    interactions_path = Path("data/logs/interactions.jsonl")
-    output_path = Path("data/learning_profile.json")
+    parser = argparse.ArgumentParser(description="Build learning profile from keyword index and interaction logs")
+    parser.add_argument(
+        "--data-root",
+        type=Path,
+        default=Path("data"),
+        help="Data root containing keyword_index.json, logs/, and learning_profile.json",
+    )
+    args = parser.parse_args()
+
+    data_root = args.data_root
+    keyword_index_path = data_root / "keyword_index.json"
+    interactions_path = data_root / "logs" / "interactions.jsonl"
+    output_path = data_root / "learning_profile.json"
 
     profile = build_learning_profile(
         keyword_index_path=keyword_index_path,
@@ -19,6 +30,7 @@ def main() -> None:
         secondary_size=260,
     )
     print(json.dumps({
+        "data_root": str(data_root).replace("\\", "/"),
         "output": str(output_path).replace("\\", "/"),
         "core_keywords": len(profile.get("core_keywords", [])),
         "secondary_keywords": len(profile.get("secondary_keywords", [])),

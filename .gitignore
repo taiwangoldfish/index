@@ -20,9 +20,11 @@ index_repo/
 # Pipeline artifacts
 data/raw/
 data/clean/
+data/web_learning/
 
 # Runtime logs
 data/logs/
+data/eval/fixed_set_report.json
 
 # Jupyter
 .ipynb_checkpoints/

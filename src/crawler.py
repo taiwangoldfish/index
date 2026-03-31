@@ -64,6 +64,10 @@ def _url_to_filename(url: str) -> str:
 
 def crawl_site(config: PipelineConfig) -> list[CrawledPage]:
     session = requests.Session()
+    session.headers.update({
+        "User-Agent": config.user_agent,
+        "Accept": "text/html,application/xhtml+xml",
+    })
     config.raw_dir.mkdir(parents=True, exist_ok=True)
 
     queue: deque[str] = deque()

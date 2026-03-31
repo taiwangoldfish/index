@@ -10,6 +10,21 @@ from typing import Iterable
 
 ZH_RE = re.compile(r"[\u4e00-\u9fff]+")
 EN_RE = re.compile(r"[a-z0-9]+")
+QUERY_STOP_TOKENS = {
+    "什麼",
+    "為什",
+    "為什麼",
+    "為何",
+    "如何",
+    "多少",
+    "可以",
+    "建議",
+    "比較",
+    "較好",
+    "好嗎",
+    "時候",
+    "哪裡",
+}
 
 
 @dataclass
@@ -60,6 +75,8 @@ def load_chunks_jsonl(path: Path) -> list[ChunkItem]:
             row = json.loads(line)
             text = str(row.get("text", "")).strip()
             if not text:
+                continue
+            if str(row.get("section_title", "")).strip() == "Image OCR":
                 continue
             if _is_navigation_chunk(text):
                 continue
@@ -151,22 +168,39 @@ class BM25Retriever:
         core_keywords: list[str] | None = None,
     ) -> list[RetrievedItem]:
         query_tokens = tokenize(query)
+        filtered_query_tokens = [token for token in query_tokens if token not in QUERY_STOP_TOKENS]
+        if filtered_query_tokens:
+            query_tokens = filtered_query_tokens
+        query_token_set = {token for token in query_tokens if len(token) >= 2}
         scored: list[RetrievedItem] = []
         boost_keywords = boost_keywords or []
         core_keywords = core_keywords or []
 
         for idx, item in enumerate(self.chunks):
             score = self._score_doc(query_tokens, idx)
+            title_text = item.page_title.lower()
+            section_text = item.section_title.lower()
+            title_and_section = f"{title_text} {section_text}"
+            if score > 0 and query_token_set:
+                title_token_matches = sum(1 for token in query_token_set if token in title_text)
+                section_token_matches = sum(1 for token in query_token_set if token in section_text)
+                if title_token_matches > 0:
+                    score += 1.5 * title_token_matches
+                if section_token_matches > 0:
+                    score += 0.25 * section_token_matches
             if score > 0 and core_keywords:
                 core_matched = sum(1 for kw in core_keywords if kw and kw in item.text)
+                core_matched += sum(1 for kw in core_keywords if kw and kw in title_and_section)
                 if core_matched > 0:
-                    # Core knowledge receives stronger priority boost.
-                    score += 0.8 * core_matched
+                    # Core knowledge receives stronger priority boost, especially
+                    # when it matches the page title or section heading.
+                    score += 1.0 * core_matched
             if score > 0 and boost_keywords:
                 # Extra weight if page chunk contains matched site keywords.
                 matched = sum(1 for kw in boost_keywords if kw and kw in item.text)
+                matched += sum(1 for kw in boost_keywords if kw and kw in title_and_section)
                 if matched > 0:
-                    score += 0.35 * matched
+                    score += 0.5 * matched
             if score <= 0:
                 continue
             scored.append(RetrievedItem(item=item, score=score))

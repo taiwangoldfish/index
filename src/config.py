@@ -8,6 +8,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 @dataclass
 class PipelineConfig:
+    source_mode: str = "auto"
     start_url: str = "https://taiwangoldfish.github.io/index/"
     utility_urls: list[str] = field(
         default_factory=lambda: [
@@ -44,6 +45,7 @@ class PipelineConfig:
     request_timeout_seconds: int = 20
     crawl_delay_seconds: float = 0.3
     max_pages: int = 300
+    user_agent: str = "GoldfishAI/1.0 (+https://taiwangoldfish.github.io/index/)"
     source_repo_dir: Optional[Path] = PROJECT_ROOT / "index_repo"
     enable_image_ocr: bool = True
     max_images_per_run: int = 500

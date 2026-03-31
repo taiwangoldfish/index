@@ -17,14 +17,29 @@ def _doc_id_from_url(url: str) -> str:
     return hashlib.sha1(url.encode("utf-8")).hexdigest()
 
 
+def _resolve_source_pages(config: PipelineConfig) -> tuple[list[object], str]:
+    source_mode = config.source_mode.strip().lower()
+    repo_pages = load_repo_pages(config)
+
+    if source_mode == "repo":
+        return repo_pages, "repo"
+
+    if source_mode == "web":
+        return crawl_site(config), "web"
+
+    if repo_pages:
+        return repo_pages, "repo"
+
+    return crawl_site(config), "web"
+
+
 def run_pipeline(config: PipelineConfig) -> dict[str, int]:
     config.raw_dir.mkdir(parents=True, exist_ok=True)
     config.clean_dir.mkdir(parents=True, exist_ok=True)
     config.chunks_dir.mkdir(parents=True, exist_ok=True)
     config.ocr_dir.mkdir(parents=True, exist_ok=True)
 
-    repo_pages = load_repo_pages(config)
-    crawled_pages = repo_pages if repo_pages else crawl_site(config)
+    crawled_pages, source_mode = _resolve_source_pages(config)
 
     chunk_jsonl_path = config.chunks_dir / "chunks.jsonl"
     docs_jsonl_path = config.chunks_dir / "documents.jsonl"
@@ -101,7 +116,7 @@ def run_pipeline(config: PipelineConfig) -> dict[str, int]:
     ocr_jsonl_path = write_ocr_jsonl(config.ocr_dir, ocr_rows_all)
 
     return {
-        "source_mode": "repo" if repo_pages else "web",
+        "source_mode": source_mode,
         "crawled_pages": len(crawled_pages),
         "documents_written": total_docs,
         "chunks_written": total_chunks,

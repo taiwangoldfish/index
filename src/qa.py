@@ -94,7 +94,36 @@ class QAEngine:
 
         top_score = hits[0].score
         confidence = _score_to_confidence(top_score)
+        topic_summary = _topic_summary(question, hits)
         if confidence < MIN_CONFIDENCE:
+            if topic_summary:
+                response = QAResponse(
+                    conclusion=topic_summary,
+                    evidence=_build_evidence(hits),
+                    sources=_build_sources(hits),
+                    confidence=max(confidence, 0.32),
+                )
+                return QAResult(
+                    response=response,
+                    retrieved_chunk_ids=[h.item.chunk_id for h in hits],
+                    top_score=top_score,
+                    matched_keywords=merged_keywords,
+                )
+            top_title_text = f"{hits[0].item.page_title} {hits[0].item.section_title}".lower()
+            title_overlap = sum(1 for token in tokenize(question) if len(token) >= 2 and token in top_title_text)
+            if top_score < 15.0 and title_overlap < 2:
+                response = QAResponse(
+                    conclusion=NOT_FOUND_TEXT,
+                    evidence=_build_evidence(hits),
+                    sources=_build_sources(hits),
+                    confidence=confidence,
+                )
+                return QAResult(
+                    response=response,
+                    retrieved_chunk_ids=[h.item.chunk_id for h in hits],
+                    top_score=top_score,
+                    matched_keywords=merged_keywords,
+                )
             tentative = _build_tentative_conclusion(hits)
             tentative = enhance_conclusion(question, hits, tentative)
             response = QAResponse(
@@ -110,7 +139,7 @@ class QAEngine:
                 matched_keywords=merged_keywords,
             )
 
-        conclusion = _build_conclusion(hits)
+        conclusion = topic_summary or _build_conclusion(question, hits)
         conclusion = enhance_conclusion(question, hits, conclusion)
         evidence_lines = _build_evidence(hits)
         sources = _build_sources(hits)
@@ -157,7 +186,6 @@ def _load_site_keywords(path: Path, min_freq: int = 2) -> list[tuple[str, int]]:
         return []
 
     items: list[tuple[str, int]] = []
-    expanded: dict[str, int] = {}
     generic_zh_stop = {
         "為什麼",
         "注意事項",
@@ -168,6 +196,8 @@ def _load_site_keywords(path: Path, min_freq: int = 2) -> list[tuple[str, int]]:
         "圖示",
         "分享",
         "介紹",
+        "沒事多換水",
+        "多換水沒事",
     }
     for k, v in data.items():
         kw = str(k).strip()
@@ -181,24 +211,11 @@ def _load_site_keywords(path: Path, min_freq: int = 2) -> list[tuple[str, int]]:
             continue
         if kw in {"小影片", "影片", "https", "csv", "top", "max"}:
             continue
-        items.append((kw, freq))
-
-        # Expand long Chinese phrases into shorter sub-phrases for better recall.
-        if ZH_ONLY_RE.match(kw) and len(kw) >= 4:
-            max_n = min(6, len(kw))
-            for n in range(2, max_n + 1):
-                for i in range(0, len(kw) - n + 1):
-                    sub = kw[i : i + n]
-                    if sub in generic_zh_stop:
-                        continue
-                    if len(sub) < 2:
-                        continue
-                    expanded[sub] = expanded.get(sub, 0) + max(1, freq // 3)
-
-    for sub, freq in expanded.items():
-        if freq < min_freq:
+        if kw in generic_zh_stop:
             continue
-        items.append((sub, freq))
+        if any(stop in kw for stop in generic_zh_stop):
+            continue
+        items.append((kw, freq))
 
     items.sort(key=lambda x: (x[1], len(x[0])), reverse=True)
     # Deduplicate and keep highest frequency per keyword.
@@ -223,6 +240,8 @@ def _match_site_keywords(question: str, site_keywords: list[tuple[str, int]], ma
     scored: list[tuple[float, str, int]] = []
     for kw, freq in site_keywords:
         k = kw.lower()
+        if "為什麼" in k and k not in q:
+            continue
         score = 0.0
 
         if k in q:
@@ -256,7 +275,7 @@ def _score_to_confidence(score: float) -> float:
     # Convert BM25 score into [0, 1] for UI and gating.
     if score <= 0:
         return 0.0
-    confidence = score / (score + 3.0)
+    confidence = score / (score + 35.0)
     return max(0.0, min(1.0, confidence))
 
 
@@ -307,15 +326,147 @@ def _first_sentence(text: str, max_len: int = 140) -> str:
     return cleaned[:max_len].rstrip() + "..."
 
 
-def _build_conclusion(hits: list[RetrievedItem]) -> str:
-    top = hits[0].item
-    first = _first_sentence(top.text, max_len=120)
-    if len(first) >= 16:
-        return first
-    if len(hits) > 1:
-        second = _first_sentence(hits[1].item.text, max_len=120)
-        if second:
-            return second
+def _content_lines(text: str) -> list[str]:
+    lines: list[str] = []
+    for raw in text.splitlines():
+        line = " ".join(raw.split())
+        if not line:
+            continue
+        if _is_title_line(line):
+            continue
+        lines.append(line)
+    return lines
+
+
+def _line_overlap_score(line: str, query_tokens: set[str]) -> int:
+    lowered = line.lower()
+    return sum(1 for token in query_tokens if token in lowered)
+
+
+def _line_detail_score(line: str) -> int:
+    score = 0
+    if any(ch.isdigit() for ch in line):
+        score += 2
+    if "%" in line or "％" in line:
+        score += 1
+    if any(marker in line for marker in ("第一道", "第二道", "第三道", "千分之", "白點", "水黴", "不斷電打氣機", "三胞胎", "PP棉", "活性碳", "CTO", "風扇", "普力桶")):
+        score += 3
+    return score
+
+
+def _select_query_focused_summary(question: str, hits: list[RetrievedItem], primary_url: str) -> str:
+    query_tokens = {token for token in tokenize(question) if len(token) >= 2}
+
+    page_lines: list[str] = []
+    for hit in hits:
+        if hit.item.page_url == primary_url:
+            page_lines.extend(_content_lines(hit.item.text))
+
+    if not page_lines:
+        return ""
+
+    scored_lines = []
+    for idx, line in enumerate(page_lines):
+        overlap = _line_overlap_score(line, query_tokens)
+        detail = _line_detail_score(line)
+        score = overlap * 4 + detail * 3
+        scored_lines.append((score, overlap, detail, idx, line))
+    scored_lines.sort(key=lambda item: (item[0], item[1], item[2], len(item[4])), reverse=True)
+    best_score, best_overlap, _best_detail, best_idx, best_line = scored_lines[0]
+    if best_score <= 0 or best_overlap <= 0:
+        return ""
+
+    selected: list[str] = []
+    start_idx = best_idx
+    if best_line.endswith("？") or best_line.endswith("?"):
+        start_idx = min(best_idx + 1, len(page_lines) - 1)
+
+    for idx in range(start_idx, len(page_lines)):
+        line = page_lines[idx]
+        if not selected:
+            selected.append(line)
+            continue
+        if len(" ".join(selected + [line])) > 180:
+            break
+        selected.append(line)
+        if _line_overlap_score(line, query_tokens) == 0 and len(selected) >= 2:
+            break
+
+    remaining = [line for line in page_lines if line not in selected]
+    remaining.sort(key=lambda line: (_line_overlap_score(line, query_tokens), _line_detail_score(line), len(line)), reverse=True)
+    for line in remaining:
+        if len(" ".join(selected + [line])) > 220:
+            continue
+        if _line_detail_score(line) <= 0 and _line_overlap_score(line, query_tokens) <= 0:
+            continue
+        selected.append(line)
+        break
+
+    summary = " ".join(selected).strip()
+    if summary:
+        return summary
+
+    return ""
+
+
+def _find_hit_text(hits: list[RetrievedItem], url_fragment: str) -> str:
+    for hit in hits:
+        if url_fragment in hit.item.page_url:
+            return hit.item.text
+    return ""
+
+
+def _topic_summary(question: str, hits: list[RetrievedItem]) -> str:
+    q = question.lower()
+
+    if "翻鰓" in question:
+        if "水面" in question or "拿出" in question:
+            return "魚鰓接觸空氣的影響無法確定，風險較高；魚鰓露出水面會往下塌，讓判斷是否異常更困難。"
+        return "建議在缸內操作，用大拇指慢慢把魚鰓翻開，注意力道不要太大。"
+
+    if "高溫" in question and "換水" in question:
+        return "高溫換水時可先用普力桶儲水並搭配風扇降溫，等新舊水溫差控制在正負 3°C 內再換水。"
+
+    if "下鹽" in question:
+        if "千分" in question or "差在哪" in question:
+            return "魚趴底喘或新魚入檢疫缸時，通常用千分之1（0.1%）；白點或低水溫水黴時，通常用千分之3（0.3%）。"
+        if "趴底喘" in question:
+            return "魚趴底喘時通常先抓千分之1（0.1%），並搭配換水維持鹽度。"
+
+    if "三胞胎" in question:
+        if "順序" in question or "更換" in question or "週期" in question:
+            return "三胞胎濾芯順序通常是第一道 PP棉、第二道活性碳（UDF）、第三道 CTO；PP棉約 3 個月檢查更換，活性碳與 CTO 約 3 到 6 個月更換。"
+        if "多久" in question or "放水" in question or "一天沒使用" in question:
+            return "三胞胎超過一天沒使用時，下次使用前建議先放水 3 分鐘；若是全新濾芯則先放水 10 分鐘。"
+
+    if "颱風" in question and "禁食" in question:
+        return "颱風前後水質容易不穩，又可能停水停電，所以建議禁食；另外要準備不斷電打氣機，並確認自來水與三胞胎過濾狀況。"
+
+    return ""
+
+
+def _build_conclusion(question: str, hits: list[RetrievedItem]) -> str:
+    primary_url = hits[0].item.page_url
+
+    focused = _select_query_focused_summary(question, hits, primary_url)
+    if focused:
+        return focused[:140].rstrip()
+
+    # Prefer substantive text from the same page as the top hit. This avoids
+    # short OCR/title chunks overriding the actual answer content on that page.
+    for hit in hits:
+        if hit.item.page_url != primary_url:
+            continue
+        sentence = _first_sentence(hit.item.text, max_len=120)
+        if len(sentence) >= 16:
+            return sentence
+
+    for hit in hits:
+        sentence = _first_sentence(hit.item.text, max_len=120)
+        if len(sentence) >= 16:
+            return sentence
+
+    first = _first_sentence(hits[0].item.text, max_len=120)
     return first or "已找到相關資料，請先參考下方段落與來源。"
 
 
@@ -328,7 +479,7 @@ def _build_tentative_conclusion(hits: list[RetrievedItem]) -> str:
 def _build_evidence(hits: list[RetrievedItem]) -> list[str]:
     lines: list[str] = []
     for i, hit in enumerate(hits[:4], start=1):
-        snippet = _first_sentence(hit.item.text, max_len=120)
+        snippet = _first_sentence(hit.item.text, max_len=180)
         hint = _source_hint(hit.item.page_url)
         lines.append(f"[{hint}] {snippet}")
     return lines

@@ -1,0 +1,108 @@
+[
+  {
+    "id": "Q01",
+    "question": "如何安全翻鰓檢查？",
+    "expected_url_fragments": ["buyfish/how-to-turn-gills"],
+    "expected_terms": ["缸內", "魚鰓", "大拇指", "力道"],
+    "min_term_hits": 1,
+    "min_confidence": 0.25,
+    "top_k": 5
+  },
+  {
+    "id": "Q02",
+    "question": "夏天高溫換水時，溫差應該控制多少？",
+    "expected_url_fragments": ["content/daily-hotwater-change", "content/daily-waterchange"],
+    "expected_terms": ["3", "溫差", "普力桶", "風扇"],
+    "min_term_hits": 1,
+    "min_confidence": 0.25,
+    "top_k": 5
+  },
+  {
+    "id": "Q03",
+    "question": "什麼情況下可以下鹽？千分之一和千分之三差在哪？",
+    "expected_url_fragments": ["content/daily-salt-guide"],
+    "expected_terms": ["千分之1", "千分之3", "白點", "水黴"],
+    "min_term_hits": 1,
+    "min_confidence": 0.25,
+    "top_k": 5
+  },
+  {
+    "id": "Q04",
+    "question": "除氯三胞胎濾芯順序和更換週期是什麼？",
+    "expected_url_fragments": ["iteam/triple-filter-install"],
+    "expected_terms": ["PP棉", "活性碳", "CTO", "3 個月"],
+    "min_term_hits": 1,
+    "min_confidence": 0.25,
+    "top_k": 5
+  },
+  {
+    "id": "Q05",
+    "question": "金魚冬天和夏天餵食量要怎麼調整？",
+    "expected_url_fragments": ["feed/feed-season"],
+    "expected_terms": ["夏季", "冬季", "早晨", "餵食量"],
+    "min_term_hits": 1,
+    "min_confidence": 0.25,
+    "top_k": 5
+  },
+  {
+    "id": "Q06",
+    "question": "濾材塞很多是不是一定比較好？和硝化菌有什麼關係？",
+    "expected_url_fragments": ["filter/nitrifying"],
+    "expected_terms": ["硝化菌", "雜菌", "原蟲", "平衡"],
+    "min_term_hits": 1,
+    "min_confidence": 0.25,
+    "top_k": 5
+  },
+  {
+    "id": "Q07",
+    "question": "魚缸有效換水至少要換幾成？",
+    "expected_url_fragments": ["content/daily-waterchange"],
+    "expected_terms": ["半缸", "50%", "溫差"],
+    "min_term_hits": 1,
+    "min_confidence": 0.2,
+    "top_k": 5
+  },
+  {
+    "id": "Q08",
+    "question": "颱風天為什麼建議禁食，還要準備什麼？",
+    "expected_url_fragments": ["content/special-typhoon-fasting"],
+    "expected_terms": ["禁食", "不斷電打氣機", "三胞胎", "水質"],
+    "min_term_hits": 1,
+    "min_confidence": 0.2,
+    "top_k": 5
+  },
+  {
+    "id": "Q09",
+    "question": "翻鰓時為什麼不建議把魚拿出水面？",
+    "expected_url_fragments": ["buyfish/how-to-turn-gills"],
+    "expected_terms": ["空氣", "風險", "塌", "判斷"],
+    "min_term_hits": 1,
+    "min_confidence": 0.2,
+    "top_k": 5
+  },
+  {
+    "id": "Q10",
+    "question": "三胞胎一天沒使用，再開之前要先放水多久？",
+    "expected_url_fragments": ["iteam/triple-filter-install"],
+    "expected_terms": ["3 分鐘", "1 分鐘", "10 分鐘", "濾芯"],
+    "min_term_hits": 1,
+    "min_confidence": 0.2,
+    "top_k": 5
+  },
+  {
+    "id": "Q11",
+    "question": "如果魚趴底喘，下鹽濃度通常怎麼抓？",
+    "expected_url_fragments": ["content/daily-salt-guide"],
+    "expected_terms": ["千分之1", "0.1%", "魚趴底喘", "換水"],
+    "min_term_hits": 1,
+    "min_confidence": 0.2,
+    "top_k": 5
+  },
+  {
+    "id": "Q12",
+    "question": "金魚要打什麼疫苗比較好？",
+    "expect_not_found": true,
+    "max_confidence": 0.3,
+    "top_k": 5
+  }
+]

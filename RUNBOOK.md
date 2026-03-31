@@ -25,6 +25,35 @@ pip install -r requirements.txt
 python run_pipeline.py
 ```
 
+Force live crawling with `requests + BeautifulSoup` instead of local repo snapshot:
+
+```bash
+python run_pipeline.py --source web
+```
+
+Windows quick launchers:
+- `crawl_web_learning.bat`: run live web crawl into `data/web_learning`
+- `crawl_repo_snapshot.bat`: run local `index_repo` snapshot mode
+- `train_web_learning.bat`: build `keyword_index.json` and `learning_profile.json` under `data/web_learning`
+
+Build learning artifacts for a custom data root:
+
+```bash
+python train_index_only.py --data-root data/web_learning --skip-pipeline
+python train_learning_profile.py --data-root data/web_learning
+```
+
+Useful crawl flags:
+- `--max-pages 120`
+- `--delay 0.5`
+- `--timeout 20`
+- `--data-root data/web_learning`
+
+Source modes:
+- `auto`: prefer local `index_repo/`, fallback to live site crawl
+- `repo`: only read local HTML snapshot from `index_repo/`
+- `web`: always crawl the live site with `requests + BeautifulSoup`
+
 ## Continuous Learning Profile (Core First)
 
 Generate and update persistent learning record:
@@ -55,6 +84,22 @@ Answer output format:
 - `結論`
 - `依據`
 - `來源`
+
+## Evaluate with Fixed Question Set
+Run the benchmark script against a stable question set:
+
+```bash
+python tools/evaluate_fixed_set.py
+```
+
+Optional flags:
+- `--chunk-file data/chunks/chunks.jsonl`
+- `--question-set data/eval/fixed_questions.json`
+- `--output data/eval/fixed_set_report.json`
+
+Default outputs:
+- Console summary with pass/fail per case.
+- JSON report at `data/eval/fixed_set_report.json`.
 
 ## Start API + Web Chat
 ```bash
@@ -135,6 +180,7 @@ Example feedback body:
 - `data/chunks/documents.jsonl`: document-level records
 - `data/ocr/image_ocr.jsonl`: image OCR records
 - `data/logs/interactions.jsonl`: ask + feedback telemetry logs
+- `data/eval/fixed_set_report.json`: fixed question set evaluation report
 
 ## Admin Dashboard
 - Page: `/admin`
@@ -149,8 +195,8 @@ Example feedback body:
 ## Pipeline Behavior (v1)
 - Allowed source starts at: https://taiwangoldfish.github.io/index/
 - Source priority:
-  - First: local repository folder index_repo (if exists)
-  - Fallback: live website crawl
+  - `auto` mode: first local repository folder `index_repo/`, fallback to live website crawl
+  - `web` mode: always use live website crawl via `requests + BeautifulSoup`
 - Utility pages included:
   - https://taiwangoldfish.github.io/MLE/
   - https://taiwangoldfish.github.io/fish-tank-circulation/
