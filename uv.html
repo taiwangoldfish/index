@@ -624,11 +624,11 @@
         },
         {
             title: "泰國人養金魚方式",
-            url: "./knowledge/reproduce.html"
+            url: "./knowledge/how-thai-fishfram-make-goldfish.html"
         },
         {
             title: "繁殖日記",
-            url: "./knowledge/how-thai-fishfram-make-goldfish.html"
+            url: "./knowledge/reproduce.html"
         },
 
         /* 📚 filter */
@@ -810,27 +810,97 @@
     /* ======================================================
        🚀 最快化搜尋：一次跑 8 頁 → 速度提升 5–8倍
     ====================================================== */
+    const pageSearchCache = new Map();
+
+    function normalizeSearchText(value) {
+        return (value || "").toLowerCase().replace(/\s+/g, "").trim();
+    }
+
+    async function getPageSearchData(page) {
+        if (pageSearchCache.has(page.url)) {
+            return pageSearchCache.get(page.url);
+        }
+
+        const response = await fetch(page.url);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const html = await response.text();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const heading = doc.querySelector("main h1, .content h1, article h1")?.textContent || "";
+        const description = doc.querySelector('meta[name="description"]')?.getAttribute("content") || "";
+        const articleBody = Array.from(doc.querySelectorAll("main .article-body, .article-body"))
+            .map((node) => node.textContent || "")
+            .join(" ");
+
+        const searchData = {
+            title: normalizeSearchText(heading || page.title),
+            description: normalizeSearchText(description),
+            body: normalizeSearchText(articleBody)
+        };
+
+        pageSearchCache.set(page.url, searchData);
+        return searchData;
+    }
+
     async function searchKeyword(keyword) {
+        const normalizedKeyword = normalizeSearchText(keyword);
+        if (!normalizedKeyword) {
+            return [];
+        }
+
         const results = [];
         const chunkSize = 8;
 
         for (let i = 0; i < searchablePages.length; i += chunkSize) {
             const chunk = searchablePages.slice(i, i + chunkSize);
 
-            await Promise.all(
+            const chunkResults = await Promise.all(
                 chunk.map(async (page) => {
                     try {
-                        const res = await fetch(page.url);
-                        const text = await res.text();
-                        if (text.includes(keyword)) results.push(page);
+                        const fallbackTitle = normalizeSearchText(page.title);
+                        let score = 0;
+
+                        if (fallbackTitle === normalizedKeyword) {
+                            score = 400;
+                        } else if (fallbackTitle.includes(normalizedKeyword)) {
+                            score = 300;
+                        }
+
+                        const searchData = await getPageSearchData(page);
+
+                        if (searchData.title === normalizedKeyword) {
+                            score = Math.max(score, 500);
+                        } else if (searchData.title.includes(normalizedKeyword)) {
+                            score = Math.max(score, 320);
+                        }
+
+                        if (searchData.description.includes(normalizedKeyword)) {
+                            score = Math.max(score, 220);
+                        }
+
+                        if (searchData.body.includes(normalizedKeyword)) {
+                            score = Math.max(score, 180);
+                        }
+
+                        if (score > 0) {
+                            return { ...page, score };
+                        }
                     } catch (err) {
                         console.log("❌ 無法讀取：", page.url);
                     }
+
+                    return null;
                 })
             );
+
+            results.push(...chunkResults.filter(Boolean));
         }
 
-        return results;
+        return results
+            .sort((left, right) => right.score - left.score || left.title.length - right.title.length)
+            .map(({ score, ...page }) => page);
     }
 
     /* ======================================================
