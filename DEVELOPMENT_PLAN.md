@@ -5,6 +5,7 @@
 	- https://taiwangoldfish.github.io/index/
 - Prioritize accuracy, traceability, and low hallucination.
 - Default reply language: Traditional Chinese.
+- Organic growth goal: become the leading Traditional Chinese goldfish learning website for beginners and hobbyists, so users can quickly learn correct methods and avoid common mistakes.
 
 ## 2) Scope Rules
 - In scope:
