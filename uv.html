@@ -1034,9 +1034,84 @@
        🏠 首頁分類折疊
     ====================================================== */
     if (document.body.classList.contains("home")) {
-        document.querySelectorAll(".sidebar nav li > span").forEach((span) => {
+        const categoryHeaders = document.querySelectorAll(".sidebar nav li > span");
+
+        function getSubmenu(li) {
+            return li ? li.querySelector(":scope > ul") : null;
+        }
+
+        function openCategory(li) {
+            const submenu = getSubmenu(li);
+            if (!submenu) return;
+
+            li.classList.add("open");
+            submenu.style.visibility = "visible";
+            submenu.style.pointerEvents = "auto";
+            submenu.style.overflow = "hidden";
+            submenu.style.maxHeight = "0px";
+            submenu.style.opacity = "0";
+            submenu.offsetHeight;
+            submenu.style.opacity = "1";
+            submenu.style.maxHeight = submenu.scrollHeight + "px";
+
+            const onEnd = (event) => {
+                if (event.propertyName !== "max-height") return;
+                if (li.classList.contains("open")) {
+                    submenu.style.maxHeight = "none";
+                    submenu.style.overflow = "visible";
+                }
+                submenu.removeEventListener("transitionend", onEnd);
+            };
+
+            submenu.addEventListener("transitionend", onEnd);
+        }
+
+        function closeCategory(li) {
+            const submenu = getSubmenu(li);
+            if (!submenu) return;
+
+            submenu.style.overflow = "hidden";
+            submenu.style.maxHeight = submenu.scrollHeight + "px";
+            submenu.offsetHeight;
+            li.classList.remove("open");
+            submenu.style.opacity = "0";
+            submenu.style.maxHeight = "0px";
+            submenu.style.pointerEvents = "none";
+
+            const onEnd = (event) => {
+                if (event.propertyName !== "max-height") return;
+                if (!li.classList.contains("open")) {
+                    submenu.style.visibility = "hidden";
+                }
+                submenu.removeEventListener("transitionend", onEnd);
+            };
+
+            submenu.addEventListener("transitionend", onEnd);
+        }
+
+        categoryHeaders.forEach((span) => {
+            const li = span.parentElement;
+            const submenu = getSubmenu(li);
+            if (!li || !submenu) return;
+
+            if (li.classList.contains("open")) {
+                submenu.style.visibility = "visible";
+                submenu.style.opacity = "1";
+                submenu.style.maxHeight = "none";
+                submenu.style.pointerEvents = "auto";
+            } else {
+                submenu.style.visibility = "hidden";
+                submenu.style.opacity = "0";
+                submenu.style.maxHeight = "0px";
+                submenu.style.pointerEvents = "none";
+            }
+
             span.addEventListener("click", () => {
-                span.parentElement.classList.toggle("open");
+                if (li.classList.contains("open")) {
+                    closeCategory(li);
+                } else {
+                    openCategory(li);
+                }
             });
         });
     }

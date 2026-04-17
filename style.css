@@ -7,7 +7,7 @@ body {
   background-size: 900px auto;      /* ✅ 調整圖片大小（建議 800~1000px 間） */
   background-position: center top;  /* ✅ 置中靠上 */
   background-repeat: repeat;        /* ✅ 平鋪 */
-  background-attachment: fixed;
+  background-attachment: scroll;
   color: #333;
   display: flex;
   flex-direction: row;
@@ -22,9 +22,9 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 250, 240, 0.82);
-  backdrop-filter: blur(3px);
+  background: rgba(255, 250, 240, 0.9);
   z-index: -1;
+  pointer-events: none;
 }
 
 /* === 側邊導覽欄 === */
@@ -33,11 +33,13 @@ body::before {
   width: 260px;
   height: 100vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: 3px 0 8px rgba(0, 0, 0, 0.1);
   position: fixed;
   left: 0;
   top: 0;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
   z-index: 999;
 }
 
@@ -90,7 +92,7 @@ body::before {
   word-break: break-word;    /* 中文安全換行 */
 
   line-height: 1.6;
-  transition: all 0.25s ease-in-out;
+  transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease;
   border-left: 4px solid transparent;
   box-sizing: border-box;    /* 防止寬度計算錯誤 */
 }
@@ -213,7 +215,7 @@ body::before {
   text-decoration: none;
   font-weight: 700;
   box-shadow: 0 4px 10px rgba(232, 149, 60, 0.12);
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .topic-chip:hover {
@@ -325,8 +327,7 @@ footer {
   cursor: pointer;
   z-index: 1001;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(4px);
-  transition: all 0.25s ease-in-out;
+  transition: background-color 0.25s ease, transform 0.25s ease;
 }
 
 .menu-toggle:hover {
@@ -346,6 +347,7 @@ footer {
 
   .sidebar {
     transform: translateX(-100%);
+    pointer-events: none;
     position: fixed;
     height: 100%;
     width: 230px;
@@ -355,6 +357,7 @@ footer {
 
   .sidebar.active {
     transform: translateX(0);
+    pointer-events: auto;
   }
 
   .content {
@@ -540,7 +543,7 @@ ol li {
   text-align: center;
   text-decoration: none;
   box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-  transition: 0.25s ease;
+  transition: background-color 0.25s ease, transform 0.25s ease;
 }
 
 .home-btn:hover {
@@ -551,8 +554,11 @@ ol li {
 /* === 下拉展開動畫 === */
 .sidebar nav ul ul {
   max-height: 0;
+  opacity: 0;
   overflow: hidden;
-  transition: max-height 0.35s ease-in-out;
+  visibility: hidden;
+  pointer-events: none;
+  transition: max-height 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
 }
 
 .sidebar nav li > span {
@@ -567,7 +573,7 @@ ol li {
   content: "▾";
   font-size: 0.9em;
   color: #e8953c;
-  transition: transform 0.3s ease;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar nav li.open > span::after {
@@ -596,6 +602,25 @@ ol li {
 }
 .search-box button:hover {
   background: #cc6f00;
+}
+
+@media (hover: none) {
+  .card:hover,
+  .topic-chip:hover,
+  .home-btn:hover,
+  .gallery img:hover,
+  .gallery-horizontal img:hover,
+  .media-box img:hover,
+  .menu-toggle:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* 🔍 搜尋結果 */
@@ -676,8 +701,10 @@ ol li {
 
 /* ✅ 修正下拉選單文字被裁切問題 */
 .sidebar nav li.open > ul {
-  max-height: 3000px;
+  opacity: 1;
+  visibility: visible;
   overflow: visible;
+  pointer-events: auto;
 }
 
 .sidebar nav ul ul li a {
