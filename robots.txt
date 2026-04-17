@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
+
+# GitHub Pages 專案站請提交這個 sitemap 路徑
 Sitemap: https://taiwangoldfish.github.io/index/sitemap.xml
