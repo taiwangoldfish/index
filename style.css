@@ -2,29 +2,17 @@
 body {
   font-family: "Noto Sans TC", sans-serif;
   margin: 0;
-  background-color: #fffaf3;
-  background-image: url("image/背景圖.png");
-  background-size: 900px auto;      /* ✅ 調整圖片大小（建議 800~1000px 間） */
-  background-position: center top;  /* ✅ 置中靠上 */
-  background-repeat: repeat;        /* ✅ 平鋪 */
-  background-attachment: scroll;
+  background: #fffaf3;
+  background-image: none;
   color: #333;
   display: flex;
   flex-direction: row;
   min-height: 100vh;
 }
 
-/* ✅ 淡淡柔焦遮罩層：讓背景不搶主體 */
+/* ✅ 取消全頁固定遮罩，減少重繪負擔 */
 body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 250, 240, 0.9);
-  z-index: -1;
-  pointer-events: none;
+  content: none;
 }
 
 /* === 側邊導覽欄 === */
@@ -34,12 +22,12 @@ body::before {
   height: 100vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  box-shadow: 3px 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.08);
   position: fixed;
   left: 0;
   top: 0;
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
+  transition: none;
+  will-change: auto;
   z-index: 999;
 }
 
@@ -76,7 +64,6 @@ body::before {
 /* === 子項目（第二層） === */
 .sidebar nav ul ul li {
   color: #444;
-  transition: background 0.25s, color 0.25s;
 }
 
 /* 🔗 子項連結樣式 */
@@ -85,6 +72,9 @@ body::before {
   text-decoration: none;
   display: block;
   width: 100%;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 
   /* 🔧 關鍵修正 */
   padding: 8px 32px 8px 25px; /* 右邊多留空間給 scrollbar */
@@ -92,35 +82,32 @@ body::before {
   word-break: break-word;    /* 中文安全換行 */
 
   line-height: 1.6;
-  transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease;
+  transition: none;
   border-left: 4px solid transparent;
   box-sizing: border-box;    /* 防止寬度計算錯誤 */
 }
 
 
-/* hover 效果 */
-.sidebar nav ul ul li a:hover {
-  color: #e8953c;
-  background-color: #fff2de;
-  border-left-color: #f1b972;
+/* hover 效果：只保留文字回饋，避免整塊重繪延遲感 */
+.sidebar nav ul ul li a:hover,
+.sidebar nav ul ul li a:focus-visible {
+  color: #c97800;
+  background: transparent;
+  border-left-color: transparent;
 }
 
 /* 🔸 被選取項目高亮 */
 .sidebar nav ul ul li a.active {
-  background-color: #ffe8c4;
+  background-color: #fff3df;
   color: #b96a00;
-  font-weight: 600;
+  font-weight: 700;
   border-left: 4px solid #e8953c;
-  box-shadow: inset 0 0 6px rgba(233, 149, 60, 0.2);
+  box-shadow: none;
 }
 
 /* 🚫 非連結項目（純文字） */
-.sidebar nav ul ul li:not(:has(a)) {
-  color: #aaa;
-  padding: 6px 25px;
-  font-style: italic;
-  text-decoration: underline dotted #ccc;
-  cursor: not-allowed;
+.sidebar nav ul ul li {
+  contain: none;
 }
 
 /* === 主內容區 === */
@@ -129,24 +116,23 @@ body::before {
   padding: 40px;
   width: calc(100% - 260px);
   min-height: 100vh;
-  transition: margin-left 0.3s ease-in-out;
 }
 
 /* 卡片容器 */
 .card {
   background: #fff;
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 40px 30px;
   max-width: 900px;
   margin: 40px auto;
   text-align: center;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 640px;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
 }
 
 /* === 首頁美化 === */
@@ -157,9 +143,9 @@ body::before {
 .home .card {
   max-width: 1020px;
   text-align: left;
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(232, 149, 60, 0.14);
-  box-shadow: 0 12px 30px rgba(86, 61, 22, 0.12);
+  box-shadow: 0 6px 18px rgba(86, 61, 22, 0.08);
 }
 
 .home .card h1,
@@ -220,7 +206,6 @@ body::before {
 
 .topic-chip:hover {
   background: #fff4e4;
-  transform: translateY(-1px);
 }
 
 .hero-note {
@@ -332,11 +317,10 @@ footer {
 
 .menu-toggle:hover {
   background: rgba(241, 166, 74, 0.95);
-  transform: scale(1.05);
 }
 
 .menu-toggle:active {
-  transform: scale(0.96);
+  opacity: 0.92;
 }
 
 /* === 手機版 RWD 調整 === */
@@ -548,17 +532,24 @@ ol li {
 
 .home-btn:hover {
   background: #ffab47;
-  transform: scale(1.06);
 }
 
-/* === 下拉展開動畫 === */
+/* === 下拉展開動畫（效能優先：即時開合） === */
 .sidebar nav ul ul {
+  display: none;
   max-height: 0;
-  opacity: 0;
+  opacity: 1;
   overflow: hidden;
   visibility: hidden;
   pointer-events: none;
-  transition: max-height 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+  transition: none;
+}
+
+.sidebar nav li.open > ul {
+  display: block;
+  max-height: none;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .sidebar nav li > span {
@@ -573,11 +564,24 @@ ol li {
   content: "▾";
   font-size: 0.9em;
   color: #e8953c;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
 }
 
 .sidebar nav li.open > span::after {
   transform: rotate(180deg);
+}
+
+/* === 效能優先互動降載 === */
+.sidebar *,
+.menu-toggle,
+.home-btn,
+.join-btn,
+.topic-chip,
+.gallery img,
+.gallery-horizontal img,
+.media-box img {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* 🔍 搜尋框 */
@@ -605,6 +609,10 @@ ol li {
 }
 
 @media (hover: none) {
+  body {
+    background-image: none;
+  }
+
   .card:hover,
   .topic-chip:hover,
   .home-btn:hover,

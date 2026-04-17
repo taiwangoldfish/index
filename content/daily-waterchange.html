@@ -265,53 +265,16 @@
         return li ? li.querySelector(":scope > ul") : null;
       }
 
-      function openCategory(li) {
+      function setCategoryState(li, isOpen) {
         const submenu = getSubmenu(li);
         if (!submenu) return;
 
-        li.classList.add("open");
-        submenu.style.visibility = "visible";
-        submenu.style.pointerEvents = "auto";
-        submenu.style.overflow = "hidden";
-        submenu.style.maxHeight = "0px";
-        submenu.style.opacity = "0";
-        submenu.offsetHeight;
-        submenu.style.opacity = "1";
-        submenu.style.maxHeight = submenu.scrollHeight + "px";
-
-        const onEnd = (event) => {
-          if (event.propertyName !== "max-height") return;
-          if (li.classList.contains("open")) {
-            submenu.style.maxHeight = "none";
-            submenu.style.overflow = "visible";
-          }
-          submenu.removeEventListener("transitionend", onEnd);
-        };
-
-        submenu.addEventListener("transitionend", onEnd);
-      }
-
-      function closeCategory(li) {
-        const submenu = getSubmenu(li);
-        if (!submenu) return;
-
-        submenu.style.overflow = "hidden";
-        submenu.style.maxHeight = submenu.scrollHeight + "px";
-        submenu.offsetHeight;
-        li.classList.remove("open");
-        submenu.style.opacity = "0";
-        submenu.style.maxHeight = "0px";
-        submenu.style.pointerEvents = "none";
-
-        const onEnd = (event) => {
-          if (event.propertyName !== "max-height") return;
-          if (!li.classList.contains("open")) {
-            submenu.style.visibility = "hidden";
-          }
-          submenu.removeEventListener("transitionend", onEnd);
-        };
-
-        submenu.addEventListener("transitionend", onEnd);
+        li.classList.toggle("open", isOpen);
+        submenu.style.display = isOpen ? "block" : "none";
+        submenu.style.visibility = isOpen ? "visible" : "hidden";
+        submenu.style.opacity = isOpen ? "1" : "0";
+        submenu.style.pointerEvents = isOpen ? "auto" : "none";
+        submenu.style.maxHeight = isOpen ? "none" : "0px";
       }
 
       for (const span of categoryHeaders) {
@@ -319,38 +282,17 @@
         const submenu = getSubmenu(li);
         if (!li || !submenu) continue;
 
-        if (li.classList.contains("open")) {
-          submenu.style.visibility = "visible";
-          submenu.style.opacity = "1";
-          submenu.style.maxHeight = "none";
-          submenu.style.pointerEvents = "auto";
-        } else {
-          submenu.style.visibility = "hidden";
-          submenu.style.opacity = "0";
-          submenu.style.maxHeight = "0px";
-          submenu.style.pointerEvents = "none";
-        }
+        setCategoryState(li, li.classList.contains("open"));
 
         span.addEventListener("click", function () {
-          if (li.classList.contains("open")) {
-            closeCategory(li);
-          } else {
-            openCategory(li);
-          }
+          setCategoryState(li, !li.classList.contains("open"));
         });
       }
 
       const activeCategory = document.querySelector(".sidebar nav a.active")?.closest("ul")?.parentElement;
       if (activeCategory && !activeCategory.classList.contains("open")) {
-        openCategory(activeCategory);
+        setCategoryState(activeCategory, true);
       }
-
-      window.addEventListener("resize", function () {
-        document.querySelectorAll(".sidebar nav li.open").forEach((li) => {
-          const submenu = getSubmenu(li);
-          if (submenu) submenu.style.maxHeight = "none";
-        });
-      }, { passive: true });
 
       // Keep search usable in both local review and production.
       const searchBtn = document.getElementById("searchBtn");
