@@ -720,6 +720,154 @@ ol li {
   text-decoration: underline;
 }
 
+/* 搜尋 2.0：分類、摘要與手機友善結果卡片 */
+.search-results {
+  overflow: hidden;
+  border: 1px solid rgba(116, 58, 103, 0.14);
+}
+
+.search-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(116, 58, 103, 0.12);
+}
+
+.search-summary h2 {
+  margin: 4px 0 0;
+  color: #43213f;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+
+.search-summary p,
+.search-loading,
+.search-error {
+  margin: 8px 0 0;
+  color: #625762;
+}
+
+.search-kicker {
+  color: #a05b34;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.search-clear {
+  flex: 0 0 auto;
+  padding: 9px 14px;
+  border: 1px solid rgba(116, 58, 103, 0.25);
+  border-radius: 999px;
+  background: #fffaf4;
+  color: #642c59;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.search-list {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 0;
+}
+
+.search-list li {
+  padding: 0;
+  border: 0;
+}
+
+.search-list li a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5px 16px;
+  padding: 16px 18px;
+  border: 1px solid rgba(116, 58, 103, 0.13);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #fffdf9, #fbf5ee);
+  color: #43213f;
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.search-list li a:hover,
+.search-list li a:focus-visible {
+  border-color: rgba(190, 112, 50, 0.5);
+  box-shadow: 0 8px 22px rgba(67, 33, 63, 0.1);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.search-category {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #f1e5ee;
+  color: #743a67;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.search-list strong {
+  font-size: 1.08rem;
+  line-height: 1.45;
+}
+
+.search-snippet {
+  grid-column: 1;
+  color: #625762;
+  font-size: 0.92rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.search-snippet mark {
+  padding: 0 2px;
+  border-radius: 3px;
+  background: #ffe3a6;
+  color: inherit;
+}
+
+.search-open {
+  grid-column: 2;
+  grid-row: 2 / 4;
+  align-self: center;
+  color: #a05b34;
+  font-size: 0.86rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .search-results {
+    margin: 14px 0;
+    padding: 16px;
+  }
+
+  .search-summary {
+    align-items: flex-start;
+  }
+
+  .search-list li a {
+    display: block;
+    min-height: 44px;
+    padding: 15px;
+  }
+
+  .search-category,
+  .search-list strong,
+  .search-snippet,
+  .search-open {
+    display: block;
+  }
+
+  .search-list strong { margin-top: 8px; }
+  .search-snippet { margin-top: 6px; }
+  .search-open { margin-top: 9px; }
+}
+
 /* ✅ 修正下拉選單文字被裁切問題 */
 .sidebar nav li.open > ul {
   opacity: 1;

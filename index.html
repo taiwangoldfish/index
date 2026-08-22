@@ -857,6 +857,8 @@
     /* ======================================================
        🚀 最快化搜尋：一次跑 8 頁 → 速度提升 5–8倍
     ====================================================== */
+    /* 舊版搜尋保留作為版本紀錄，但不再執行；新版改用 search.js 與靜態索引。 */
+    if (false) {
     const pageSearchCache = new Map();
 
     function normalizeSearchText(value) {
@@ -1057,6 +1059,7 @@
     document.addEventListener("pageLoaded", initHomeSearch);
   
   });
+    }
 
     /* ======================================================
        🏠 首頁分類折疊
@@ -1093,5 +1096,6 @@
         });
     }
 </script>
+<script src="./search.js"></script>
 </body>
 </html>
