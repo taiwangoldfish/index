@@ -1,4 +1,10 @@
 /* === 基本設定 === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Noto Sans TC", sans-serif;
   margin: 0;
@@ -710,6 +716,7 @@ ol li {
 /* ✅ 修正下拉選單文字被裁切問題 */
 .sidebar nav li.open > ul {
   opacity: 1;
+  max-height: none !important;
   visibility: visible;
   overflow: visible;
   pointer-events: auto;
@@ -719,4 +726,118 @@ ol li {
   line-height: 1.6;
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+/* === 2026 年度主題：紫金水墨 === */
+:root {
+  --theme-plum-950: #1b071f;
+  --theme-plum-900: #2b0d31;
+  --theme-plum-800: #421746;
+  --theme-plum-700: #652458;
+  --theme-gold: #c9a74a;
+  --theme-gold-light: #eadb9b;
+  --theme-ivory: #fffaf0;
+  --theme-ink: #2c1c2d;
+  --theme-amber: #c9783b;
+  --theme-rose: #9d4f70;
+  --theme-teal: #3f7773;
+  --theme-indigo: #5d5a91;
+}
+
+body {
+  color: var(--theme-ink);
+  background-color: #eee4ea;
+  background-image:
+    linear-gradient(110deg, rgba(250, 246, 240, 0.72), rgba(238, 224, 234, 0.66)),
+    url("./image/snake-year-background.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.sidebar {
+  background: rgba(255, 250, 240, 0.96);
+  border-right: 1px solid rgba(201, 167, 74, 0.48);
+  box-shadow: 8px 0 30px rgba(18, 4, 24, 0.28);
+}
+
+.sidebar .logo {
+  color: #fff8da;
+  background: linear-gradient(135deg, var(--theme-plum-900), var(--theme-plum-700));
+  border-bottom: 2px solid var(--theme-gold);
+}
+
+.sidebar nav span { color: var(--theme-plum-700); background: #f7eff3; border-bottom: 1px solid rgba(101, 36, 88, 0.12); }
+.sidebar nav > ul > li:nth-child(3) > span { color: #316762; background: #e9f3f0; }
+.sidebar nav > ul > li:nth-child(4) > span { color: #8b4563; background: #f6eaf0; }
+.sidebar nav > ul > li:nth-child(5) > span { color: #a65d29; background: #fbefe3; }
+.sidebar nav > ul > li:nth-child(6) > span { color: #504d82; background: #ececf7; }
+.sidebar nav > ul > li:nth-child(7) > span { color: #316762; background: #e9f3f0; }
+.sidebar nav > ul > li:nth-child(8) > span { color: #8b4563; background: #f6eaf0; }
+.sidebar nav > ul > li:nth-child(9) > span { color: #a65d29; background: #fbefe3; }
+.sidebar nav li > span::after { color: currentColor; opacity: 0.72; }
+.sidebar nav ul > li { border-bottom-color: rgba(75, 31, 69, 0.11); }
+.sidebar nav ul ul li a:hover,
+.sidebar nav ul ul li a:focus-visible { color: var(--theme-plum-700); }
+.sidebar nav ul ul li a.active { color: var(--theme-plum-800); background-color: #f3e7ee; border-left-color: var(--theme-gold); }
+
+.card,
+.home .card {
+  background: rgba(255, 250, 240, 0.94);
+  border: 1px solid rgba(234, 219, 155, 0.72);
+  box-shadow: 0 18px 55px rgba(18, 4, 24, 0.32);
+  backdrop-filter: blur(9px);
+}
+
+.home .card h1,
+.home .card h2,
+.article-page h1,
+.article-page h2,
+.article-page h3 { color: var(--theme-plum-800); }
+
+.hero-card { background: linear-gradient(135deg, rgba(255, 252, 244, 0.97), rgba(243, 231, 238, 0.95)); }
+.eyebrow { color: var(--theme-plum-800); background: #f0e4c4; }
+.topic-chip { color: var(--theme-plum-800); background: rgba(255, 252, 244, 0.92); border-color: rgba(201, 167, 74, 0.72); }
+.topic-chip:hover { background: #f3e7ee; }
+.topic-chip:nth-child(4n + 1) { color: #8b4563; border-color: rgba(157, 79, 112, 0.45); background: #fbf0f4; }
+.topic-chip:nth-child(4n + 2) { color: #316762; border-color: rgba(63, 119, 115, 0.42); background: #eef7f4; }
+.topic-chip:nth-child(4n + 3) { color: #a65d29; border-color: rgba(201, 120, 59, 0.46); background: #fff4e9; }
+.topic-chip:nth-child(4n + 4) { color: #504d82; border-color: rgba(93, 90, 145, 0.42); background: #f1f0fa; }
+.focus-list li { color: var(--theme-plum-800); background: #fbf3f6; border-left-color: var(--theme-gold); }
+.focus-list li:nth-child(4n + 1) { border-left-color: var(--theme-rose); background: #fbf0f4; }
+.focus-list li:nth-child(4n + 2) { border-left-color: var(--theme-teal); background: #eef7f4; }
+.focus-list li:nth-child(4n + 3) { border-left-color: var(--theme-amber); background: #fff4e9; }
+.focus-list li:nth-child(4n + 4) { border-left-color: var(--theme-indigo); background: #f1f0fa; }
+.faq-item { background: #fcf7f2; border-color: #dfc9d5; }
+.faq-item:nth-child(4n + 1) { border-top: 4px solid var(--theme-rose); background: #fbf0f4; }
+.faq-item:nth-child(4n + 2) { border-top: 4px solid var(--theme-teal); background: #eef7f4; }
+.faq-item:nth-child(4n + 3) { border-top: 4px solid var(--theme-amber); background: #fff4e9; }
+.faq-item:nth-child(4n + 4) { border-top: 4px solid var(--theme-indigo); background: #f1f0fa; }
+.faq-item h3 { color: var(--theme-plum-700); }
+.section.yellow { background: #fff3e5; border-left-color: var(--theme-amber); }
+.section.blue { background: #eaf5f3; border-left-color: var(--theme-teal); }
+.section.white { background: rgba(255, 252, 247, 0.92); border-left-color: #cfb66f; }
+
+.menu-toggle,
+.home-btn,
+.search-box button {
+  color: #fff8da;
+  background: linear-gradient(135deg, var(--theme-plum-800), var(--theme-plum-700));
+  border-color: var(--theme-gold);
+}
+
+.menu-toggle:hover,
+.home-btn:hover,
+.search-box button:hover { background: var(--theme-plum-700); }
+.search-box button { background: var(--theme-amber); color: #fff; }
+.search-box button:hover { background: #a95f2c; }
+footer { color: #4f2b4b; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.82); }
+
+@media (max-width: 800px) {
+  html,
+  body { overflow-x: hidden; }
+  body { background-attachment: scroll; background-position: 58% top; }
+  .content { padding-top: 68px; }
+  .sidebar { overflow-x: hidden; }
 }
