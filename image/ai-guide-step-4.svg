@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">開始詢問金魚問題</title><desc id="desc">在同一個 ChatGPT 對話中詢問金魚問題並取得本站來源</desc>
+  <rect width="900" height="430" rx="28" fill="#f1f0fa"/><rect x="75" y="45" width="750" height="340" rx="24" fill="#fff" stroke="#c9c6e4" stroke-width="3"/>
+  <rect x="310" y="85" width="445" height="72" rx="24" fill="#ececf7"/><text x="335" y="128" font-family="sans-serif" font-size="21" fill="#423f6d">金魚多久換一次水比較適合？</text>
+  <circle cx="145" cy="215" r="40" fill="#f2dfaa"/><text x="145" y="229" text-anchor="middle" font-size="36">🐟</text><rect x="205" y="183" width="550" height="135" rx="24" fill="#f7eff3"/>
+  <text x="235" y="224" font-family="sans-serif" font-size="20" font-weight="700" fill="#4b2145">金魚 AI 回答</text><text x="235" y="260" font-family="sans-serif" font-size="18" fill="#554b53">根據本站資料整理重點，並附上文章來源。</text><text x="235" y="292" font-family="sans-serif" font-size="17" fill="#316762">🔗 taiwangoldfish.github.io/index/…</text>
+</svg>

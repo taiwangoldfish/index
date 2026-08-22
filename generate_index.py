@@ -118,4 +118,31 @@ for category in CATEGORY_LABELS:
     json.dumps(entries, ensure_ascii=False, separators=(",", ":")),
     encoding="utf-8",
 )
-print(f"Generated search-index.json with {len(entries)} pages.")
+
+knowledge_lines = [
+    "# 金魚養殖經驗教學群知識庫",
+    "",
+    "本文件由網站現有文章自動整理，供專屬金魚 Agent 檢索。回答時必須附上對應的原始文章網址。",
+    "",
+]
+for entry in entries:
+    public_url = entry["url"].replace("./", "https://taiwangoldfish.github.io/index/", 1)
+    knowledge_lines.extend([
+        f"## {entry['title']}",
+        f"- 分類：{entry['category']}",
+        f"- 原始文章：{public_url}",
+        f"- 摘要：{entry['description']}" if entry["description"] else "",
+        "",
+        entry["content"] or "本頁主要為圖片或影片資料，請引導使用者查看原始文章。",
+        "",
+        "---",
+        "",
+    ])
+
+(ROOT / "goldfish-agent-knowledge.md").write_text(
+    "\n".join(line for line in knowledge_lines if line is not None),
+    encoding="utf-8",
+)
+knowledge_package = "\n".join(line for line in knowledge_lines if line is not None)
+(ROOT / "金魚AI知識包.md").write_text(knowledge_package, encoding="utf-8")
+print(f"Generated search-index.json and goldfish-agent-knowledge.md with {len(entries)} pages.")

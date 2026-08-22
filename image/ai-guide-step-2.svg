@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">在 ChatGPT 上傳知識包</title><desc id="desc">點擊輸入框旁的加號並選擇上傳檔案</desc>
+  <rect width="900" height="430" rx="28" fill="#eef7f4"/><rect x="75" y="42" width="750" height="345" rx="24" fill="#fff" stroke="#b9d8d2" stroke-width="3"/>
+  <text x="115" y="92" font-family="sans-serif" font-size="25" font-weight="700" fill="#2f5f5b">ChatGPT</text><rect x="120" y="270" width="660" height="75" rx="37" fill="#f6f6f6" stroke="#c6c6c6" stroke-width="2"/>
+  <circle cx="167" cy="307" r="25" fill="#652458"/><text x="167" y="317" text-anchor="middle" font-family="sans-serif" font-size="30" fill="#fff">＋</text><text x="212" y="316" font-family="sans-serif" font-size="20" fill="#777">詢問 ChatGPT</text>
+  <rect x="125" y="120" width="300" height="118" rx="16" fill="#fffaf0" stroke="#c9a74a" stroke-width="3"/><text x="160" y="165" font-family="sans-serif" font-size="22" font-weight="700" fill="#4b2145">📎 上傳檔案</text><text x="160" y="204" font-family="sans-serif" font-size="18" fill="#675a64">選擇「金魚AI知識包」</text>
+  <path d="M184 257v-24" stroke="#c9783b" stroke-width="8" stroke-linecap="round"/><path d="M170 240l14-14 14 14" fill="none" stroke="#c9783b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="金魚養殖經驗教學群 AI 圖解使用說明，教你下載知識包、上傳到 ChatGPT 並開始詢問金魚飼養問題。" />
+  <title>金魚 AI 使用說明｜金魚養殖經驗教學群</title>
+  <link href="./style.css" rel="stylesheet" />
+</head>
+<body class="home ai-guide-page">
+  <button class="menu-toggle" id="menuToggle" type="button" aria-controls="sidebar" aria-expanded="false">☰ 選單</button>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">🐠 金魚養殖經驗教學群</div>
+    <div class="search-box">
+      <input id="guideSearchInput" placeholder="搜尋金魚知識..." type="search" />
+      <button id="guideSearchBtn" type="button">搜尋</button>
+    </div>
+    <nav id="guideNav" aria-label="AI 說明頁導覽">
+      <ul>
+        <li><a class="home-btn" href="./index.html">🏠 回到首頁</a></li>
+        <li><a class="ai-guide-nav active" href="./ai-guide.html">🐟 金魚 AI 使用說明</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content" id="mainContent">
+    <article class="card ai-guide-hero">
+      <p class="eyebrow">公益服務・免費使用</p>
+      <div class="ai-guide-badge" aria-hidden="true">🐟</div>
+      <h1>跟著圖片使用金魚 AI</h1>
+      <p class="ai-guide-lead">不用懂電腦，也不用付費給本站。照著下面四個步驟，把本站整理的「金魚 AI 知識包」交給你自己的 ChatGPT，就可以開始提問。</p>
+      <div class="ai-status" role="status">
+        <strong>請記得：回到同一個 ChatGPT 對話繼續問</strong>
+        <span>如果另開新對話，需要重新上傳一次知識包並貼上啟動文字。</span>
+      </div>
+    </article>
+
+    <section class="card ai-quick-start">
+      <h2>先準備這兩樣東西</h2>
+      <div class="ai-action-group">
+        <a class="ai-primary-button" href="./金魚AI知識包.md" download>① 下載金魚 AI 知識包</a>
+        <a class="ai-secondary-button" href="https://chatgpt.com/" target="_blank" rel="noopener">② 開啟 ChatGPT</a>
+      </div>
+      <p class="ai-helper-text">下載後不用打開檔案，只要記得它通常會放在手機或電腦的「下載」資料夾。</p>
+    </section>
+
+    <section class="card ai-tutorial-card">
+      <div class="ai-step-heading"><span>1</span><div><p>第一步</p><h2>下載知識包</h2></div></div>
+      <img class="ai-tutorial-image" src="./image/ai-guide-step-1.svg" alt="點擊下載金魚 AI 知識包按鈕的示意圖" />
+      <p>點上方紫色的「下載金魚 AI 知識包」。下載完成後，不用開啟、不用修改。</p>
+    </section>
+
+    <section class="card ai-tutorial-card">
+      <div class="ai-step-heading"><span>2</span><div><p>第二步</p><h2>把知識包放進 ChatGPT</h2></div></div>
+      <img class="ai-tutorial-image" src="./image/ai-guide-step-2.svg" alt="在 ChatGPT 按加號並選擇上傳檔案的示意圖" />
+      <p>開啟 ChatGPT 後，按輸入框旁邊的「＋」或迴紋針，選擇「上傳檔案」，再選剛下載的「金魚AI知識包」。</p>
+    </section>
+
+    <section class="card ai-tutorial-card">
+      <div class="ai-step-heading"><span>3</span><div><p>第三步</p><h2>複製並貼上啟動文字</h2></div></div>
+      <img class="ai-tutorial-image" src="./image/ai-guide-step-3.svg" alt="複製啟動文字並貼到 ChatGPT 的示意圖" />
+      <div class="ai-prompt-box">
+        <p id="starterPrompt">請先完整讀取我上傳的「金魚AI知識包」。後續所有金魚飼養問題只能依照檔案內容，以臺灣繁體中文回答。資料不足時請直接說不知道，不可自行編造；每次回答最後請附上知識包內的本站文章名稱與完整網址。魚病問題不可武斷確診或直接指定藥物。</p>
+        <button class="ai-copy-button" id="copyPromptBtn" type="button">複製啟動文字</button>
+      </div>
+      <p class="ai-copy-status" id="copyStatus" aria-live="polite"></p>
+      <p>按「複製啟動文字」，回到 ChatGPT，在輸入框長按或按右鍵選擇「貼上」，然後送出。</p>
+    </section>
+
+    <section class="card ai-tutorial-card">
+      <div class="ai-step-heading"><span>4</span><div><p>第四步</p><h2>開始問金魚問題</h2></div></div>
+      <img class="ai-tutorial-image" src="./image/ai-guide-step-4.svg" alt="在同一個 ChatGPT 對話中詢問金魚問題的示意圖" />
+      <p>等 ChatGPT 回覆「已讀取完成」後，就可以直接問：「金魚多久換一次水？」或「新魚怎麼檢疫？」</p>
+    </section>
+
+    <section class="card ai-guide-section">
+      <h2>這個知識包會要求 ChatGPT</h2>
+      <div class="ai-principle-grid">
+        <article><span>📚</span><h3>依照本站資料</h3><p>回答優先使用本站整理的金魚飼養內容。</p></article>
+        <article><span>🔗</span><h3>附上文章來源</h3><p>提供文章名稱與網址，方便回到本站確認。</p></article>
+        <article><span>🛑</span><h3>不知道就明說</h3><p>資料不足時不應自行編造答案。</p></article>
+        <article><span>🩺</span><h3>不代替專業診斷</h3><p>嚴重魚病與高風險操作仍應尋求專業協助。</p></article>
+      </div>
+    </section>
+
+    <section class="card ai-guide-section ai-notice-card">
+      <h2>使用前請留意</h2>
+      <ul class="ai-notice-list">
+        <li>請回到同一個 ChatGPT 對話繼續提問，這樣才會保留已上傳的知識包。</li>
+        <li>另開新對話時，請重新上傳知識包並貼上一次啟動文字。</li>
+        <li>ChatGPT 的檔案上傳與使用次數，依使用者自己的帳戶方案為準。</li>
+        <li>AI 仍可能理解錯誤，涉及魚隻生命或高風險操作時，請回原始文章確認。</li>
+        <li>本站不會要求你提供 ChatGPT 密碼、API 金鑰或信用卡資料。</li>
+      </ul>
+      <div class="ai-action-group">
+        <a class="ai-primary-button" href="./金魚AI知識包.md" download>下載金魚 AI 知識包</a>
+        <a class="ai-secondary-button" href="https://chatgpt.com/" target="_blank" rel="noopener">開啟 ChatGPT</a>
+        <a class="ai-secondary-button" href="./index.html">搜尋本站文章</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 金魚養殖經驗教學群 ｜ 公益知識分享</p>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    menuToggle.addEventListener("click", () => {
+      const open = sidebar.classList.toggle("active");
+      menuToggle.setAttribute("aria-expanded", String(open));
+    });
+
+    function goToSearch() {
+      const keyword = document.getElementById("guideSearchInput").value.trim();
+      if (keyword) window.location.href = `./index.html?q=${encodeURIComponent(keyword)}`;
+    }
+    document.getElementById("guideSearchBtn").addEventListener("click", goToSearch);
+    document.getElementById("guideSearchInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        goToSearch();
+      }
+    });
+
+    document.getElementById("copyPromptBtn").addEventListener("click", async () => {
+      const text = document.getElementById("starterPrompt").textContent.trim();
+      const status = document.getElementById("copyStatus");
+      try {
+        await navigator.clipboard.writeText(text);
+        status.textContent = "✅ 已複製！現在回到 ChatGPT 貼上並送出。";
+      } catch (error) {
+        const range = document.createRange();
+        range.selectNodeContents(document.getElementById("starterPrompt"));
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        status.textContent = "已幫你選取文字，請長按或按右鍵選擇複製。";
+      }
+    });
+
+    async function loadCategoryNavigation() {
+      const guideNav = document.getElementById("guideNav");
+      try {
+        const response = await fetch("./index.html");
+        if (!response.ok) return;
+        const source = new DOMParser().parseFromString(await response.text(), "text/html");
+        const sourceList = source.querySelector("#sidebar nav > ul");
+        if (!sourceList) return;
+
+        const clonedList = sourceList.cloneNode(true);
+        const aiLink = clonedList.querySelector(".ai-guide-nav");
+        aiLink?.classList.add("active");
+        guideNav.replaceChildren(clonedList);
+
+        guideNav.querySelectorAll("li > span").forEach((heading) => {
+          const item = heading.parentElement;
+          const submenu = item?.querySelector(":scope > ul");
+          if (!item || !submenu) return;
+          item.classList.remove("open");
+          submenu.style.display = "none";
+          heading.addEventListener("click", () => {
+            const open = item.classList.toggle("open");
+            submenu.style.display = open ? "block" : "none";
+            submenu.style.visibility = open ? "visible" : "hidden";
+            submenu.style.opacity = open ? "1" : "0";
+            submenu.style.pointerEvents = open ? "auto" : "none";
+            submenu.style.maxHeight = open ? "none" : "0px";
+          });
+        });
+      } catch (error) {
+        console.warn("分類選單載入失敗，保留基本導覽。", error);
+      }
+    }
+
+    loadCategoryNavigation();
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">下載金魚 AI 知識包</title><desc id="desc">手指點擊紫色下載按鈕</desc>
+  <rect width="900" height="430" rx="28" fill="#f8f0f5"/><rect x="85" y="55" width="730" height="320" rx="24" fill="#fffaf0" stroke="#d8bfd0" stroke-width="3"/>
+  <circle cx="168" cy="142" r="48" fill="#f2dfaa"/><text x="168" y="158" text-anchor="middle" font-size="44">🐟</text>
+  <text x="235" y="130" font-family="sans-serif" font-size="26" font-weight="700" fill="#4b2145">金魚 AI 知識包</text><text x="235" y="170" font-family="sans-serif" font-size="19" fill="#675a64">不用開啟檔案，下載後直接交給 ChatGPT</text>
+  <rect x="245" y="235" width="410" height="72" rx="36" fill="#652458" stroke="#c9a74a" stroke-width="3"/><text x="450" y="280" text-anchor="middle" font-family="sans-serif" font-size="25" font-weight="700" fill="#fff8da">① 下載金魚 AI 知識包</text>
+  <path d="M680 325l25-72 26 26 37-37 20 20-37 37 26 26z" fill="#fff" stroke="#4b2145" stroke-width="5"/>
+</svg>

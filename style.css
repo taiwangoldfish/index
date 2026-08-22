@@ -868,6 +868,190 @@ ol li {
   .search-open { margin-top: 9px; }
 }
 
+/* === 金魚 AI 導覽與使用說明頁 === */
+.ai-promo-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 22px;
+  background: linear-gradient(135deg, rgba(249, 237, 245, 0.97), rgba(239, 248, 245, 0.96)) !important;
+}
+
+.ai-promo-card h2,
+.ai-promo-card p { margin: 4px 0; text-align: left !important; }
+.ai-promo-icon,
+.ai-guide-badge {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border: 1px solid rgba(201, 167, 74, 0.6);
+  border-radius: 22px;
+  background: linear-gradient(135deg, #fff8df, #f3e4ef);
+  box-shadow: 0 10px 24px rgba(67, 33, 63, 0.12);
+  font-size: 2rem;
+}
+
+.ai-primary-button,
+.ai-secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 11px 18px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.ai-primary-button {
+  color: #fff8da;
+  background: linear-gradient(135deg, var(--theme-plum-800), var(--theme-plum-700));
+  border-color: var(--theme-gold);
+  box-shadow: 0 8px 20px rgba(67, 33, 63, 0.18);
+}
+
+.ai-primary-button:hover { color: #fff; background: var(--theme-plum-700); }
+.ai-primary-button.is-disabled { opacity: 0.62; cursor: not-allowed; }
+.ai-secondary-button { color: var(--theme-plum-800); background: #fffaf0; border-color: rgba(101, 36, 88, 0.25); }
+
+.ai-guide-nav {
+  display: block;
+  margin: 10px 14px;
+  padding: 13px 16px;
+  border-radius: 12px;
+  color: var(--theme-plum-800);
+  background: #f3e7ee;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.ai-guide-page .content { padding-bottom: 64px; }
+.ai-guide-page .card { width: min(100%, 960px); }
+.ai-guide-hero { text-align: center !important; }
+.ai-guide-hero .ai-guide-badge { margin: 18px auto; width: 82px; height: 82px; font-size: 2.5rem; }
+.ai-guide-hero h1 { margin: 8px 0 18px; font-size: clamp(2rem, 5vw, 3rem); }
+.ai-guide-lead { max-width: 720px; margin: 0 auto; color: #544753; font-size: 1.08rem; line-height: 1.9; }
+
+.ai-quick-start { text-align: center !important; }
+.ai-quick-start h2 { margin-top: 0; }
+.ai-helper-text { margin: 16px 0 0; color: #6f626d; line-height: 1.75; }
+
+.ai-tutorial-card { text-align: left !important; }
+.ai-step-heading {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 15px;
+  align-items: center;
+}
+.ai-step-heading > span {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--theme-plum-700), #916078);
+  border: 2px solid #e4c879;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  font-weight: 900;
+  box-shadow: 0 7px 18px rgba(67, 33, 63, 0.18);
+}
+.ai-step-heading p { margin: 0 0 2px; color: #a35f2e; font-weight: 800; }
+.ai-step-heading h2 { margin: 0; text-align: left !important; }
+.ai-tutorial-card > p { color: #5c505a; line-height: 1.8; }
+.ai-tutorial-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 22px auto;
+  border: 1px solid rgba(101, 36, 88, 0.14);
+  border-radius: 18px;
+  background: #fffaf4;
+  box-shadow: 0 12px 28px rgba(67, 33, 63, 0.1);
+}
+.ai-prompt-box {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(63, 119, 115, 0.3);
+  border-radius: 15px;
+  background: #eef7f4;
+}
+.ai-prompt-box > p { margin: 0 0 15px; color: #344e4c; line-height: 1.8; }
+.ai-copy-button {
+  min-height: 44px;
+  padding: 10px 18px;
+  color: #fff;
+  background: #3f7773;
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.ai-copy-button:hover { background: #315f5c; }
+.ai-copy-button:focus-visible { outline: 3px solid rgba(201, 167, 74, 0.55); outline-offset: 3px; }
+.ai-copy-status { min-height: 1.6em; margin: 9px 0 0; color: #3f7773; font-weight: 800; }
+
+.ai-status {
+  display: grid;
+  gap: 5px;
+  max-width: 700px;
+  margin: 24px auto 0;
+  padding: 16px 18px;
+  border: 1px solid rgba(201, 120, 59, 0.3);
+  border-radius: 14px;
+  color: #74441f;
+  background: #fff4e9;
+}
+
+.ai-guide-section h2,
+.ai-guide-actions h2 { margin-top: 0; }
+.ai-flow-list { display: grid; gap: 14px; padding: 0; list-style: none; }
+.ai-flow-list li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; padding: 16px; border-radius: 14px; background: #fbf3f6; text-align: left; }
+.ai-flow-list li > span { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; color: #fff; background: var(--theme-plum-700); font-weight: 900; }
+.ai-flow-list p { margin: 4px 0 0; color: #625762; line-height: 1.7; }
+
+.ai-principle-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.ai-principle-grid article { padding: 20px; border: 1px solid rgba(101, 36, 88, 0.12); border-radius: 16px; background: #fffaf5; text-align: left; }
+.ai-principle-grid article:nth-child(2) { background: #eef7f4; }
+.ai-principle-grid article:nth-child(3) { background: #fff4e9; }
+.ai-principle-grid article:nth-child(4) { background: #f1f0fa; }
+.ai-principle-grid span { font-size: 1.65rem; }
+.ai-principle-grid h3 { margin: 9px 0 7px; }
+.ai-principle-grid p { margin: 0; color: #625762; line-height: 1.75; }
+
+.ai-notice-card { border-left: 6px solid var(--theme-amber) !important; }
+.ai-notice-list { margin: 0; padding-left: 1.35rem; text-align: left; }
+.ai-notice-list li { margin: 10px 0; padding-left: 4px; line-height: 1.75; }
+.ai-guide-actions { text-align: center !important; }
+.ai-guide-actions p { color: #625762; }
+.ai-action-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 20px; }
+
+@media (max-width: 800px) {
+  .ai-promo-card { grid-template-columns: auto 1fr; padding: 24px 20px !important; }
+  .ai-promo-card .ai-primary-button { grid-column: 1 / -1; width: 100%; }
+  .ai-guide-page .content { padding: 68px 16px 36px; }
+}
+
+@media (max-width: 600px) {
+  .ai-promo-card { display: block; text-align: center; }
+  .ai-promo-icon { margin: 0 auto 14px; }
+  .ai-promo-card h2,
+  .ai-promo-card p { text-align: center !important; }
+  .ai-promo-card .ai-primary-button { margin-top: 16px; }
+  .ai-principle-grid { grid-template-columns: 1fr; }
+  .ai-action-group > * { width: 100%; }
+  .ai-step-heading { grid-template-columns: 46px 1fr; gap: 11px; }
+  .ai-step-heading > span { width: 44px; height: 44px; }
+  .ai-step-heading h2 { font-size: 1.35rem; }
+  .ai-tutorial-image { margin: 18px auto; border-radius: 13px; }
+  .ai-copy-button { width: 100%; }
+}
+
 /* ✅ 修正下拉選單文字被裁切問題 */
 .sidebar nav li.open > ul {
   opacity: 1;
