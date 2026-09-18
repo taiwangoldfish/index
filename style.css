@@ -1037,6 +1037,82 @@ ol li {
   .ai-guide-page .content { padding: 68px 16px 36px; }
 }
 
+/* 新手必看：直式影片專用版面，避免 YouTube iframe 顯示成扁長條。 */
+.article-page.freshman-videos-page .card {
+  width: min(100%, 1120px);
+  max-width: 1120px;
+}
+
+.freshman-videos-page .article-body {
+  max-width: none;
+}
+
+.freshman-videos-page .article-body > p:first-child {
+  max-width: 760px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.freshman-video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 28px);
+  align-items: start;
+}
+
+.freshman-videos-page .video-block {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(101, 36, 88, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 8px 24px rgba(42, 20, 40, 0.08);
+}
+
+.freshman-videos-page .video-title {
+  margin: 0 0 12px;
+  padding: 0 4px;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.freshman-videos-page .video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #201c26;
+}
+
+.freshman-videos-page .video-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 1250px) {
+  .freshman-video-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .freshman-video-grid {
+    grid-template-columns: minmax(0, 360px);
+    justify-content: center;
+  }
+
+  .freshman-videos-page .video-block {
+    padding: 12px;
+  }
+}
+
 @media (max-width: 600px) {
   .ai-promo-card { display: block; text-align: center; }
   .ai-promo-icon { margin: 0 auto 14px; }
