@@ -1037,6 +1037,65 @@ ol li {
   .ai-guide-page .content { padding: 68px 16px 36px; }
 }
 
+/* 辨別魚鰓的狀態 */
+.gill-condition-page .gill-condition-lead {
+  margin: 0 auto 28px;
+  padding: 20px 22px;
+  color: #493243;
+  background: linear-gradient(135deg, rgba(255, 250, 240, 0.96), rgba(243, 231, 238, 0.9));
+  border: 1px solid rgba(201, 167, 74, 0.42);
+  border-radius: 16px;
+}
+
+.gill-condition-page .section h2 {
+  margin-top: 0;
+  font-size: clamp(1.28rem, 2.4vw, 1.6rem);
+}
+
+.gill-condition-figure {
+  width: min(100%, 720px);
+  margin: 30px auto 42px;
+  text-align: center;
+}
+
+.gill-condition-figure a {
+  display: block;
+  border-radius: 18px;
+}
+
+.gill-condition-figure img {
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(26, 13, 25, 0.22);
+}
+
+.gill-condition-figure figcaption {
+  margin-top: 12px;
+  color: #6f5b6d;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.gill-condition-note {
+  margin-top: 30px;
+  padding: 18px 20px;
+  color: #704325;
+  background: #fff2df;
+  border-left: 5px solid var(--theme-amber);
+  border-radius: 0 14px 14px 0;
+}
+
+@media (max-width: 700px) {
+  .gill-condition-page .gill-condition-lead,
+  .gill-condition-note {
+    padding: 16px 17px;
+  }
+
+  .gill-condition-figure {
+    margin: 24px auto 32px;
+  }
+}
+
 /* 新手必看：直式影片專用版面，避免 YouTube iframe 顯示成扁長條。 */
 .article-page.freshman-videos-page .card {
   width: min(100%, 1120px);
