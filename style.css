@@ -380,6 +380,114 @@ footer {
   }
 }
 
+/* Feed digestion guide */
+.feed-digestion-page .feed-digestion-lead {
+  max-width: 780px;
+  margin: 0 auto 24px;
+  color: #554454;
+  font-size: 1.08rem;
+  line-height: 1.9;
+  text-align: center;
+}
+
+.feed-digestion-figure {
+  max-width: 820px;
+  margin: 0 auto 30px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(101, 36, 88, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 14px 34px rgba(42, 20, 40, 0.16);
+}
+
+.feed-digestion-figure a,
+.feed-digestion-figure img {
+  display: block;
+  width: 100%;
+}
+
+.feed-digestion-figure img {
+  height: auto;
+  border-radius: 13px;
+}
+
+.feed-digestion-figure figcaption {
+  padding: 11px 8px 2px;
+  color: #765f73;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.digestion-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 18px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: digestion-step;
+}
+
+.digestion-steps li {
+  position: relative;
+  min-height: 70px;
+  padding: 14px 14px 14px 54px;
+  line-height: 1.7;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(183, 126, 42, 0.2);
+  border-radius: 14px;
+  counter-increment: digestion-step;
+}
+
+.digestion-steps li::before {
+  content: counter(digestion-step);
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: #fff;
+  font-weight: 800;
+  background: linear-gradient(135deg, #e85838, #b52836);
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(181, 40, 54, 0.24);
+}
+
+.feed-digestion-note {
+  margin: 24px 0 0;
+  padding: 18px 20px;
+  color: #604d33;
+  line-height: 1.8;
+  background: #fff8df;
+  border: 1px solid #ead38b;
+  border-left: 5px solid #d7a52d;
+  border-radius: 12px;
+}
+
+@media (max-width: 700px) {
+  .feed-digestion-page .feed-digestion-lead {
+    text-align: left;
+  }
+
+  .feed-digestion-figure {
+    margin-right: -4px;
+    margin-left: -4px;
+    padding: 7px;
+    border-radius: 15px;
+  }
+
+  .feed-digestion-figure img {
+    border-radius: 10px;
+  }
+
+  .digestion-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* === 燈箱樣式（圖片放大） === */
 .lightbox {
   display: none;
